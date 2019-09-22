@@ -1,0 +1,18 @@
+{
+    "blocks":[
+        {
+            "number":1,
+            "Sequence":[4,3,1,4,2],
+            "timeOn":30,
+            "timeOff":30
+        },
+        {
+            "number":2,
+            "Sequence":[4,3,1,4,2],
+            "timeOn":30,
+            "timeOff":30
+        }
+    ]
+}
+
+
