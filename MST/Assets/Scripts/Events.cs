@@ -47,6 +47,7 @@ public class Events : MonoBehaviour
     public int currentBlockIdx;
     private int eventNumInBlock = 0;
     private float currentBlockStartTime;
+    private float lastButtonPressedTime;
 
     void Awake()
     {
@@ -85,6 +86,7 @@ public class Events : MonoBehaviour
             {
                 introTMPText.SetText("");
                 StartCoroutine(startPresentation());
+                lastButtonPressedTime = Time.time;
             }
         }
 
@@ -95,12 +97,16 @@ public class Events : MonoBehaviour
             if (Input.GetKeyDown("h")) { tmpButtonPressed = 2; } // Ringfinger
             if (Input.GetKeyDown("j")) { tmpButtonPressed = 1; } // kleiner Finger
 
-            if (tmpButtonPressed != lastButtonPressed)
+            // wenn einer der 4 nummern gepressed wurde UND (es nicht der gleiche ist oder mehr als 50 ms vergangen)
+            if (tmpButtonPressed>0 && (tmpButtonPressed != lastButtonPressed || Time.time-lastButtonPressedTime>0.05))
             {
                 audioSource.Play();
                 ButtonPressed(tmpButtonPressed);
                 isButtonPressedInFrame = true;
+                lastButtonPressedTime = Time.time;
+                tmpButtonPressed = 0;
             }
+            
         }
     }
 
@@ -129,6 +135,8 @@ public class Events : MonoBehaviour
         isActive = true;
         float starttime = Time.time;
         bool toExit = false;
+        print(currentBlock.expTimeOn);
+        while (Time.time  - starttime < currentBlock.expTimeOn){
         for (int i = 0; i < currentBlock.expSequence.Count; i++)
         {
             currentTargetNum = currentBlock.expSequence[i];
@@ -144,6 +152,7 @@ public class Events : MonoBehaviour
             }
             isButtonPressedInFrame = false;
             if (toExit){ break; }
+        }
         }
         sequenceTMPText.SetText("");
     }
