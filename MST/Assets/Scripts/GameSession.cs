@@ -164,7 +164,9 @@ public class GameSession : MonoBehaviour
                     {
                         break;
                     }
+                    // print(line);
                     string[] fields = line.Split(';');
+                    // print(fields[0]);
                     int expBlock = int.Parse(fields[0]);
                     string expSequence = fields[1];
                     int expTimeOn = int.Parse(fields[2]);
