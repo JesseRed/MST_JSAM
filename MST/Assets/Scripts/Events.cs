@@ -96,6 +96,10 @@ public class Events : MonoBehaviour
             if (Input.GetKeyDown("g")) { tmpButtonPressed = 3; } // Mittelfinger
             if (Input.GetKeyDown("h")) { tmpButtonPressed = 2; } // Ringfinger
             if (Input.GetKeyDown("j")) { tmpButtonPressed = 1; } // kleiner Finger
+            if (Input.GetButtonDown("Fire1")) { tmpButtonPressed = 4; print("Fire1"); } // Zeigefinger
+            if (Input.GetButtonDown("Fire2")) { tmpButtonPressed = 3; print("Fire2"); } // Zeigefinger
+            if (Input.GetButtonDown("Fire3")) { tmpButtonPressed = 2; print("Fire3"); } // Zeigefinger
+            if (Input.GetButtonDown("Fire4")) { tmpButtonPressed = 1; print("Fire4"); } // Zeigefinger
 
             // wenn einer der 4 nummern gepressed wurde UND (es nicht der gleiche ist oder mehr als 50 ms vergangen)
             if (tmpButtonPressed>0 && (tmpButtonPressed != lastButtonPressed || Time.time-lastButtonPressedTime>0.05))
@@ -121,9 +125,11 @@ public class Events : MonoBehaviour
             currentBlockStartTime = Time.time;
             yield return StartCoroutine(startBlockActive());
             yield return StartCoroutine(startBlockPassive());
+            gameSession.playerData.SaveDataAsCSV("unvollstaendig");
+
         }
         // alles abgeschlossen  ... speichere nun die Daten
-        gameSession.playerData.SaveDataAsCSV();
+        gameSession.playerData.SaveDataAsCSV("fertig");
         introTMPText.SetText("Experiment abgeschlossen!");
         //panelEnde.SetActive(true);
         yield return new WaitForSeconds(5);

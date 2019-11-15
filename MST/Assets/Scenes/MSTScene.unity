@@ -186,6 +186,7 @@ MonoBehaviour:
   audioClipSuccess: {fileID: 8300000, guid: d48c3946fa2c78343bbf2b3eb29bc27f, type: 3}
   audioClipFailure: {fileID: 8300000, guid: 2a5339c14356bab4f82a5d3196983a39, type: 3}
   audioSource: {fileID: 237539155}
+  currentBlockIdx: 0
 --- !u!82 &237539155
 AudioSource:
   m_ObjectHideFlags: 0
@@ -495,7 +496,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<size=60%><cspace=0.2em>-4-<u>3</u>- 2-1-<mark=#ffff00aa>4</mark>
+  m_text: '
 
 '
   m_isRightToLeft: 0
@@ -543,7 +544,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -567,10 +568,10 @@ MonoBehaviour:
   m_margin: {x: -262.59897, y: 0, z: -262.59882, w: 0}
   m_textInfo:
     textComponent: {fileID: 445047329}
-    characterCount: 12
+    characterCount: 1
     spriteCount: 0
-    spaceCount: 2
-    wordCount: 2
+    spaceCount: 1
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1

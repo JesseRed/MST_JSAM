@@ -63,8 +63,9 @@ public class GameSession : MonoBehaviour
 
         string vpNummerstring = GameObject.Find("VPNummerText").GetComponent<TextMeshProUGUI>().text;
         vpNummerstring = vpNummerstring.Substring(0,vpNummerstring.Length-1);
-        int vpNummer;
-        int.TryParse(vpNummerstring, out vpNummer);
+        string vpNummer;
+        vpNummer = vpNummerstring;
+        // int.TryParse(vpNummerstring, out vpNummer);
         string appdatapath = Application.dataPath;
         string fileDesignName;
         //fileDesignName = "Experiment1_Day1.csv";//"Experiment1_Day" + trainingsDaystring + ".csv";
@@ -91,7 +92,7 @@ public class GameSession : MonoBehaviour
         public string nachname;
         public string gebDatum;
         public int trainingsDay;
-        public int vpNummer;
+        public string vpNummer;
         // public Paradigma paradigma;
         public List<Block> paradigmaBlocks = new List<Block>();
 
@@ -102,7 +103,7 @@ public class GameSession : MonoBehaviour
 
 
         // construktor .... ohne die persoenlichen Infos geht nix
-        public PlayerData(string vn, string nn, string gd, int td, int vpnum, string paradigmaFileName)
+        public PlayerData(string vn, string nn, string gd, int td, string vpnum, string paradigmaFileName)
         {
             vorname = vn;
             nachname = nn;
@@ -122,10 +123,11 @@ public class GameSession : MonoBehaviour
             playerTrackEntries.Add(new PlayerTrackEntry(iblockIdx, ieventNum, itimeSinceBlockStart, iisHit, itarget, ipressed));
         }
 
-        public void SaveDataAsCSV()
+        public void SaveDataAsCSV(string status)
         {
             string path = relativeFilePath; // Application.persistentDataPath;
-            string filename = path + '/' + vpNummer + vorname + nachname + gebDatum + trainingsDay.ToString() + ".csv";
+            string filename = path + '/' + vpNummer + '_' + vorname + nachname + gebDatum + trainingsDay.ToString() + status + ".csv";
+            // string filename = path + '/' + vpNummer + vorname + nachname + gebDatum + trainingsDay.ToString() + status + ".csv";
             print("filename = " + filename);
             using (StreamWriter sw = new StreamWriter(filename))
             {
