@@ -56,6 +56,8 @@ public class GameSession : MonoBehaviour
         string nachname = GameObject.Find("NachnameText").GetComponent<TextMeshProUGUI>().text;
         string gebDat = GameObject.Find("GebDatText").GetComponent<TextMeshProUGUI>().text;
         string trainingsDaystring = GameObject.Find("TrainingsDayText").GetComponent<TextMeshProUGUI>().text;
+        string studyname = GameObject.Find("StudynameText").GetComponent<TextMeshProUGUI>().text;
+        studyname = studyname.Substring(0,studyname.Length-1);
         trainingsDaystring = trainingsDaystring.Substring(0,trainingsDaystring.Length-1);
 
         int trainingsDay;
@@ -69,7 +71,8 @@ public class GameSession : MonoBehaviour
         string appdatapath = Application.dataPath;
         string fileDesignName;
         //fileDesignName = "Experiment1_Day1.csv";//"Experiment1_Day" + trainingsDaystring + ".csv";
-        fileDesignName = "Experiment1_Day" + trainingsDay.ToString() + ".csv";
+        fileDesignName = studyname + "_Day" + trainingsDay.ToString() + ".csv";
+        fileDesignName = fileDesignName.ToString();
 //        string relative_path_file = Path.Combine(relativeReadPath, fileDesignName);
         //string jsonString = Path.Combine(appdatapath, relative_path_file);
         char x = Path.DirectorySeparatorChar;
@@ -78,10 +81,11 @@ public class GameSession : MonoBehaviour
         string paradigmFileName;
         //paradigmFileName = "G:/Unity/MST_JSAM/MST/Assets/ExperimentalDesign/Experiment1_Day1.csv"; //Application.dataPath + x + relativeReadPath + x + fileDesignName; //Path.DirectorySeparatorChar Combine(appdatapath, relative_path_file);
         paradigmFileName = Application.dataPath + x + relativeReadPath + x + fileDesignName; //Path.DirectorySeparatorChar Combine(appdatapath, relative_path_file);
-        
+        print("filedesignname = " + fileDesignName);
+        print("paradigmFileName = " + paradigmFileName);
 //        print(paradigmFileName);
 
-        playerData = new PlayerData(vorname, nachname, gebDat, trainingsDay, vpNummer, paradigmFileName);
+        playerData = new PlayerData(vorname, nachname, gebDat, trainingsDay, vpNummer, studyname, paradigmFileName);
         isInitialized = true;
     }
 
@@ -92,6 +96,7 @@ public class GameSession : MonoBehaviour
         public string nachname;
         public string gebDatum;
         public int trainingsDay;
+        public string studyname;
         public string vpNummer;
         // public Paradigma paradigma;
         public List<Block> paradigmaBlocks = new List<Block>();
@@ -99,16 +104,17 @@ public class GameSession : MonoBehaviour
         private List<PlayerTrackEntry> playerTrackEntries;
         public char lineSeperater = '\n'; // It defines line seperate character
         public char fieldSeperator = ';'; // It defines field seperate chracter
-        public string relativeFilePath = "Assets/Data/";
+        public string relativeFilePath = "Data";
 
 
         // construktor .... ohne die persoenlichen Infos geht nix
-        public PlayerData(string vn, string nn, string gd, int td, string vpnum, string paradigmaFileName)
+        public PlayerData(string vn, string nn, string gd, int td, string vpnum, string sn, string paradigmaFileName)
         {
             vorname = vn;
             nachname = nn;
             gebDatum = gd;
             trainingsDay = td;
+            studyname = sn;
             vpNummer = vpnum;
             //paradigma = Paradigma(jsonString);
             //print(jsonString);
@@ -125,8 +131,9 @@ public class GameSession : MonoBehaviour
 
         public void SaveDataAsCSV(string status)
         {
-            string path = relativeFilePath; // Application.persistentDataPath;
-            string filename = path + '/' + vpNummer + '_' + vorname + nachname + gebDatum + trainingsDay.ToString() + status + ".csv";
+            char x = Path.DirectorySeparatorChar;
+            string path = Application.dataPath + x + relativeFilePath;
+            string filename = path + '/' + vpNummer + '_' + vorname + nachname + studyname + trainingsDay.ToString() + status + ".csv";
             // string filename = path + '/' + vpNummer + vorname + nachname + gebDatum + trainingsDay.ToString() + status + ".csv";
             print("filename = " + filename);
             using (StreamWriter sw = new StreamWriter(filename))
