@@ -25,6 +25,8 @@ public class Events : MonoBehaviour
     private List<int> resultButtonPressed = new List<int>();
     private GameObject waitObject;
     private TextMeshProUGUI waitTMPText;
+    private GameObject nextObject;
+    private TextMeshProUGUI nextTMPText;
     //  private GameObject waitObject;
     private GameObject introObject;
     private TextMeshProUGUI introTMPText;
@@ -48,7 +50,7 @@ public class Events : MonoBehaviour
     private int eventNumInBlock = 0;
     private float currentBlockStartTime;
     private float lastButtonPressedTime;
-
+    private string currenttextnachricht = "";
     void Awake()
     {
         print("awake");
@@ -60,6 +62,10 @@ public class Events : MonoBehaviour
         gameSession = FindObjectOfType<GameSession>();
         waitObject = GameObject.Find("WaitText");
         waitTMPText = waitObject.GetComponent<TextMeshProUGUI>();
+        
+        nextObject = GameObject.Find("NextText");
+        nextTMPText = nextObject.GetComponent<TextMeshProUGUI>();
+        
         sequenceObject = GameObject.Find("SequenceText");
         sequenceTMPText = sequenceObject.GetComponent<TextMeshProUGUI>();
         // sequenceUnderlineObject = GameObject.Find("SequenceUnderlineText");
@@ -123,8 +129,10 @@ public class Events : MonoBehaviour
             currentBlockIdx++;
             currentBlock = block;
             currentBlockStartTime = Time.time;
+            
+            currenttextnachricht = block.expEndBlockMessage;
             yield return StartCoroutine(startBlockActive());
-            yield return StartCoroutine(startBlockPassive());
+            yield return StartCoroutine(startBlockPassive(currenttextnachricht));
             gameSession.playerData.SaveDataAsCSV("unvollstaendig");
 
         }
@@ -208,12 +216,13 @@ public class Events : MonoBehaviour
         //<size=60%><cspace=0.2em>-4-<u>3</u>- 2-1-<mark=#ffff00aa>4</mark>
         return seq;
     }
-    IEnumerator startBlockPassive()
+    IEnumerator startBlockPassive(string textnachricht)
     {
         isActive = false;
         // introTMPText.text = "Pause!";
         // yield return new WaitForSeconds(1);
         introTMPText.text = "Pause!\n weiter in ...";
+        nextTMPText.text = textnachricht;
         for (int i = currentBlock.expTimeOff; i >= 0; i--)
         {
             waitTMPText.SetText(i.ToString());
@@ -224,6 +233,8 @@ public class Events : MonoBehaviour
         }
         introTMPText.SetText("");
         waitTMPText.SetText("");
+        nextTMPText.SetText("");
+        
     }
 
 }
