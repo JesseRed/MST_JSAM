@@ -8,6 +8,35 @@ from os.path import isfile, join
 class MST():
     def __init__(self, filename):
         self.df = pd.read_csv(filename, sep = ';' )
+        self.ipi, self.hits = self.get_inter_key_intervals()
+        self.corrsq = self.estimate_correct_seqences()
+        self.improvement = self.estimate_improvement()
+
+    def get_inter_key_intervals(self):
+        """ in einem numpy Array werden die inter Key intervalls gespeichert
+            die Zeit zum ersten key press entfaellt 
+            Liste von Arrays
+        """ 
+        blcktmp = 0
+        ipi = []
+        hits = []
+        for index, row in self.df.iterrows():
+            if row["BlockNumber"]!=blcktmp:
+                if blcktmp > 0:
+                    ipi.append(np.asarray(ipi_block_list_tmp, dtype = np.float32))
+                    hits.append(np.asarray(block_hits, dtype = np.int8))
+                # ein neuer Block
+                blcktmp +=1
+                ipi_block_list_tmp = []
+                key_press_time = float(row["Time Since Block start"].replace(',','.'))
+                block_hits = []
+                block_hits.append(row['isHit'])
+                continue
+            ipi_block_list_tmp.append(float(row["Time Since Block start"].replace(',','.'))-key_press_time)
+            key_press_time = float(row["Time Since Block start"].replace(',','.'))
+            block_hits.append(row['isHit'])
+        return (ipi, hits)
+            
 
     def estimate_correct_seqences(self):
         corrsq=[]
@@ -38,11 +67,12 @@ class MST():
                 tmpcount=0
                 num_sq[-1]=num_sq[-1]+1
         #print(f"{corrsq}")   
-        self.corrsq = corrsq
+        return corrsq
 
     def estimate_improvement(self):
         X = [1,2,3,4,5,6,7,8,9,10,11,12]
         if not hasattr(self,'corrsq'):
             self.estimate_correct_seqences()
-        self.improvement,b = np.polyfit(X, self.corrsq, 1)
+        improvement,b = np.polyfit(X, self.corrsq, 1)
+        return improvement
         

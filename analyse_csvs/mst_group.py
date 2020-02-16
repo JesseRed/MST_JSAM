@@ -29,10 +29,7 @@ class MST_Group():
         self.corrsq = []
         for filename in self.files:
             mst = MST(filename)
-            mst.estimate_correct_seqences()
-            mst.estimate_improvement()
             self.mst.append(mst)
-
             self.corrsq.append(mst.corrsq)
             self.improvement.append(mst.improvement)
 

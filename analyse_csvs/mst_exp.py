@@ -19,14 +19,17 @@ class MST_Exp():
 
     def perform_statistics(self):
         self.statistic, self.pval = stats.ttest_ind(self.mst_g1.corrsq, self.mst_g2.corrsq)
-        print(f"statistic = {statistic}")
+        print(f"statistic = {self.statistic}")
         for index, p in enumerate(self.pval):
             print(f"Block[{index+1}] - pval = {p:.4}")
 
+    def plot(self):
+        # https://matplotlib.org/gallery/statistics/violinplot.html#sphx-glr-gallery-statistics-violinplot-py
 
 if __name__ == '__main__':
     experiment = MST_Exp(group1_path= "./Data MST", group1_filepattern="Tag1", group2_path= "./Data MST", group2_filepattern="Tag2")
     experiment.perform_statistics()
+    experiment.plot()
     
 
     
