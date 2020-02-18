@@ -1,3 +1,21 @@
 {
-    "python.pythonPath": "F:\\ProgramData\\Anaconda3\\envs\\Telestroke\\python.exe"
+    "python.pythonPath": "F:\\ProgramData\\Anaconda3\\envs\\Telestroke\\python.exe",
+    "code-runner.executorMap": {
+        "python": "F://ProgramData//Anaconda3//envs//Telestroke//python.exe"
+    },
+    "macros": {
+        "rerunCommand": [
+            "workbench.action.showCommands",
+            "workbench.action.acceptSelectedQuickOpenItem"
+        
+          ],
+          "commentDown": [
+            "editor.action.copyLinesDownAction",
+            "cursorUp",
+            "editor.action.addCommentLine",
+            "cursorDown"
+        ]
+ 
+
+    },
 }

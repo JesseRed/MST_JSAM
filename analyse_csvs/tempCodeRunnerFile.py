@@ -1,7 +1,8 @@
-linear_regressor = LinearRegression()  # create object for the class
-# linear_regressor.fit(X, Y)  # perform linear regression
-# Y_pred = linear_regressor.predict(Y)  # make predictions
-# print(Y_pred)
-# plt.scatter(X, Y)
-# plt.plot(X, Y_pred, color='red')
-# plt.show()
+    seed(1)
+    # prepare data
+    data1 = 10 * randn(10000) + 60
+    data2 = 10 * randn(10000) + 55
+    # calculate cohen's d
+    print(type(data1))
+    d = cohend(data1, data2)
+    print('Cohens d: %.3f' % d)
