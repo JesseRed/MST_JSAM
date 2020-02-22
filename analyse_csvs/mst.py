@@ -29,9 +29,12 @@ class MST():
 
         self.ipi_norm = self.get_normalized_ipi(ipi, m, std)
         self.ipi_norm_arr = self.convert_to_array2D(self.ipi_norm)
+        self.A = self.get_adjacencies(self.ipi_norm) 
         self.w = self.get_simple_weights(self.ipi_norm_arr)
         #self.w_norm = self.get_normalized_weigths(self.ipi_norm)
             
+    def 
+    
     def convert_to_array2D(self, list3):
         y = []
         for block in x:
@@ -51,32 +54,6 @@ class MST():
                 d[j,j+1]=(m-abs(ipi_arr[i,j]-ipi_arr[i,j+1]))/m
             w.append(d)
     
-    def get_normalized_weigths(self, ipi):
-        w = []
-        wm = [] #np.zeros(10,10)
-        w2 = []
-        for block in ipi:
-            w_block = []
-            for sequence in block:
-                w_seq = []
-                w_mat = np.zeros((10,10))
-                for k in range(1,len(sequence)):
-                    w_seq.append(abs(sequence[k]-sequence[k-1]))
-                    
-                maximum = max(w_seq)
-                w_seq = [(maximum-i)/maximum for i in w_seq]
-                for index,i in enumerate(w_seq):
-                    w_mat[index,index+1] = (maximum-w_seq[i])/maximum
-                
-                w_block.append(w_seq)
-            w.append(w_block)
-
-        for x in wm[:-1]:
-            for idx in range(x.shape[0]):
-                x[idx,idx]=x[idx,idx+1]
-
-
-        return w
 
     def get_ipi_mean_arr(self, ipi):
         mean_arr = ipi.mean(axis=0)
