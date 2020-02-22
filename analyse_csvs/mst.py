@@ -3,24 +3,117 @@ import numpy as np
 import matplotlib.pyplot as plt
 from os import listdir, rename
 from os.path import isfile, join
-
+from statistics import mean, stdev
+import statistics
 
 class MST():
     def __init__(self, filename):
         self.df = pd.read_csv(filename, sep = ';' )
         self.ipi, self.hits = self.get_inter_key_intervals()
         #print(f"size = {len(self.ipi)}")
-        self.ipi_cor = self.get_inter_key_intervals_only_cor(10) # nur correcte
+        self.ipi_cor = self.get_inter_key_intervals_only_cor(10) # nur Korrekte Sequencen
+
         #self.printlist3(self.ipi_cor)
+        print(self.ipi_cor)
+        self.estimate_chunks()
+        
         self.corrsq = self.estimate_correct_seqences()
         self.improvement = self.estimate_improvement()
+        #self.estimate_chunks()
+
+
+    def estimate_chunks(self):
+        ipi = self.ipi_cor
+        self.ipi_arr = self.convert_to_array2D(self.ipi)
+        m, std = self.get_ipi_mean_arr(self.ipi_arr)
+
+        self.ipi_norm = self.get_normalized_ipi(ipi, m, std)
+        self.ipi_norm_arr = self.convert_to_array2D(self.ipi_norm)
+        self.w = self.get_simple_weights(self.ipi_norm_arr)
+        #self.w_norm = self.get_normalized_weigths(self.ipi_norm)
+            
+    def convert_to_array2D(self, list3):
+        y = []
+        for block in x:
+             for sequence in block:
+                 y.append(sequence)
+        y_mat = np.stack(y)
+        return y_mat # array der dimension N x M   (N anzahl der korrekten Sequenzen, M Anzahl der Elemente pro sequenz)
+        
+    def get_simple_weights(ipi_arr):
+        # estimates similarities in IKIs 
+        w = []
+        for i in range(ipi_arr.shape[0]):
+            d = np.zeros((10,10))
+            m = max(ipi_arr[i,:])
+            for j in range(ipi_arr.shape[1]-1):
+                d[j,j]=0.03
+                d[j,j+1]=(m-abs(ipi_arr[i,j]-ipi_arr[i,j+1]))/m
+            w.append(d)
+    
+    def get_normalized_weigths(self, ipi):
+        w = []
+        wm = [] #np.zeros(10,10)
+        w2 = []
+        for block in ipi:
+            w_block = []
+            for sequence in block:
+                w_seq = []
+                w_mat = np.zeros((10,10))
+                for k in range(1,len(sequence)):
+                    w_seq.append(abs(sequence[k]-sequence[k-1]))
+                    
+                maximum = max(w_seq)
+                w_seq = [(maximum-i)/maximum for i in w_seq]
+                for index,i in enumerate(w_seq):
+                    w_mat[index,index+1] = (maximum-w_seq[i])/maximum
+                
+                w_block.append(w_seq)
+            w.append(w_block)
+
+        for x in wm[:-1]:
+            for idx in range(x.shape[0]):
+                x[idx,idx]=x[idx,idx+1]
+
+
+        return w
+
+    def get_ipi_mean_arr(self, ipi):
+        mean_arr = ipi.mean(axis=0)
+        std_arr = ipi.std(axis=0)
+
+        return (mean_arr, std_arr)        
+    
+    def get_mean_list3(self, ipi):
+        mean_list = []
+        for block in ipi:
+            for sequence in block:
+                mean_list.append(sum(sequence) / len(sequence))
+        m = sum(mean_list) / len(mean_list)
+        std = stdev(mean_list)
+        return (m, std)        
+
+    def get_normalized_ipi(self, ipi, m, std):
+
+        ipi_new = []
+        for block in ipi:
+            block_new = []
+            for sequence in block:
+                keep = True
+                for idx, p in enumerate(sequence):
+                    if p>m[idx]+std[idx]*3 or p<m[idx]-std[idx]*3 :
+                        keep = False
+                if keep:
+                    block_new.append(sequence)
+            ipi_new.append(block_new)
+        return ipi_new
 
     def printlist3(self, list3):
         for idx, x in enumerate(list3):
             print(f"Block nummer: {idx+1}")
             for y in x:
-                print(type(y))
-                print(type(y[0]))
+                print(y)
+ #               print(type(y[0]))
 
 
     def get_inter_key_intervals_only_cor(self, num_cor_press):
@@ -150,6 +243,11 @@ class MST():
 if __name__ == '__main__':
     filename = ".\\Data MST\\3Tag1_.csv"
     mst = MST(filename)
-    print(type(mst.ipi_cor))
-    print(len(mst.ipi_cor))
+    ipi_cor = mst.ipi_cor
+    ipi_norm = mst.ipi_norm
+    ipi_norm_arr = mst.ipi_norm_arr
+    
+    #w_norm = mst.w_norm
+    #print(type(mst.ipi_cor))
+    #print(len(mst.ipi_cor))
 
