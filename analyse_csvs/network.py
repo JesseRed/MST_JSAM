@@ -7,166 +7,123 @@ from statistics import mean, stdev
 import statistics
 import networkx
 import time
+from mst import MST
 
-class MST():
-    def __init__(self, filename):
-        self.df = pd.read_csv(filename, sep = ';' )
-        self.ipi, self.hits = self.get_inter_key_intervals()
-        #print(f"size = {len(self.ipi)}")
-        self.ipi_cor = self.get_inter_key_intervals_only_cor(10) # nur Korrekte Sequencen
-
-        #self.printlist3(self.ipi_cor)
-        #print(self.ipi_cor)
+class Network():
+    def __init__(self, ipi, coupling_parameter = 0.03,  resolution_parameter = 0.9):
+        self.ipi = ipi
+        self.coupling_parameter = coupling_parameter
+        self.resolution_parameter = resolution_parameter    
+        
+        self.estimate_chunks()
         
         
-        self.corrsq = self.estimate_correct_seqences()
-        self.improvement = self.estimate_improvement()
-        #self.estimate_chunks()
 
+    def estimate_chunks(self):
 
-#    def estimate_chunks(self):
-#        self.coupling_parameter = 0.03
-#        self.resolution_parameter = 0.9
-#        ipi = self.ipi_cor
-#
-#        self.ipi_arr = self.convert_to_array2D(self.ipi_cor)
-#        print(self.ipi_arr.shape)
-#        m, std = self.get_ipi_mean_arr(self.ipi_arr)
-#
-#        self.ipi_norm = self.get_normalized_ipi(ipi, m, std)
-#        self.ipi_norm_arr = self.convert_to_array2D(self.ipi_norm)
-#        self.A = self.get_adjacency_matrix(self.ipi_norm_arr) 
-#        self.C = self.get_inter_slice_coupling(self.ipi_norm_arr, self.coupling_parameter)
-#        
-#        self.g = self.initialize_g() # jedes node ist seine eigene community
-#        start = time.time()
-#        self.Qms = self.get_Qms(self.g)
-#        print(f"Qms execution time = {time.time()-start:.3} s")
-#
-#        self.adapt_communities()
-#        
-#        start = time.time()
-#        self.Qms = self.get_Qms(self.g)
-#        print(f"Qms execution time = {time.time()-start:.3} s")
-#                
-#        #self.w = self.get_simple_weights(self.ipi_norm_arr)
-#        #self.w_norm = self.get_normalized_weigths(self.ipi_norm)
-#        
-#    def adapt_communities(self):
-#        # Anpassung von g entsprechend dem Algorithmus von Blondel 2008
-#        # g wird durchgegangen und g[i,s] wird in seinerm community
-#        # ersetzt durch g[i-1,s] und g[i+1,s]
-#        # wenn sich eine Verbesserung einstellt dann wird die neue
-#        # Zuordnung beibehalten
-#        g = self.g.copy()
-#        for s in range(g.shape[1]):
-#            for i in range(g.shape[0]):
-#                original_entry = g[i,s]
-#                dq1 = -1
-#                dq2 = -1
-#                if i>0:
-#                    if not g[i,s]==g[i-1,s]:
-#                        g[i,s] = g[i-1,s]
+        ipi = self.ipi
+        self.ipi_arr = self.convert_to_array2D(self.ipi)
+        #print(self.ipi_arr.shape)
+        m, std = self.get_ipi_mean_arr(self.ipi_arr)
+
+        self.ipi_norm = self.get_normalized_ipi(ipi, m, std)
+        self.ipi_norm_arr = self.convert_to_array2D(self.ipi_norm)
+        self.A = self.get_adjacency_matrix(self.ipi_norm_arr) 
+        self.C = self.get_inter_slice_coupling(self.ipi_norm_arr, self.coupling_parameter)
+        
+        self.g = self.initialize_g() # jedes node ist seine eigene community
+        start = time.time()
+        self.Qms = self.get_Qms(self.g, 1, 1)
+        print(f"Qms execution time = {time.time()-start:.3} s")
+
+        self.adapt_communities()
+        
+        start = time.time()
+        self.Qms = self.get_Qms(self.g, 1,1)
+        print(f"Qms execution time = {time.time()-start:.3} s")
+                
+        #self.w = self.get_simple_weights(self.ipi_norm_arr)
+        #self.w_norm = self.get_normalized_weigths(self.ipi_norm)
+        
+    def adapt_communities(self):
+        # Anpassung von g entsprechend dem Algorithmus von Blondel 2008
+        # g wird durchgegangen und g[i,s] wird in seinerm community
+        # ersetzt durch g[i-1,s] und g[i+1,s]
+        # wenn sich eine Verbesserung einstellt dann wird die neue
+        # Zuordnung beibehalten
+        g = self.g.copy()
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(f"praeadapt ... unique elements in g: {np.unique(g).shape[0]}")
+        print(f"g.shape = {g.shape}")
+        index = 0
+        for s in range(g.shape[1]):
+            for i in range(g.shape[0]):
+                index+=1
+                print(f"{i} ... unique elements in g: {np.unique(g).shape[0]}")
+                print(f"{g[:,0]}")
+                print(f"g[i,s]= {g[i,s]}")
+                original_entry = g[i,s]
+                dq1 = -1
+                dq2 = -1
+                g_tmp= g.copy()
+                
+                if i>0:
+                    if not g[i,s]==g[i-1,s]:
+                        g_tmp[i,s] = g[i-1,s]
+                        dq1 = self.get_Qms(g_tmp,i,s)
 #                        dq1 = self.get_delta_q(g,i,s)
-#                if i<10:
-#                    if not g[i,s]==g[i+1,s]:
-#                        g[i,s] = g[i+1,s]
+                if i<9:
+                    if not g[i,s]==g[i+1,s]:
+                        g_tmp[i,s] = g[i+1,s]
 #                        dq2 = self.get_delta_q(g,i,s)
-#                # setze nun g[i,s] auf den neuen Wert
-#                if dq1>=dq2 and abs(dq1)>0:
-#                    g[i,s]=g[i-1,s]
-#                elif dq1<dq2 and abs(dq2)>0:
-#                    g[i,s]=g[i+1,s]
-#                else:
-#                    g[i,s]=origninal_entry
-#                    
-#                
-#    def get_delta_q(self,g, i, s):
-#        A = self.A
-#        C = self.C
-#        community = g[i,s]
-#        # Sin  ...sum of the weights of the links inside the community
-#        # Stot ...sum of the weights of the links incident to nodes in C
-#        Sin, Stot = self.get_sum_of_weights_within_a_community(A,C,g,community)
-#        # k_i_in ... sum of the weights of the links from i to nodes in the community
-#        # k_i    ... sum of the weights of the links incident to node i
-#        (k_i_in, k_i) = self.get_sum_of_weights_of_links_from_i_to_nodes_in_community(A,C,g,community, i)
-#        #sum of the weights of all the links in the network
-#        m = sum(sum(sum(A)))+sum(sum(sum(C)))
-#        
-#        dq = 
-#        # gebe deltaQ zurueck
-#        return dq
-#    
-    
-#    def get_sum_of_weights_of_links_incident_to_node_i(A,C,g, community):
-#        Ais = np.sum(A,axis=1) # i x s ... eliminating j ... entsprechend der symmetrischen Natur von A gibt es 2 links fuer jeden Node
-#        Cis = np.sum(C,axis=2) # i x s ... eleminating r
-#        Sin = Ais[g==community] + Cis[g==community]
-#        return Sin   
-    
-    
-    def get_sum_of_weights_of_links_from_i_to_nodes_in_community(self, A, C, g, community, fokus_node_i, fokus_node_s):
-        # sum of the weights of the links from i to nodes in the community
-        # es ist so implementiert, dass es auch berechnet wird wenn fokus_node gar nicht in der community liegt
-        # in der aktuellen Anwendung sollte das aber der fall sein durch das setzen von community
-        g_bool = g==community
-        k_i_in = 0 # sum of the weights of the links from i to nodes in the community
-        k_i = 0
-        start_i = (0 if fokus_node_i==0 else fokus_node_i-1)
-        end_i = (g.shape[0] if fokus_node_i==g.shape[0] else fokus_node_i+1)
-        start_s = (0 if fokus_node_s==0 else fokus_node_s-1)
-        end_s = (g.shape[1] if fokus_node_s==g.shape[1] else fokus_node_s+1)
-        
-        # in Schicht s nur nach vorn und hinten ... wenn start_i == fokus_node_i ist das egal da dann A = 0
-        k_i_in = k_i_in + (A[start_i,fokus_node_s,fokus_node_s] if g_bool[start_i,fokus_node_s] else 0)
-        k_i_in = k_i_in + (A[end_i,fokus_node_s,fokus_node_s] if g_bool[start_i,fokus_node_s] else 0)
-        # in i nur nach vorn und hinten ... wenn start_s == fokus_node_s ist das egal da dann C = 0
-        k_i_in = k_i_in + (C[fokus_node_i,start_s,fokus_node_s] if g_bool[fokus_node_i,start_s] else 0)
-        k_i_in = k_i_in + (C[fokus_node_i,end_s,fokus_node_s] if g_bool[fokus_node_i,end_s] else 0)
-       
-        # in Schicht s nur nach vorn und hinten ... wenn start_i == fokus_node_i ist das egal da dann A = 0
-        k_i = k_i + A[start_i,fokus_node_s,fokus_node_s] 
-        k_i = k_i + A[end_i,fokus_node_s,fokus_node_s]
-        # in i nur nach vorn und hinten ... wenn start_s == fokus_node_s ist das egal da dann C = 0
-        k_i = k_i + C[fokus_node_i,start_s,fokus_node_s] 
-        k_i = k_i + C[fokus_node_i,end_s,fokus_node_s]
-       
-        return (k_i_in, k_i)
+                        dq2 = self.get_Qms(g_tmp,i,s)
+                # setze nun g[i,s] auf den neuen Wert
+                if dq1>=dq2 and abs(dq1)>=0:
+                    g[i,s]=g[i-1,s]
+                elif dq1<dq2 and abs(dq2)>=0:
+                    g[i,s]=g[i+1,s]
+                else:
+                    g[i,s]=original_entry
+                if index>5:
+                    break
+            break
+        print(f"postadapt ... unique elements in g: {np.unique(g).shape[0]}")
+                
+                
 
-    def get_sum_of_weights_within_a_community(self, A, C, g, community):
-        g_bool = g==community
-        Sin = 0 #sum of the weights of the links inside the community
-        Stot = 0 #
-        for s in range(g.shape[1]-1): # i
-            for i in range(g.shape[0]-1):
-                if g_bool[i,s]:
-                    Stot = Stot + A[i,i+1,s]
-                    if g_bool[i+1,s]:
-                        # dann gehoeren zwei nebeneinander stehende nodes in eine community
-                        Sin = Sin + A[i,i+1,s]
-                    Stot = Stot + C[i,s,s+1]
-                    if g_bool[i,s+1]:
-                        # dann gehoeren zwei untereinander stehende nodes in eine community
-                        Sin = Sin + C[i,s,s+1]
-        return (Sin, Stot)
-        
     def initialize_g(self):
         # initialization with every node is a community
+        print(self.A.shape)
         g = np.arange(self.A.shape[0]*self.A.shape[2]).reshape(self.A.shape[0],self.A.shape[2])
+        print(g)
+        print(g.shape)
         return g
     
-    def get_Qms(self, g):
+    def get_Qms(self, g, i, s):
         A = self.A
         C = self.C
         print(f"A.shape = {A.shape}")
         print(f"C.shape = {C.shape}")
+        print("C")
+        print(C)
         c = np.sum(C,axis=2)
+        print("c")
+        print(c)
         k = np.sum(A,axis=0)
+        print("k")
+        print(k)
         kappa = k + c
+        print("kappa")
+        print(kappa)
         my2 = sum(sum(kappa))
+        print("my2")
+        print(my2)
         m = np.sum(k, axis=0)
+        print("m")
+        print(m)
         gamma = np.zeros((A.shape[2]))+self.resolution_parameter
+        print("gamma")
+        print(gamma)
         delta_intra_slice = self.get_delta_intra_slice(A)
         delta_inter_slice = self.get_delta_inter_slice(C)
         
@@ -181,6 +138,9 @@ class MST():
                         x = x + delta_intra_slice[i,j] * C[j,s,r]
                         x = x * self.get_delta_community(g[i,s],g[j,r])
                         summe = summe + x 
+
+        print("summe")
+        print(summe)
 
         Qms = 1/my2 * summe
         print(f"Qms = {Qms}")
@@ -411,16 +371,92 @@ class MST():
             self.estimate_correct_seqences()
         improvement,b = np.polyfit(X, self.corrsq, 1)
         return improvement
+
+
+                
+#                
+#    def get_delta_q(self,g, i, s):
+#        A = self.A
+#        C = self.C
+#        community = g[i,s]
+#        # Sin  ...sum of the weights of the links inside the community
+#        # Stot ...sum of the weights of the links incident to nodes in C
+#        Sin, Stot = self.get_sum_of_weights_within_a_community(A,C,g,community)
+#        # k_i_in ... sum of the weights of the links from i to nodes in the community
+#        # k_i    ... sum of the weights of the links incident to node i
+#        (k_i_in, k_i) = self.get_sum_of_weights_of_links_from_i_to_nodes_in_community(A,C,g,community, i)
+#        #sum of the weights of all the links in the network
+#        m = sum(sum(sum(A)))+sum(sum(sum(C)))
+#        
+#        dq = 
+#        # gebe deltaQ zurueck
+#        return dq
+#    
+#    
+##    def get_sum_of_weights_of_links_incident_to_node_i(A,C,g, community):
+##        Ais = np.sum(A,axis=1) # i x s ... eliminating j ... entsprechend der symmetrischen Natur von A gibt es 2 links fuer jeden Node
+##        Cis = np.sum(C,axis=2) # i x s ... eleminating r
+##        Sin = Ais[g==community] + Cis[g==community]
+##        return Sin   
+#    
+#    
+#    def get_sum_of_weights_of_links_from_i_to_nodes_in_community(self, A, C, g, community, fokus_node_i, fokus_node_s):
+#        # sum of the weights of the links from i to nodes in the community
+#        # es ist so implementiert, dass es auch berechnet wird wenn fokus_node gar nicht in der community liegt
+#        # in der aktuellen Anwendung sollte das aber der fall sein durch das setzen von community
+#        g_bool = g==community
+#        k_i_in = 0 # sum of the weights of the links from i to nodes in the community
+#        k_i = 0
+#        start_i = (0 if fokus_node_i==0 else fokus_node_i-1)
+#        end_i = (g.shape[0] if fokus_node_i==g.shape[0] else fokus_node_i+1)
+#        start_s = (0 if fokus_node_s==0 else fokus_node_s-1)
+#        end_s = (g.shape[1] if fokus_node_s==g.shape[1] else fokus_node_s+1)
+#        
+#        # in Schicht s nur nach vorn und hinten ... wenn start_i == fokus_node_i ist das egal da dann A = 0
+#        k_i_in = k_i_in + (A[start_i,fokus_node_s,fokus_node_s] if g_bool[start_i,fokus_node_s] else 0)
+#        k_i_in = k_i_in + (A[end_i,fokus_node_s,fokus_node_s] if g_bool[start_i,fokus_node_s] else 0)
+#        # in i nur nach vorn und hinten ... wenn start_s == fokus_node_s ist das egal da dann C = 0
+#        k_i_in = k_i_in + (C[fokus_node_i,start_s,fokus_node_s] if g_bool[fokus_node_i,start_s] else 0)
+#        k_i_in = k_i_in + (C[fokus_node_i,end_s,fokus_node_s] if g_bool[fokus_node_i,end_s] else 0)
+#       
+#        # in Schicht s nur nach vorn und hinten ... wenn start_i == fokus_node_i ist das egal da dann A = 0
+#        k_i = k_i + A[start_i,fokus_node_s,fokus_node_s] 
+#        k_i = k_i + A[end_i,fokus_node_s,fokus_node_s]
+#        # in i nur nach vorn und hinten ... wenn start_s == fokus_node_s ist das egal da dann C = 0
+#        k_i = k_i + C[fokus_node_i,start_s,fokus_node_s] 
+#        k_i = k_i + C[fokus_node_i,end_s,fokus_node_s]
+#       
+#        return (k_i_in, k_i)
+#
+#    def get_sum_of_weights_within_a_community(self, A, C, g, community):
+#        g_bool = g==community
+#        Sin = 0 #sum of the weights of the links inside the community
+#        Stot = 0 #
+#        for s in range(g.shape[1]-1): # i
+#            for i in range(g.shape[0]-1):
+#                if g_bool[i,s]:
+#                    Stot = Stot + A[i,i+1,s]
+#                    if g_bool[i+1,s]:
+#                        # dann gehoeren zwei nebeneinander stehende nodes in eine community
+#                        Sin = Sin + A[i,i+1,s]
+#                    Stot = Stot + C[i,s,s+1]
+#                    if g_bool[i,s+1]:
+#                        # dann gehoeren zwei untereinander stehende nodes in eine community
+#                        Sin = Sin + C[i,s,s+1]
+#        return (Sin, Stot)
+#        
+
         
 
 if __name__ == '__main__':
     filename = ".\\Data MST\\3Tag1_.csv"
     mst = MST(filename)
-    ipi_cor = mst.ipi_cor
-    ipi_norm = mst.ipi_norm
-    ipi_norm_arr = mst.ipi_norm_arr
+
+    net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
     
     #w_norm = mst.w_norm
     #print(type(mst.ipi_cor))
     #print(len(mst.ipi_cor))
+
+
 
