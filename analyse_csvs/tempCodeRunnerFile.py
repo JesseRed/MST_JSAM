@@ -1,8 +1,13 @@
-    seed(1)
-    # prepare data
-    data1 = 10 * randn(10000) + 60
-    data2 = 10 * randn(10000) + 55
-    # calculate cohen's d
-    print(type(data1))
-    d = cohend(data1, data2)
-    print('Cohens d: %.3f' % d)
+    # net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
+    # g_real,q_real = net.estimate_chunks(is_random = False)
+    # phi_real = net.estimate_chunk_magnitudes(g_real)
+    # g_fake_list = []
+    # q_fake_list = []
+    # phi_fake_list = []
+    # for i in range(10):
+    #     g, q = net.estimate_chunks(is_random = True)
+    #     phi = net.estimate_chunk_magnitudes(g)
+    #     g_fake_list.append(g)
+    #     q_fake_list.append(q)
+    #     phi_fake_list.append(phi)
+    # ipi = net.ipi_norm_arr

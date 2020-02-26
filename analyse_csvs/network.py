@@ -8,6 +8,7 @@ import statistics
 import networkx
 import time
 from mst import MST
+from srtt import SRTT
 import random
 
 class Network():
@@ -605,25 +606,52 @@ class Network():
 
 if __name__ == '__main__':
     filename = ".\\Data MST\\3Tag1_.csv"
-    mst = MST(filename)
+    filename = ".\\Data_SRTT\\03_3_SRTT_2020-02-05_09-06-38.txt"
+    srtt = SRTT(filename)
+    print(srtt.df.head())
+    # net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
+    # g_real,q_real = net.estimate_chunks(is_random = False)
+    # phi_real = net.estimate_chunk_magnitudes(g_real)
+    # g_fake_list = []
+    # q_fake_list = []
+    # phi_fake_list = []
+    # for i in range(10):
+    #     g, q = net.estimate_chunks(is_random = True)
+    #     phi = net.estimate_chunk_magnitudes(g)
+    #     g_fake_list.append(g)
+    #     q_fake_list.append(q)
+    #     phi_fake_list.append(phi)
+    # ipi = net.ipi_norm_arr
 
-    net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
-    #g = net.g
-    g_real,q_real = net.estimate_chunks(is_random = False)
-    phi_real = net.estimate_chunk_magnitudes(g_real)
-    g_fake_list = []
-    q_fake_list = []
-    phi_fake_list = []
-    for i in range(10):
-        g, q = net.estimate_chunks(is_random = True)
-        phi = net.estimate_chunk_magnitudes(g)
-        g_fake_list.append(g)
-        q_fake_list.append(q)
-        phi_fake_list.append(phi)
-#    g = np.load("g_arr.npy")
+
+
+
+
+
+#    filename = ".\\Data MST\\3Tag1_.csv"
+#     mst = MST(filename)
+
+#     net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
+#     #g = net.g
+#     g_real,q_real = net.estimate_chunks(is_random = False)
+#     phi_real = net.estimate_chunk_magnitudes(g_real)
+#     g_fake_list = []
+#     q_fake_list = []
+#     phi_fake_list = []
+#     for i in range(10):
+#         g, q = net.estimate_chunks(is_random = True)
+#         phi = net.estimate_chunk_magnitudes(g)
+#         g_fake_list.append(g)
+#         q_fake_list.append(q)
+#         phi_fake_list.append(phi)
+# #    g = np.load("g_arr.npy")
     
-    #Qms_list = net.Qms_list
-    ipi = net.ipi_norm_arr
+#     #Qms_list = net.Qms_list
+#     ipi = net.ipi_norm_arr
+
+
+
+
     #the partition optimized by Qmulti_trial
     #g = self.estimate_chunks()
         

@@ -8,20 +8,47 @@ import statistics
 import networkx
 import time
 
-class MST():
+class SRTT():
     def __init__(self, filename):
-        self.df = pd.read_csv(filename, sep = ';' )
-        self.ipi, self.hits = self.get_inter_key_intervals()
+        self.df = pd.read_csv(filename, sep = '\t' )
+        self.ipi_cor = self.get_ipi_from_correct_non_random_sequences()
+
+        #self.ipi, self.hits = self.get_inter_key_intervals()
         #print(f"size = {len(self.ipi)}")
-        self.ipi_cor = self.get_inter_key_intervals_only_cor(10) # nur Korrekte Sequencen
+        #elf.ipi_cor = self.get_inter_key_intervals_only_cor(10) # nur Korrekte Sequencen
 
         #self.printlist3(self.ipi_cor)
         #print(self.ipi_cor)
         
         
-        self.corrsq = self.estimate_correct_seqences()
-        self.improvement = self.estimate_improvement()
+        #self.corrsq = self.estimate_correct_seqences()
+        #self.improvement = self.estimate_improvement()
         #self.estimate_chunks() 
+    def get_ipi_from_correct_non_random_sequences(self):
+       # loesche die random
+        df = dfx.copy()
+        df =df[df['type']=='fixed']
+        cur_seq = 0
+        ipi_cor = []
+        rts_cor = []
+        num_miss =1
+        rts = []
+        ipi = [] # temporaeres speichern einer Sequenz 
+        print(df.columns)
+        for idx,row in df.iterrows():
+            rts.append(row['RT_1'])
+            if row['sequ.']>1:
+                ipi.append(row['time']-old_time)
+            old_time = row['time']
+            if row['trial']==12: # sequenz fertig
+                if num_miss ==0: # wir speichern nur correcte Sequenzen
+                    ipi_cor.append(ipi)
+                    rts_cor.append(rts)
+                rts = []
+                ipi = []
+                num_miss = 0
+        return (rts_cor, ipi_cor)
+        
 
     def estimate_correct_seqences(self):
         corrsq=[]
