@@ -13,6 +13,7 @@ class MST_Group():
         self.filepattern = filepattern
         self.files = self.get_group_files()
         self.mst = []
+        self.srtts = []
         self.get_data()
         
     def get_group_files(self):

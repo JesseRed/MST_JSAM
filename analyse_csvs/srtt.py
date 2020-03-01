@@ -13,11 +13,13 @@ import scipy.cluster.hierarchy as sch
 
 class SRTT():
     def __init__(self, filename):
+        self.filename = filename
         self.df = pd.read_csv(filename, sep = '\t' )
-        self.rts_nr, self.rts_nr = self.get_data_from_sequences(self.df,is_random=False)
-        self.ipi_ra, self.rts_ra = self.get_data_from_sequences(self.df, is_random=True)
-        self.rts_cv = self.get_rt_change_variable_sequence(self.rts_nr,self.rts_ra)# response time change variable
-        self.clustering(self.rts_cv)
+        self.rts_nr, self.ipi_nr, self.but_nr = self.get_data_from_sequences(self.df,is_random=False)
+        self.rts_ra, self.ipi_ra, self.but_ra = self.get_data_from_sequences(self.df, is_random=True)
+        self.rts_cv_seq = self.get_rt_change_variable_sequence(self.rts_nr,self.rts_ra)# response time change variable
+        self.rts_cv_but = self.get_rt_change_variable_button(self.rts_nr,self.rts_ra, self.but_nr, self.but_ra)# response time change variable
+
 
     def clustering(self,rts_cv):
         c = abs(np.corrcoef(rts_cv.T))
@@ -27,10 +29,6 @@ class SRTT():
         dendrogram = sch.dendrogram(sch.linkage(c, method='ward'))
         plt.axhline(y=6, color='r', linestyle='--')
         plt.show()
-
-        model = AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
-        model.fit(c)
-        labels = model.labels_
 
         model = AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
         model.fit(c)
@@ -59,9 +57,11 @@ class SRTT():
         '''
         mean_ra = np.rint(np.mean(rts_ra, axis = 0)).astype(int)
         rts_cv = rts_nr-mean_ra
+        # ich moechte nur positive WErte
+        rts_cv = rts_cv + rts_cv.min()
         return rts_cv
 
-    def get_rt_change_variable_button(self,rts_nr, rts_ra):
+    def get_rt_change_variable_button(self,rts_nr, rts_ra, but_nr, but_ra):
         ''' getting the response times (rts) and inter_key intervals (ipis)
         Boyed 2009 
             First, subtracting RTs of individual elements in random sequences from the elements
@@ -71,8 +71,17 @@ class SRTT():
                 oder die gleiche Position in der Sequenz
                 ->ich mache erstmal die sequenzposition
         '''
-        mean_ra = np.rint(np.mean(rts_ra, axis = 0)).astype(int)
-        rts_cv = rts_nr-mean_ra
+        mean_ra_but_1 =  np.rint(np.mean(rts_ra[but_ra==1],axis=0)).astype(int)
+        mean_ra_but_2 =  np.rint(np.mean(rts_ra[but_ra==2],axis=0)).astype(int)
+        mean_ra_but_3 =  np.rint(np.mean(rts_ra[but_ra==3],axis=0)).astype(int)
+        mean_ra_but_4 =  np.rint(np.mean(rts_ra[but_ra==4],axis=0)).astype(int)
+        rts_cv = rts_nr
+        rts_cv[but_nr==1]=rts_nr[but_nr==1]-mean_ra_but_1
+        rts_cv[but_nr==2]=rts_nr[but_nr==2]-mean_ra_but_2
+        rts_cv[but_nr==3]=rts_nr[but_nr==3]-mean_ra_but_3
+        rts_cv[but_nr==4]=rts_nr[but_nr==4]-mean_ra_but_4
+        # ich moechte nur positive Werte
+        rts_cv = rts_cv + rts_cv.min()
         return rts_cv
 
     def get_data_from_sequences(self,df,is_random=False):
@@ -87,13 +96,17 @@ class SRTT():
         df =df[df['type']==selector]
         ipi_cor = [] # correct sequences 
         rts_cor = []
+        but_cor = []
         num_miss =1
         rts = []
+        but = []
+        buttons = []
         old_time = -1
         ipi = [] # temporaeres speichern einer Sequenz 
         for idx,row in df.iterrows():
             #print(f"idx= {idx}")
             rts.append(row['RT_1'])
+            but.append(row['Button'])
             if old_time>0:
                 #print(f"append with idx = {idx} and old_time= {old_time}")
                 ipi.append(row['time']-old_time)
@@ -104,12 +117,14 @@ class SRTT():
                 if num_miss ==0: # wir speichern nur correcte Sequenzen
                     ipi_cor.append(ipi)
                     rts_cor.append(rts)
+                    but_cor.append(but)
                 old_time = -1
                 rts = []
                 ipi = []
+                but = []
                 num_miss = 0
         
-        return (np.asarray(rts_cor), np.asarray(ipi_cor))
+        return (np.asarray(rts_cor), np.asarray(ipi_cor), np.asarray(but_cor))
         
     def estimate_improvement(self):
         X = [1,2,3,4,5,6,7,8,9,10,11,12]
@@ -123,14 +138,13 @@ if __name__ == '__main__':
     filename = ".\\Data MST\\3Tag1_.csv"
     filename = "H:\\Unity\MST_JSAM\\analyse_csvs\\Data_SRTT\\03_3_SRTT_2020-02-05_09-06-38.txt"
     filename = ".\\Data_SRTT\\03_3_SRTT_2020-02-05_09-06-38.txt"
+    filename = ".\\Data_SRTT\\04_2_SRTT_2020-02-06_12-17-15.txt"
     df = pd.read_csv(filename, sep = '\t' )
     srtt = SRTT(filename)
+    srtt.clustering(srtt.rts_cv_seq)
+    srtt.clustering(srtt.rts_cv_but)
+        
     
-    
-    #w_norm = mst.w_norm
-    #print(type(mst.ipi_cor))
-    #print(len(mst.ipi_cor))
-
     '''
     To assess the chunking of elements, we first conducted an
     exploratory cluster analysis (Everitt, 1993), to identify groups of

@@ -10,6 +10,7 @@ import time
 
 class MST():
     def __init__(self, filename):
+        self.filename = filename
         self.df = pd.read_csv(filename, sep = ';' )
         self.ipi, self.hits = self.get_inter_key_intervals()
         #print(f"size = {len(self.ipi)}")
@@ -23,6 +24,90 @@ class MST():
         self.improvement = self.estimate_improvement()
         #self.estimate_chunks() 
 
+    def get_inter_key_intervals_only_cor(self, num_cor_press):
+        """reduziert die ipi (inter Press Intervals) auf nur die korrekten Druecker
+            dazu werden ausschliesslich korrekte Sequenzen herangezogen
+            Wir behaupten, dass man nicht mehr als 10 druecker chunkt
+            Daher ketten wir maximal 2 aneinander
+            Nachher die anhehaengte wird gedoppelt
+            hier muessen wir nacher darauf achten, dass wir keine Sequenzen nehmen die nur in der 2. 
+            Sequenz stattfinden da sie dann doppelte gezaehlt waeren
+            num_cor_press definiert wie viele korrekte vorhanden sein muessen um eine komplette "Sequenz" zu definieren
+        """        
+        ipi_cor = []
+
+        
+        for idx, i in enumerate(self.ipi):
+            # print(f'block number: {idx} mit blocklaenge von: {i.shape}')
+            # am Anfang des blockes gibt es kein ipi fuer den ersten Tastendruck
+            # hier fuege ich einen dummy des durchschnitts der Tastendruecke ein           
+            ipi = np.array(np.mean(i))
+            ipi = np.append(ipi, i)
+
+            h = self.hits[idx]
+            ipi_corr_block = []
+            ipi_corr_seq = []
+            # Schleife ueber das Array eines Blocks
+            seq_idx = 0
+            arr_idx = 0
+            while arr_idx <ipi.shape[0]:
+                #print(f"arr_idx = {arr_idx}")
+                if h[arr_idx]==0:
+                    # abbruch der Sequenz bei einem Fehler nun neubegin
+                    # setze arr_idx auf den begin der naechsten Sequenz 
+                    # ggf. vor oder zurueck
+                    if seq_idx < 5:
+                        arr_idx = arr_idx + 5 -seq_idx
+                    if seq_idx > 5:
+                        arr_idx = arr_idx - (seq_idx-5)
+                    # loesche den aktuellen Sequenzblock
+                    ipi_corr_seq = []
+                    # setze den aktuellen Sequenzmarker zureck
+                    seq_idx = 0
+                else:
+                    # es wurde korrekt gedrueckt
+                    ipi_corr_seq.append(ipi[arr_idx])
+                    seq_idx+= 1
+                    arr_idx+= 1
+
+                if seq_idx==num_cor_press:
+                    # wenn diese Stelle erreicht wird dann war die Sequenz bis hierher erfolgreich
+                    # und wir speichern die Sequenz ab
+                    ipi_corr_block.append(ipi_corr_seq)
+                    ipi_corr_seq = []
+                    seq_idx = 0
+            ipi_cor.append(ipi_corr_block) # liste einer liste einer Liste
+        return ipi_cor
+
+    def get_inter_key_intervals(self):
+        """ in einem numpy Array werden die inter Key intervalls gespeichert
+            die Zeit zum ersten key press entfaellt 
+            Liste von Arrays
+        """ 
+        blcktmp = 0
+        ipi = []
+        hits = []
+        key_press_time = 0
+        for index, row in self.df.iterrows():
+            if row["BlockNumber"]!=blcktmp:
+                if blcktmp > 0:
+                    ipi.append(np.asarray(ipi_block_list_tmp, dtype = np.float32))
+                    hits.append(np.asarray(block_hits, dtype = np.int8))
+                # ein neuer Block
+                blcktmp +=1
+                ipi_block_list_tmp = []
+                key_press_time = float(row["Time Since Block start"].replace(',','.')) # dummy 
+                block_hits = []
+                block_hits.append(row['isHit'])
+                continue # der erste in jedem Block wird nicht gespeichert
+                
+            ipi_block_list_tmp.append(float(row["Time Since Block start"].replace(',','.'))-key_press_time)
+            key_press_time = float(row["Time Since Block start"].replace(',','.'))
+            block_hits.append(row['isHit'])
+        ipi.append(np.asarray(ipi_block_list_tmp, dtype = np.float32))
+        hits.append(np.asarray(block_hits, dtype = np.int8))
+        return (ipi, hits)
+            
     def estimate_correct_seqences(self):
         corrsq=[]
         tmpcount=0

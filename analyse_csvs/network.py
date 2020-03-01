@@ -5,11 +5,15 @@ from os import listdir, rename
 from os.path import isfile, join
 from statistics import mean, stdev
 import statistics
+import scipy
 import networkx
 import time
 from mst import MST
 from srtt import SRTT
 import random
+import pickle
+import json
+from datetime import datetime
 
 class Network():
     def __init__(self, ipi, coupling_parameter = 0.03,  resolution_parameter = 0.9):
@@ -17,18 +21,15 @@ class Network():
         # node in the next trial to the same node of the previous
         self.is_adapt_communities_across_trials = False 
         
-        self.ipi = ipi
         self.coupling_parameter = coupling_parameter
         self.resolution_parameter = resolution_parameter    
-        ipi = self.ipi
-        self.ipi_arr = self.convert_to_array2D(self.ipi)
-        #print(self.ipi_arr.shape)
-        m, std = self.get_ipi_mean_arr(self.ipi_arr)
-
-        self.ipi_norm = self.get_normalized_ipi(ipi, m, std)
-        self.ipi_norm_arr = self.convert_to_array2D(self.ipi_norm)
-        self.A = self.get_adjacency_matrix(self.ipi_norm_arr) 
-        self.C = self.get_inter_slice_coupling(self.ipi_norm_arr, self.coupling_parameter)
+        self.ipi = self.get_normalized_2D_array(ipi)
+        # self.ipi now 2D np.array trials x sequence_elements (key presses per trial)
+        
+        
+#        self.ipi = self.convert_to_array2D(self.ipi_norm)
+        self.A = self.get_adjacency_matrix(self.ipi) 
+        self.C = self.get_inter_slice_coupling(self.ipi, self.coupling_parameter)
         self.delta_intra_slice = self.get_delta_intra_slice(self.A)
         self.delta_inter_slice = self.get_delta_inter_slice(self.C)
 
@@ -39,22 +40,22 @@ class Network():
         self.m = np.sum(self.k, axis=0)
         self.gamma = np.zeros((self.A.shape[2]))+self.resolution_parameter
 
+        
+    def get_normalized_2D_array(self, ipi):
+        ''' checking and preparing of input data
+                check whether ipi is a 3D list (mst) or a 2D array (SRTT)
+            if list than changing into 2D array
+            then normalizing as suggested by Wymbs 2013 (deleting trails with std>3)
+        '''
+        # umwandlung in np.ndarray fals als liste uebergeben
+        ipi_arr = (ipi if isinstance(ipi,np.ndarray) else self.convert_to_array2D(ipi))
+        # print(self.ipi_arr.shape)
+        m, std = self.get_ipi_mean_arr(ipi_arr)
 
-        #Randomize
-        self.ipi_norm_arr_shuffled = self.shuffle(self.ipi_norm_arr)
-        self.P_list = []
-        for i in range(100):
-            self.ipi_norm_arr_shuffled = self.shuffle(self.ipi_norm_arr)
-            self.P_list.append(self.get_adjacency_matrix(self.ipi_norm_arr_shuffled))
-            
-        self.P = self.P_list[0]
+        # self.ipi_norm = self.get_normalized_ipi(ipi, m, std)
+        ipi_norm_arr = self.get_normalized_ipi_arr(ipi_arr, m, std)
+        return ipi_norm_arr
 
-        
-        # the partition optimized by Qmulti_trial
-        #self.g = self.estimate_chunks()
-        
-        #self.phi = self.estimate_chunk_magnitudes(self.g)
-        
     def shuffle(self, ipi):
         for i in range(ipi.shape[0]):
             random.shuffle(ipi[i,:])
@@ -62,6 +63,9 @@ class Network():
         
     def estimate_chunk_magnitudes(self, g):
         '''
+        To determine the modularity of each trial separately (Qsingle–trial) we computed the modularity
+        function Q given in Equation (1) using the partition assigned to that trial by Qmulti–trial.
+        
         Chunk magnitude (ϕ) is defined as 1/Qsingle–trial. Low values of ϕ correspond to trials with
         greater segmentation, which are computationally easier to split into chunks and high values
         of ϕ correspond to trials with greater chunk concatenation, which contain chunks that are
@@ -71,18 +75,28 @@ class Network():
         '''
         print("estimating chunk magnitudes")
         #print(g.T)
-        P = self.P
+        # erzeuge Zufallskonfiguration fuer P ... Null model
+        ipi_shuffled = self.shuffle(self.ipi)
+        P = self.get_adjacency_matrix(ipi_shuffled)
         phi = []
         for slice in range(g.shape[1]):
             Q_st = self.estimate_Q_st(g[:,slice],self.A[:,:,slice], P[:,:,slice])
-            
+            # wenn es keine Chunks in einem Layer gibt kann Q_st auch null sein
             phi.append(1/Q_st)
         #normalization
-        m = sum(phi)/len(phi)
-        for i in phi:
-            i = (i-m)/m
-        self.phi = phi
-        return phi
+        phi_arr = np.asarray(phi)
+        phi_arr[np.isinf(phi_arr)]=np.NaN
+        m = np.nanmean(phi_arr)
+        for i in range(phi_arr.shape[0]):
+            phi_arr[i]=(phi_arr[i]-m)/m
+
+        # m = sum(phi)/len(phi)
+        # for i in phi:
+        #     i = (i-m)/m
+        # back to list for saving as list
+
+        self.phi = phi_arr.tolist()
+        return self.phi
 
 
     def estimate_Q_st(self, trial, W, P):
@@ -92,8 +106,8 @@ class Network():
                 summe = summe +(W[i,j]-P[i,j])*self.get_delta_2d(trial[i],trial[j])
         return summe
     
-    def get_delta_2d(self,i,j):
-        ret = (1 if i==j else 0)
+    def get_delta_2d(self,gi,gj):
+        ret = (1 if gi==gj else 0)
         return ret
     
     def estimate_chunks(self, is_random=False):
@@ -101,12 +115,12 @@ class Network():
             erfolgt. Diese kann dann auch durch die Random Adjacency matrix 
             ersetzt werden.
         '''
-        if not is_random:
-            A = self.A # setzte die normale Adjecency matrix
-        else:
+        if is_random:
             # Shuffle the data
-            ipi_norm_arr_shuffled = self.shuffle(self.ipi_norm_arr)
-            A = self.get_adjacency_matrix(ipi_norm_arr_shuffled)
+            ipi_shuffled = self.shuffle(self.ipi)
+            A = self.get_adjacency_matrix(ipi_shuffled)
+        else:
+            A = self.A # setzte die normale Adjecency matrix
             
         g = self.initialize_g() # jedes node ist seine eigene community
         start = time.time()
@@ -130,9 +144,10 @@ class Network():
             print(f"durchlauf={idx} mit Qms = {Qms}")
         Qms = self.get_Qms_opt(g, A)
         print(f"Final Qms = {Qms}")
+        if not is_random:
+            self.g_real = g
+            self.q_real = Qms
         return (g, Qms)
-        #self.w = self.get_simple_weights(self.ipi_norm_arr)
-        #self.w_norm = self.get_normalized_weigths(self.ipi_norm)
         
     def adapt_communities(self,g, A):
         # Anpassung von g entsprechend dem Algorithmus von Blondel 2008
@@ -355,15 +370,15 @@ class Network():
         y_mat = np.stack(y)
         return y_mat # array der dimension N x M   (N anzahl der korrekten Sequenzen, M Anzahl der Elemente pro sequenz)
         
-    def get_simple_weights(self, ipi_arr):
+    def get_simple_weights(self, ipi):
         # estimates similarities in IKIs 
         w = []
-        for i in range(ipi_arr.shape[0]):
-            d = np.zeros((10,10))
-            m = max(ipi_arr[i,:])
-            for j in range(ipi_arr.shape[1]-1):
+        for i in range(ipi.shape[0]):
+            d = np.zeros((ipi.shape[1],ipi.shape[1]))
+            m = max(ipi[i,:])
+            for j in range(ipi.shape[1]-1):
                 d[j,j]=0.03
-                d[j,j+1]=(m-abs(ipi_arr[i,j]-ipi_arr[i,j+1]))/m
+                d[j,j+1]=(m-abs(ipi[i,j]-ipi[i,j+1]))/m
             w.append(d)
     
 
@@ -397,140 +412,29 @@ class Network():
             ipi_new.append(block_new)
         return ipi_new
 
+    def get_normalized_ipi_arr(self, ipi, m, std):
+
+        ipi_new = np.zeros((ipi.shape[0],ipi.shape[1]))
+        seq_num = 0
+        for row_idx in range(ipi.shape[0]):
+            keep = True
+            for col_idx in range(ipi.shape[1]):
+                if ipi[row_idx,col_idx]>m[col_idx]+std[col_idx]*3 or ipi[row_idx,col_idx]<m[col_idx]-std[col_idx]*3:
+                   # dann uebertrage nicht
+                   keep = False
+            if keep:
+                ipi_new[seq_num,:] = ipi[row_idx,:]
+                seq_num +=1
+        ipi_norm = ipi_new[:seq_num,:]
+        return ipi_norm
+
+
     def printlist3(self, list3):
         for idx, x in enumerate(list3):
             print(f"Block nummer: {idx+1}")
             for y in x:
                 print(y)
- #               print(type(y[0]))
-
-
-    def get_inter_key_intervals_only_cor(self, num_cor_press):
-        """reduziert die ipi (inter Press Intervals) auf nur die korrekten Druecker
-            dazu werden ausschliesslich korrekte Sequenzen herangezogen
-            Wir behaupten, dass man nicht mehr als 10 druecker chunkt
-            Daher ketten wir maximal 2 aneinander
-            Nachher die anhehaengte wird gedoppelt
-            hier muessen wir nacher darauf achten, dass wir keine Sequenzen nehmen die nur in der 2. 
-            Sequenz stattfinden da sie dann doppelte gezaehlt waeren
-            num_cor_press definiert wie viele korrekte vorhanden sein muessen um eine komplette "Sequenz" zu definieren
-        """        
-        ipi_cor = []
-
-        
-        for idx, i in enumerate(self.ipi):
-            # print(f'block number: {idx} mit blocklaenge von: {i.shape}')
-            # am Anfang des blockes gibt es kein ipi fuer den ersten Tastendruck
-            # hier fuege ich einen dummy des durchschnitts der Tastendruecke ein           
-            ipi = np.array(np.mean(i))
-            ipi = np.append(ipi, i)
-
-            h = self.hits[idx]
-            ipi_corr_block = []
-            ipi_corr_seq = []
-            # Schleife ueber das Array eines Blocks
-            seq_idx = 0
-            arr_idx = 0
-            while arr_idx <ipi.shape[0]:
-                #print(f"arr_idx = {arr_idx}")
-                if h[arr_idx]==0:
-                    # abbruch der Sequenz bei einem Fehler nun neubegin
-                    # setze arr_idx auf den begin der naechsten Sequenz 
-                    # ggf. vor oder zurueck
-                    if seq_idx < 5:
-                        arr_idx = arr_idx + 5 -seq_idx
-                    if seq_idx > 5:
-                        arr_idx = arr_idx - (seq_idx-5)
-                    # loesche den aktuellen Sequenzblock
-                    ipi_corr_seq = []
-                    # setze den aktuellen Sequenzmarker zureck
-                    seq_idx = 0
-                else:
-                    # es wurde korrekt gedrueckt
-                    ipi_corr_seq.append(ipi[arr_idx])
-                    seq_idx+= 1
-                    arr_idx+= 1
-
-                if seq_idx==num_cor_press:
-                    # wenn diese Stelle erreicht wird dann war die Sequenz bis hierher erfolgreich
-                    # und wir speichern die Sequenz ab
-                    ipi_corr_block.append(ipi_corr_seq)
-                    ipi_corr_seq = []
-                    seq_idx = 0
-            ipi_cor.append(ipi_corr_block) # liste einer liste einer Liste
-        return ipi_cor
-
-    def get_inter_key_intervals(self):
-        """ in einem numpy Array werden die inter Key intervalls gespeichert
-            die Zeit zum ersten key press entfaellt 
-            Liste von Arrays
-        """ 
-        blcktmp = 0
-        ipi = []
-        hits = []
-        key_press_time = 0
-        for index, row in self.df.iterrows():
-            if row["BlockNumber"]!=blcktmp:
-                if blcktmp > 0:
-                    ipi.append(np.asarray(ipi_block_list_tmp, dtype = np.float32))
-                    hits.append(np.asarray(block_hits, dtype = np.int8))
-                # ein neuer Block
-                blcktmp +=1
-                ipi_block_list_tmp = []
-                key_press_time = float(row["Time Since Block start"].replace(',','.')) # dummy 
-                block_hits = []
-                block_hits.append(row['isHit'])
-                continue # der erste in jedem Block wird nicht gespeichert
-                
-            ipi_block_list_tmp.append(float(row["Time Since Block start"].replace(',','.'))-key_press_time)
-            key_press_time = float(row["Time Since Block start"].replace(',','.'))
-            block_hits.append(row['isHit'])
-        ipi.append(np.asarray(ipi_block_list_tmp, dtype = np.float32))
-        hits.append(np.asarray(block_hits, dtype = np.int8))
-        return (ipi, hits)
-            
-
-    def estimate_correct_seqences(self):
-        corrsq=[]
-        tmpcount=0
-        num_sq=[]
-        blcktmp=-1
-        num_blck_ev=0
-        num_blck_tmp=0
-        durchschnitt_blck=[]
-        for index, row in self.df.iterrows():
-            if row["BlockNumber"]!=blcktmp:
-                if blcktmp>0:
-                    pass
-                    #print(f"In Block {blcktmp} ist Anzahl korrekter Sequenzen = {corrsq[-1]}/{num_sq[-1]}")
-                corrsq.append(0)
-                num_sq.append(0)
-                blcktmp=row["BlockNumber"]
-                num_blck_ev=row["EventNumber"]-num_blck_tmp
-                num_blck_tmp=row["EventNumber"]
-                durchschnitt_blck.append(num_blck_ev/30)
-            # print(index)
-            # print(row['pressed'], row['target'])
-            if (row['pressed']== row['target']):
-                tmpcount=tmpcount+1
-            if ((index+1)%5)==0: # eine Serie komplett
-                if tmpcount==5:
-                    corrsq[-1]=corrsq[-1]+1
-                tmpcount=0
-                num_sq[-1]=num_sq[-1]+1
-        #print(f"{corrsq}")   
-        return corrsq
-
-    def estimate_improvement(self):
-        X = [1,2,3,4,5,6,7,8,9,10,11,12]
-        if not hasattr(self,'corrsq'):
-            self.estimate_correct_seqences()
-        improvement,b = np.polyfit(X, self.corrsq, 1)
-        return improvement
-
-
-                
-#                
+#               print(type(y[0]))#                
 #    def get_delta_q(self,g, i, s):
 #        A = self.A
 #        C = self.C
@@ -602,13 +506,114 @@ class Network():
 #        return (Sin, Stot)
 #        
 
+    def test_chunking_against_random(self, rand_iterations = 10):
+        # teste ob das Netzwerk g_real mit dem Q sich 
+        # signifikant von geshuffelten kombinationen unterscheidet
+        # rand_num ist die Anzahl der random Konfigurationen
+        #Randomize
         
+        g_fake_list = []
+        q_fake_list = []
+        phi_fake_list = []
+        for i in range(rand_iterations):
+            g, q = self.estimate_chunks(is_random = True)
 
+            phi = self.estimate_chunk_magnitudes(g)
+            g_fake_list.append(g)
+            q_fake_list.append(q)
+            phi_fake_list.append(phi)
+        with open(".\\Data_python\\g_fake_list.txt", "wb") as fp:   #Pickling
+            pickle.dump(g_fake_list, fp)
+        with open(".\\Data_python\\q_fake_list.txt", "wb") as fp:   #Pickling
+            pickle.dump(q_fake_list, fp)
+        with open(".\\Data_python\\phi_fake_list.txt", "wb") as fp:   #Pickling
+            pickle.dump(phi_fake_list, fp)
+        with open(".\\Data_python\\phi_real.txt", "wb") as fp:   #Pickling
+            pickle.dump(self.phi_real, fp)
+        self.q_fake_list = q_fake_list
+        self.g_fake_list = g_fake_list
+        self.phi_fake_list = phi_fake_list
+        t, p = scipy.stats.ttest_1samp(q_fake_list,self.q_real)
+        self.q_real_t = t
+        self.q_real_p = p
+
+
+
+    def get_results_as_json(self):
+        ''' speicherung der relevanten Informationen in einm json file
+        '''
+
+        phi_fake_list_arr = np.asarray(self.phi_fake_list)
+        phi_fake_list_mean = np.nanmean(phi_fake_list_arr,axis=0)
+        phi_fake_list_std = np.nanstd(phi_fake_list_arr,axis=0)
+        
+        filename = 'net_results_x.json'# + self.filename
+        results = {
+            'input_file':           '04_2_SRTT_2020-02-06_12-17-15.txt',
+            'date_of_analysis':     datetime.today().strftime('%Y-%m-%d'),
+            'phi_real':             self.phi_real,
+            'phi_fake_list':        self.phi_fake_list,
+            'phi_fake_list_mean':   phi_fake_list_mean.tolist(),
+            'phi_fake_list_std':    phi_fake_list_std.tolist(),
+            'q_real':               self.q_real,
+            'q_real_t':             self.q_real_t,
+            'q_real_p':             self.q_real_p,
+            'q_fake_list':          self.q_fake_list,
+            'q_fake_list_mean':     len(self.q_fake_list)/sum(self.q_fake_list),
+            'g_real':               self.tolist_ck(self.g_real),
+            'g_fake_list':          self.tolist_ck(self.g_fake_list) # arrays verschachtelt in einer Liste
+        }
+
+        with open(".\\Data_python\\"+filename, "w") as fp:   #Pickling
+                    json.dump(results, fp)
+        return results
+
+    def tolist_ck(self, A):
+        ''' Funktion wandelt in ein json serializeable format um
+            d.h. arrays werden zu listen
+            einfaches np.array kann einfach mit a.tolist() umgewandelt werden
+            bei in listen verschachtelten Arrays funktioniert das nicht
+            dieser Fall wird durch diese Funktio abgedeckt. 
+        '''
+        if isinstance(A, np.ndarray):
+            return A.tolist()        
+        elif isinstance(A,list):
+            B = []
+            for e in A:
+                B.append(self.tolist_ck(e))
+                # if isinstance(e, np.ndarray):
+                #     B.append(e.tolist())
+            return B
+        else:
+            return A
+
+            
 if __name__ == '__main__':
-    filename = ".\\Data MST\\3Tag1_.csv"
-    filename = ".\\Data_SRTT\\03_3_SRTT_2020-02-05_09-06-38.txt"
-    srtt = SRTT(filename)
-    print(srtt.df.head())
+    gofor = 'MST'
+    gofor = 'SRTT'
+    if gofor == 'MST':
+        filename = ".\\Data MST\\3Tag1_.csv"
+        mst = MST(filename)
+        net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
+        net.filename = mst.filename
+    else:
+        filename = ".\\Data_SRTT\\03_3_SRTT_2020-02-05_09-06-38.txt"
+        filename = ".\\Data_SRTT\\04_2_SRTT_2020-02-06_12-17-15.txt"
+        srtt = SRTT(filename)
+        net = Network(srtt.rts_cv_but, coupling_parameter = 0.03,  resolution_parameter = 0.9)
+        net.filename = srtt.filename
+    
+#    print(srtt.df.head())
+ #   net = Network(srtt.rts_cv_but, coupling_parameter = 0.03,  resolution_parameter = 0.9)
+    g_real,q_real = net.estimate_chunks(is_random = False)
+    net.phi_real = net.estimate_chunk_magnitudes(g_real)
+    net.test_chunking_against_random(rand_iterations=2)
+    print(f"q_real = {q_real}")
+    results_json = net.get_results_as_json()
+
+#    srtt.clustering(srtt.rts_cv_seq)
+#    srtt.clustering(srtt.rts_cv_but)
+        
     # net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
     # g_real,q_real = net.estimate_chunks(is_random = False)
     # phi_real = net.estimate_chunk_magnitudes(g_real)
