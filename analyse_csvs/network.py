@@ -607,7 +607,7 @@ if __name__ == '__main__':
  #   net = Network(srtt.rts_cv_but, coupling_parameter = 0.03,  resolution_parameter = 0.9)
     g_real,q_real = net.estimate_chunks(is_random = False)
     net.phi_real = net.estimate_chunk_magnitudes(g_real)
-    net.test_chunking_against_random(rand_iterations=2)
+    net.test_chunking_against_random(rand_iterations=10)
     print(f"q_real = {q_real}")
     results_json = net.get_results_as_json()
 
