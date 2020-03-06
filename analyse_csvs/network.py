@@ -1,7 +1,10 @@
 import pandas as pd
 import numpy as np
+from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
+import seaborn as sns
 from os import listdir, rename
+import os
 from os.path import isfile, join
 from statistics import mean, stdev
 import statistics
@@ -10,10 +13,14 @@ import networkx
 import time
 from mst import MST
 from srtt import SRTT
+from sim import SIM
 import random
 import pickle
 import json
 from datetime import datetime
+from sklearn.cluster import AgglomerativeClustering
+import scipy.cluster.hierarchy as sch
+
 
 class Network():
     def __init__(self, ipi, coupling_parameter = 0.03,  resolution_parameter = 0.9):
@@ -87,6 +94,7 @@ class Network():
         phi_arr = np.asarray(phi)
         phi_arr[np.isinf(phi_arr)]=np.NaN
         m = np.nanmean(phi_arr)
+        print(f"chunk magnitude m = {m}")
         for i in range(phi_arr.shape[0]):
             phi_arr[i]=(phi_arr[i]-m)/m
 
@@ -505,7 +513,46 @@ class Network():
 #                        Sin = Sin + C[i,s,s+1]
 #        return (Sin, Stot)
 #        
+    def clustering(self):
+        ipi = self.ipi
 
+        c = abs(np.corrcoef(ipi.T))
+        c = np.nan_to_num(c)
+        sns.heatmap(c)
+        c2 = np.zeros((ipi.shape[1],ipi.shape[1]))
+        for i in range(ipi.shape[1]):
+            for j in range(ipi.shape[1]):
+                c2[i,j], _ = pearsonr(ipi[:,i],ipi[:,j])
+        sns.heatmap(c2, annot = True)
+
+        print(f"c..... ")
+        print(f"{np.array2string(c, precision=2, separator = ' ')}")
+        print(f"--------------")
+                
+
+
+        plt.figure(figsize=(10, 7))  
+        plt.title("Dendrograms")  
+        #print(c)
+        dendrogram = sch.dendrogram(sch.linkage(c, method='ward'))
+        plt.axhline(y=6, color='r', linestyle='--')
+        plt.show()
+
+        model = AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
+        model.fit(c)
+        labels = model.labels_
+        for i in range(c.shape[0]):
+            c[i,i]=0
+        X=c
+        sns.heatmap(c)
+        plt.scatter(X[labels==0, 0], X[labels==0, 1], s=50, marker='o', color='red')
+        plt.scatter(X[labels==1, 0], X[labels==1, 1], s=50, marker='o', color='blue')
+        plt.scatter(X[labels==2, 0], X[labels==2, 1], s=50, marker='o', color='green')
+        plt.scatter(X[labels==3, 0], X[labels==3, 1], s=50, marker='o', color='purple')
+        plt.scatter(X[labels==4, 0], X[labels==4, 1], s=50, marker='o', color='orange')
+
+        plt.show()
+    
     def test_chunking_against_random(self, rand_iterations = 10):
         # teste ob das Netzwerk g_real mit dem Q sich 
         # signifikant von geshuffelten kombinationen unterscheidet
@@ -537,7 +584,26 @@ class Network():
         self.q_real_t = t
         self.q_real_p = p
 
-
+    def print_results(self, print_shuffled_results = True):
+        ''' printing der relevanten Informationen
+        '''
+        print(".....................")
+        print("---print relevant Information---")
+        print(f"inputfile = ")
+        print(f"Qmulti-trial = {self.q_real} (p = {self.q_real_p}, t = {self.q_real_t})")
+        if print_shuffled_results:
+            q_fake_list_mean = sum(self.q_fake_list)/len(self.q_fake_list)
+            q_fake_list_std = np.std(np.asarray(self.q_fake_list), axis = 0)
+            print(f"Qmulti-trial-shuffled = {q_fake_list_mean} +- {q_fake_list_std:.4}")
+        print(f"phi ....")
+        print(f"phi_real = {self.phi_real}")
+        x = np.arange(len(self.phi_real)-1)
+        y = self.phi_real[1:]
+        slope,b = np.polyfit(x, y, 1)
+        print(f"slope of phi_real = {slope}")
+        plt.plot(x, y, '.')
+        plt.plot(x, b + slope * x, '-')
+        plt.show()
 
     def get_results_as_json(self):
         ''' speicherung der relevanten Informationen in einm json file
@@ -547,7 +613,7 @@ class Network():
         phi_fake_list_mean = np.nanmean(phi_fake_list_arr,axis=0)
         phi_fake_list_std = np.nanstd(phi_fake_list_arr,axis=0)
         
-        filename = 'net_results_x.json'# + self.filename
+        filename = 'net_results_x2.json'# + self.filename
         results = {
             'input_file':           '04_2_SRTT_2020-02-06_12-17-15.txt',
             'date_of_analysis':     datetime.today().strftime('%Y-%m-%d'),
@@ -559,13 +625,15 @@ class Network():
             'q_real_t':             self.q_real_t,
             'q_real_p':             self.q_real_p,
             'q_fake_list':          self.q_fake_list,
-            'q_fake_list_mean':     len(self.q_fake_list)/sum(self.q_fake_list),
+            'q_fake_list_mean':     sum(self.q_fake_list)/len(self.q_fake_list),
             'g_real':               self.tolist_ck(self.g_real),
             'g_fake_list':          self.tolist_ck(self.g_fake_list) # arrays verschachtelt in einer Liste
         }
-
+        
         with open(".\\Data_python\\"+filename, "w") as fp:   #Pickling
                     json.dump(results, fp)
+        print(f"q_real = {self.q_real}")
+        print(f"q_fake_list_mean = {sum(self.q_fake_list)/len(self.q_fake_list)}")
         return results
 
     def tolist_ck(self, A):
@@ -590,28 +658,49 @@ class Network():
             
 if __name__ == '__main__':
     gofor = 'MST'
-    gofor = 'SRTT'
+    #gofor = 'SRTT'
+    is_sim = False
+    is_estimate_Q = True
+    is_test_against_random = True
+
     if gofor == 'MST':
-        filename = ".\\Data MST\\3Tag1_.csv"
+        p = p = ".\\Data MST"
+        if is_sim:
+            sim = SIM('MST','.\\Data MST\\3Tag1_.csv', '.\\Data_MST_Simulation\\3Tag1_.csv')
+            p = ".\\Data_MST_Simulation"
+
+        filename = os.path.join(p,"3Tag1_.csv")
         mst = MST(filename)
         net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
         net.filename = mst.filename
-    else:
+        #net.clustering()
+
+    elif gofor == 'SRTT':
         filename = ".\\Data_SRTT\\03_3_SRTT_2020-02-05_09-06-38.txt"
         filename = ".\\Data_SRTT\\04_2_SRTT_2020-02-06_12-17-15.txt"
         srtt = SRTT(filename)
         net = Network(srtt.rts_cv_but, coupling_parameter = 0.03,  resolution_parameter = 0.9)
         net.filename = srtt.filename
-    
+
+
 #    print(srtt.df.head())
  #   net = Network(srtt.rts_cv_but, coupling_parameter = 0.03,  resolution_parameter = 0.9)
-    g_real,q_real = net.estimate_chunks(is_random = False)
-    net.phi_real = net.estimate_chunk_magnitudes(g_real)
-    net.test_chunking_against_random(rand_iterations=10)
-    print(f"q_real = {q_real}")
-    results_json = net.get_results_as_json()
 
-#    srtt.clustering(srtt.rts_cv_seq)
+    if is_estimate_Q:
+        g_real,q_real = net.estimate_chunks(is_random = False)
+        print(f"q_real = {q_real}")
+        net.phi_real = net.estimate_chunk_magnitudes(g_real)
+        if is_test_against_random:
+            net.test_chunking_against_random(rand_iterations=3)
+            print(f"q_real = {q_real}")
+            results_json = net.get_results_as_json()
+        net.print_results(print_shuffled_results = is_test_against_random)
+
+    if gofor=='SRTT':
+        srtt.clustering(srtt.rts_cv_seq)
+#    srtt.clustering(srtt.rts_cv_but)
+    if gofor=='MST':
+        net.clustering()
 #    srtt.clustering(srtt.rts_cv_but)
         
     # net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)

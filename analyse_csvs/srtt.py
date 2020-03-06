@@ -19,7 +19,7 @@ class SRTT():
         self.rts_ra, self.ipi_ra, self.but_ra = self.get_data_from_sequences(self.df, is_random=True)
         self.rts_cv_seq = self.get_rt_change_variable_sequence(self.rts_nr,self.rts_ra)# response time change variable
         self.rts_cv_but = self.get_rt_change_variable_button(self.rts_nr,self.rts_ra, self.but_nr, self.but_ra)# response time change variable
-
+        
 
     def clustering(self,rts_cv):
         c = abs(np.corrcoef(rts_cv.T))
