@@ -84,10 +84,11 @@ class Network():
         #print(g.T)
         # erzeuge Zufallskonfiguration fuer P ... Null model
         ipi_shuffled = self.shuffle(self.ipi)
-        P = self.get_adjacency_matrix(ipi_shuffled)
+#        P = self.get_adjacency_matrix(ipi_shuffled)
         phi = []
         for slice in range(g.shape[1]):
-            Q_st = self.estimate_Q_st(g[:,slice],self.A[:,:,slice], P[:,:,slice])
+            Q_st = self.estimate_Q_st(g[:,slice],self.A[:,:,slice], self.get_null_model_P(self.A[:,:,slice]))
+            # Berechnung von P entsprechend von paper Newman and Girvan 2004
             # wenn es keine Chunks in einem Layer gibt kann Q_st auch null sein
             phi.append(1/Q_st)
         #normalization
@@ -98,26 +99,36 @@ class Network():
         for i in range(phi_arr.shape[0]):
             phi_arr[i]=(phi_arr[i]-m)/m
 
-        # m = sum(phi)/len(phi)
-        # for i in phi:
-        #     i = (i-m)/m
-        # back to list for saving as list
-
         self.phi = phi_arr.tolist()
         return self.phi
 
 
     def estimate_Q_st(self, trial, W, P):
+        # Berechnung nach Porter 2009 
         summe = 0
         for i in range(W.shape[0]):
             for j in range(W.shape[1]):
                 summe = summe +(W[i,j]-P[i,j])*self.get_delta_2d(trial[i],trial[j])
+
+        summe = summe / sum(sum(W))
         return summe
     
     def get_delta_2d(self,gi,gj):
         ret = (1 if gi==gj else 0)
         return ret
-    
+
+    def get_null_model_P(self,A):
+        ''' Berechnung von P entsprechend von paper Newman and Girvan 2004
+        '''
+        P = np.zeros((A.shape[0],A.shape[1]))
+        w = sum(sum(A))/2
+        for i in range(A.shape[0]):
+            ki = sum(A[i,:])
+            for j in range(A.shape[1]):
+                kj = sum(A[:,j])
+                P[i,j] = (ki * kj) / 2*w
+        return P
+
     def estimate_chunks(self, is_random=False):
         ''' A ist die Adjacency matrix anhand der die Berechnung der chunks
             erfolgt. Diese kann dann auch durch die Random Adjacency matrix 
@@ -442,77 +453,78 @@ class Network():
             print(f"Block nummer: {idx+1}")
             for y in x:
                 print(y)
-#               print(type(y[0]))#                
-#    def get_delta_q(self,g, i, s):
-#        A = self.A
-#        C = self.C
-#        community = g[i,s]
-#        # Sin  ...sum of the weights of the links inside the community
-#        # Stot ...sum of the weights of the links incident to nodes in C
-#        Sin, Stot = self.get_sum_of_weights_within_a_community(A,C,g,community)
-#        # k_i_in ... sum of the weights of the links from i to nodes in the community
-#        # k_i    ... sum of the weights of the links incident to node i
-#        (k_i_in, k_i) = self.get_sum_of_weights_of_links_from_i_to_nodes_in_community(A,C,g,community, i)
-#        #sum of the weights of all the links in the network
-#        m = sum(sum(sum(A)))+sum(sum(sum(C)))
-#        
-#        dq = 
-#        # gebe deltaQ zurueck
-#        return dq
-#    
-#    
-##    def get_sum_of_weights_of_links_incident_to_node_i(A,C,g, community):
-##        Ais = np.sum(A,axis=1) # i x s ... eliminating j ... entsprechend der symmetrischen Natur von A gibt es 2 links fuer jeden Node
-##        Cis = np.sum(C,axis=2) # i x s ... eleminating r
-##        Sin = Ais[g==community] + Cis[g==community]
-##        return Sin   
-#    
-#    
-#    def get_sum_of_weights_of_links_from_i_to_nodes_in_community(self, A, C, g, community, fokus_node_i, fokus_node_s):
-#        # sum of the weights of the links from i to nodes in the community
-#        # es ist so implementiert, dass es auch berechnet wird wenn fokus_node gar nicht in der community liegt
-#        # in der aktuellen Anwendung sollte das aber der fall sein durch das setzen von community
-#        g_bool = g==community
-#        k_i_in = 0 # sum of the weights of the links from i to nodes in the community
-#        k_i = 0
-#        start_i = (0 if fokus_node_i==0 else fokus_node_i-1)
-#        end_i = (g.shape[0] if fokus_node_i==g.shape[0] else fokus_node_i+1)
-#        start_s = (0 if fokus_node_s==0 else fokus_node_s-1)
-#        end_s = (g.shape[1] if fokus_node_s==g.shape[1] else fokus_node_s+1)
-#        
-#        # in Schicht s nur nach vorn und hinten ... wenn start_i == fokus_node_i ist das egal da dann A = 0
-#        k_i_in = k_i_in + (A[start_i,fokus_node_s,fokus_node_s] if g_bool[start_i,fokus_node_s] else 0)
-#        k_i_in = k_i_in + (A[end_i,fokus_node_s,fokus_node_s] if g_bool[start_i,fokus_node_s] else 0)
-#        # in i nur nach vorn und hinten ... wenn start_s == fokus_node_s ist das egal da dann C = 0
-#        k_i_in = k_i_in + (C[fokus_node_i,start_s,fokus_node_s] if g_bool[fokus_node_i,start_s] else 0)
-#        k_i_in = k_i_in + (C[fokus_node_i,end_s,fokus_node_s] if g_bool[fokus_node_i,end_s] else 0)
-#       
-#        # in Schicht s nur nach vorn und hinten ... wenn start_i == fokus_node_i ist das egal da dann A = 0
-#        k_i = k_i + A[start_i,fokus_node_s,fokus_node_s] 
-#        k_i = k_i + A[end_i,fokus_node_s,fokus_node_s]
-#        # in i nur nach vorn und hinten ... wenn start_s == fokus_node_s ist das egal da dann C = 0
-#        k_i = k_i + C[fokus_node_i,start_s,fokus_node_s] 
-#        k_i = k_i + C[fokus_node_i,end_s,fokus_node_s]
-#       
-#        return (k_i_in, k_i)
-#
-#    def get_sum_of_weights_within_a_community(self, A, C, g, community):
-#        g_bool = g==community
-#        Sin = 0 #sum of the weights of the links inside the community
-#        Stot = 0 #
-#        for s in range(g.shape[1]-1): # i
-#            for i in range(g.shape[0]-1):
-#                if g_bool[i,s]:
-#                    Stot = Stot + A[i,i+1,s]
-#                    if g_bool[i+1,s]:
-#                        # dann gehoeren zwei nebeneinander stehende nodes in eine community
-#                        Sin = Sin + A[i,i+1,s]
-#                    Stot = Stot + C[i,s,s+1]
-#                    if g_bool[i,s+1]:
-#                        # dann gehoeren zwei untereinander stehende nodes in eine community
-#                        Sin = Sin + C[i,s,s+1]
-#        return (Sin, Stot)
-#        
+#               print(type(y[0]))#
+#                
+    def get_delta_q(self,g, i, s):
+        A = self.A
+        C = self.C
+        community = g[i,s]
+        # Sin  ...sum of the weights of the links inside the community
+        # Stot ...sum of the weights of the links incident to nodes in C
+        Sin, Stot = self.get_sum_of_weights_within_a_community(A,C,g,community)
+        # k_i_in ... sum of the weights of the links from i to nodes in the community
+        # k_i    ... sum of the weights of the links incident to node i
+        (k_i_in, k_i) = self.get_sum_of_weights_of_links_from_i_to_nodes_in_community(A,C,g,community, i)
+        #sum of the weights of all the links in the network
+        m = sum(sum(sum(A)))+sum(sum(sum(C)))
+        
+        #dq = 
+        # gebe deltaQ zurueck
+        return dq
+    
+   
+#    def get_sum_of_weights_of_links_incident_to_node_i(A,C,g, community):
+#        Ais = np.sum(A,axis=1) # i x s ... eliminating j ... entsprechend der symmetrischen Natur von A gibt es 2 links fuer jeden Node
+#        Cis = np.sum(C,axis=2) # i x s ... eleminating r
+#        Sin = Ais[g==community] + Cis[g==community]
+#        return Sin   
+   
+   
+    def get_sum_of_weights_of_links_from_i_to_nodes_in_community(self, A, C, g, community, fokus_node_i, fokus_node_s):
+        # sum of the weights of the links from i to nodes in the community
+        # es ist so implementiert, dass es auch berechnet wird wenn fokus_node gar nicht in der community liegt
+        # in der aktuellen Anwendung sollte das aber der fall sein durch das setzen von community
+        g_bool = g==community
+        k_i_in = 0 # sum of the weights of the links from i to nodes in the community
+        k_i = 0
+        start_i = (0 if fokus_node_i==0 else fokus_node_i-1)
+        end_i = (g.shape[0] if fokus_node_i==g.shape[0] else fokus_node_i+1)
+        start_s = (0 if fokus_node_s==0 else fokus_node_s-1)
+        end_s = (g.shape[1] if fokus_node_s==g.shape[1] else fokus_node_s+1)
+        
+        # in Schicht s nur nach vorn und hinten ... wenn start_i == fokus_node_i ist das egal da dann A = 0
+        k_i_in = k_i_in + (A[start_i,fokus_node_s,fokus_node_s] if g_bool[start_i,fokus_node_s] else 0)
+        k_i_in = k_i_in + (A[end_i,fokus_node_s,fokus_node_s] if g_bool[start_i,fokus_node_s] else 0)
+        # in i nur nach vorn und hinten ... wenn start_s == fokus_node_s ist das egal da dann C = 0
+        k_i_in = k_i_in + (C[fokus_node_i,start_s,fokus_node_s] if g_bool[fokus_node_i,start_s] else 0)
+        k_i_in = k_i_in + (C[fokus_node_i,end_s,fokus_node_s] if g_bool[fokus_node_i,end_s] else 0)
+        
+        # in Schicht s nur nach vorn und hinten ... wenn start_i == fokus_node_i ist das egal da dann A = 0
+        k_i = k_i + A[start_i,fokus_node_s,fokus_node_s] 
+        k_i = k_i + A[end_i,fokus_node_s,fokus_node_s]
+        # in i nur nach vorn und hinten ... wenn start_s == fokus_node_s ist das egal da dann C = 0
+        k_i = k_i + C[fokus_node_i,start_s,fokus_node_s] 
+        k_i = k_i + C[fokus_node_i,end_s,fokus_node_s]
+        
+        return (k_i_in, k_i)
+
+    def get_sum_of_weights_within_a_community(self, A, C, g, community):
+        g_bool = g==community
+        Sin = 0 #sum of the weights of the links inside the community
+        Stot = 0 #
+        for s in range(g.shape[1]-1): # i
+            for i in range(g.shape[0]-1):
+                if g_bool[i,s]:
+                    Stot = Stot + A[i,i+1,s]
+                    if g_bool[i+1,s]:
+                        # dann gehoeren zwei nebeneinander stehende nodes in eine community
+                        Sin = Sin + A[i,i+1,s]
+                    Stot = Stot + C[i,s,s+1]
+                    if g_bool[i,s+1]:
+                        # dann gehoeren zwei untereinander stehende nodes in eine community
+                        Sin = Sin + C[i,s,s+1]
+        return (Sin, Stot)
+        
     def clustering(self):
         ipi = self.ipi
 
@@ -590,13 +602,14 @@ class Network():
         print(".....................")
         print("---print relevant Information---")
         print(f"inputfile = ")
-        print(f"Qmulti-trial = {self.q_real} (p = {self.q_real_p}, t = {self.q_real_t})")
+        print(f"Qmulti-trial = {self.q_real}")
         if print_shuffled_results:
+            print(f"Qmulti-trial = {self.q_real} (p = {self.q_real_p}, t = {self.q_real_t})")
             q_fake_list_mean = sum(self.q_fake_list)/len(self.q_fake_list)
             q_fake_list_std = np.std(np.asarray(self.q_fake_list), axis = 0)
             print(f"Qmulti-trial-shuffled = {q_fake_list_mean} +- {q_fake_list_std:.4}")
-        print(f"phi ....")
-        print(f"phi_real = {self.phi_real}")
+        #print(f"phi ....")
+        #print(f"phi_real = {self.phi_real}")
         x = np.arange(len(self.phi_real)-1)
         y = self.phi_real[1:]
         slope,b = np.polyfit(x, y, 1)
@@ -612,22 +625,24 @@ class Network():
         phi_fake_list_arr = np.asarray(self.phi_fake_list)
         phi_fake_list_mean = np.nanmean(phi_fake_list_arr,axis=0)
         phi_fake_list_std = np.nanstd(phi_fake_list_arr,axis=0)
-        
+        x = np.arange(len(self.phi_real)-1)
+        y = self.phi_real[1:]
+        phi_real_slope,b = np.polyfit(x, y, 1)
         filename = 'net_results_x2.json'# + self.filename
         results = {
             'input_file':           '04_2_SRTT_2020-02-06_12-17-15.txt',
+            'ipi':                  self.ipi.tolist(),
             'date_of_analysis':     datetime.today().strftime('%Y-%m-%d'),
             'phi_real':             self.phi_real,
-            'phi_fake_list':        self.phi_fake_list,
-            'phi_fake_list_mean':   phi_fake_list_mean.tolist(),
-            'phi_fake_list_std':    phi_fake_list_std.tolist(),
+            'phi_real_slope':       phi_real_slope,
             'q_real':               self.q_real,
             'q_real_t':             self.q_real_t,
             'q_real_p':             self.q_real_p,
             'q_fake_list':          self.q_fake_list,
             'q_fake_list_mean':     sum(self.q_fake_list)/len(self.q_fake_list),
             'g_real':               self.tolist_ck(self.g_real),
-            'g_fake_list':          self.tolist_ck(self.g_fake_list) # arrays verschachtelt in einer Liste
+            'g_fake_list':          self.tolist_ck(self.g_fake_list), # arrays verschachtelt in einer Liste
+            'A':                    self.A.tolist()
         }
         
         with open(".\\Data_python\\"+filename, "w") as fp:   #Pickling
@@ -636,29 +651,11 @@ class Network():
         print(f"q_fake_list_mean = {sum(self.q_fake_list)/len(self.q_fake_list)}")
         return results
 
-    def tolist_ck(self, A):
-        ''' Funktion wandelt in ein json serializeable format um
-            d.h. arrays werden zu listen
-            einfaches np.array kann einfach mit a.tolist() umgewandelt werden
-            bei in listen verschachtelten Arrays funktioniert das nicht
-            dieser Fall wird durch diese Funktio abgedeckt. 
-        '''
-        if isinstance(A, np.ndarray):
-            return A.tolist()        
-        elif isinstance(A,list):
-            B = []
-            for e in A:
-                B.append(self.tolist_ck(e))
-                # if isinstance(e, np.ndarray):
-                #     B.append(e.tolist())
-            return B
-        else:
-            return A
 
             
 if __name__ == '__main__':
     gofor = 'MST'
-    #gofor = 'SRTT'
+    gofor = 'SRTT'
     is_sim = False
     is_estimate_Q = True
     is_test_against_random = True
@@ -670,7 +667,7 @@ if __name__ == '__main__':
             p = ".\\Data_MST_Simulation"
 
         filename = os.path.join(p,"3Tag1_.csv")
-        mst = MST(filename)
+        mst = MST(filename, sequence_length = 10)
         net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
         net.filename = mst.filename
         #net.clustering()
@@ -692,7 +689,7 @@ if __name__ == '__main__':
         net.phi_real = net.estimate_chunk_magnitudes(g_real)
         if is_test_against_random:
             net.test_chunking_against_random(rand_iterations=3)
-            print(f"q_real = {q_real}")
+            #print(f"q_real = {q_real}")
             results_json = net.get_results_as_json()
         net.print_results(print_shuffled_results = is_test_against_random)
 

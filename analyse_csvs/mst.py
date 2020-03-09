@@ -2,20 +2,30 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from os import listdir, rename
+import os
 from os.path import isfile, join
 from statistics import mean, stdev
 import statistics
 import networkx
 import time
+from filehandler import FileHandler
+from helper_functions import tolist_ck
 
 class MST():
-    def __init__(self, filename):
-        self.filename = filename
-        self.df = pd.read_csv(filename, sep = ';' )
+    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 7, path_output = ".\\Data_python", _id = "nox_id"):
+        self.fullfilename = fullfilename
+        base=os.path.basename(self.fullfilename)
+        self.filename = os.path.splitext(base)[0]
+        #print(f"filename = {self.filename}")
+        self.path_output = path_output
+        self._id = _id
+        self.filehandler = FileHandler(path_output=self.path_output, filename = self.filename, time_identifier = _id)
+        self.df = pd.read_csv(self.fullfilename, sep = ';' )
         self.ipi, self.hits = self.get_inter_key_intervals()
         #print(f"size = {len(self.ipi)}")
-        self.ipi_cor = self.get_inter_key_intervals_only_cor2(6) # nur Korrekte Sequencen
-        print('starting MST with filename : {self.filename}')
+        self.sequence_length = sequence_length
+        self.ipi_cor = self.get_inter_key_intervals_only_cor2(self.sequence_length) # nur Korrekte Sequencen
+        #print(f'starting MST with filename : {self.filename}')
         #self.printlist3(self.ipi_cor)
         #print(self.ipi_cor)
         
@@ -23,6 +33,23 @@ class MST():
         self.corrsq = self.estimate_correct_seqences()
         self.improvement = self.estimate_improvement()
         #self.estimate_chunks() 
+
+    def save(self):
+        mydict = self.create_dict()
+        self.filehandler.write(mydict)
+
+    def create_dict(self):
+        ''' generating a dictionary with all available information of this class
+        '''
+        mydict = {
+            'ipi' :                     tolist_ck(self.ipi),
+            'hits':                     tolist_ck(self.hits),
+            'ipi_cor' :                 tolist_ck(self.ipi_cor),
+            'sequence_length' :         self.sequence_length,
+            'corrsq' :                  tolist_ck(self.corrsq),
+            'corrsq_slope' :            tolist_ck(self.improvement)
+        }
+        return mydict
 
     def get_inter_key_intervals_only_cor(self, num_cor_press):
         """reduziert die ipi (inter Press Intervals) auf nur die korrekten Druecker
@@ -212,12 +239,14 @@ class MST():
     
 
 if __name__ == '__main__':
-    filename = ".\\Data MST\\3Tag1_.csv"
+    #filename = ".\\Data MST\\3Tag1_.csv"
     #filename = ".\\Data_MST_Simulation\\3Tag1_.csv"
-    mst = MST(filename)
-    ipi_cor = mst.ipi_cor
-    ipi_norm = mst.ipi_norm
-    ipi_norm_arr = mst.ipi_norm_arr
+    #mst = MST(filename)
+    mst = MST(fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 7, path_output = ".\\Data_python", _id = "no_id")
+    mst.save()
+#    ipi_cor = mst.ipi_cor
+#    ipi_norm = mst.ipi_norm
+#    ipi_norm_arr = mst.ipi_norm_arr
     
     #w_norm = mst.w_norm
     #print(type(mst.ipi_cor))
