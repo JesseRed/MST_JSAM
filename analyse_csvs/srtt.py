@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 from os import listdir, rename
 from os.path import isfile, join
@@ -10,11 +11,20 @@ import time
 from matplotlib import pyplot as plt
 from sklearn.cluster import AgglomerativeClustering
 import scipy.cluster.hierarchy as sch
+from filehandler import FileHandler
+from network import Network
+from helper_functions import tolist_ck
 
 class SRTT():
-    def __init__(self, filename):
-        self.filename = filename
-        self.df = pd.read_csv(filename, sep = '\t' )
+    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", path_output = ".\\Data_python", _id = "no_id"):
+        self.fullfilename = fullfilename
+        base=os.path.basename(self.fullfilename)
+        self.filename = os.path.splitext(base)[0]
+        self.path_output = path_output
+        self._id = _id
+        self.filehandler = FileHandler(path_output=self.path_output, filename = self.filename, time_identifier = _id)
+        
+        self.df = pd.read_csv(self.fullfilename, sep = '\t' )
         self.rts_nr, self.ipi_nr, self.but_nr = self.get_data_from_sequences(self.df,is_random=False)
         self.rts_ra, self.ipi_ra, self.but_ra = self.get_data_from_sequences(self.df, is_random=True)
         self.rts_cv_seq = self.get_rt_change_variable_sequence(self.rts_nr,self.rts_ra)# response time change variable
@@ -23,27 +33,50 @@ class SRTT():
 
     def clustering(self,rts_cv):
         c = abs(np.corrcoef(rts_cv.T))
-        print(c.shape)
-        plt.figure(figsize=(10, 7))  
-        plt.title("Dendrograms")  
-        dendrogram = sch.dendrogram(sch.linkage(c, method='ward'))
-        plt.axhline(y=6, color='r', linestyle='--')
-        plt.show()
+        # print(c.shape)
+        # plt.figure(figsize=(10, 7))  
+        # plt.title("Dendrograms")  
+        # dendrogram = sch.dendrogram(sch.linkage(c, method='ward'))
+        # plt.axhline(y=6, color='r', linestyle='--')
+        # plt.show()
 
         model = AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
         model.fit(c)
         labels = model.labels_
-        for i in range(c.shape[0]):
-            c[i,i]=0
-        X=c
+        # for i in range(c.shape[0]):
+        #     c[i,i]=0
+        # X=c
 
-        plt.scatter(X[labels==0, 0], X[labels==0, 1], s=50, marker='o', color='red')
-        plt.scatter(X[labels==1, 0], X[labels==1, 1], s=50, marker='o', color='blue')
-        plt.scatter(X[labels==2, 0], X[labels==2, 1], s=50, marker='o', color='green')
-        plt.scatter(X[labels==3, 0], X[labels==3, 1], s=50, marker='o', color='purple')
-        plt.scatter(X[labels==4, 0], X[labels==4, 1], s=50, marker='o', color='orange')
+        # plt.scatter(X[labels==0, 0], X[labels==0, 1], s=50, marker='o', color='red')
+        # plt.scatter(X[labels==1, 0], X[labels==1, 1], s=50, marker='o', color='blue')
+        # plt.scatter(X[labels==2, 0], X[labels==2, 1], s=50, marker='o', color='green')
+        # plt.scatter(X[labels==3, 0], X[labels==3, 1], s=50, marker='o', color='purple')
+        # plt.scatter(X[labels==4, 0], X[labels==4, 1], s=50, marker='o', color='orange')
 
-        plt.show()
+        # plt.show()
+    def save(self):
+        mydict = self.create_dict()
+        self.filehandler.write(mydict)
+
+    
+    def create_dict(self):
+        ''' generating a dictionary with all available information of this class
+        '''
+        mydict = {
+            'experiment' :              'SRTT',
+            'rts_cv_seq' :              tolist_ck(self.rts_cv_seq),
+            'rts_cv_but':               tolist_ck(self.rts_cv_but)            
+        }
+        # ergaenze die Network Daten falls vorhanden
+        if hasattr(self,'net'):
+            net_dict = self.net.get_results_as_json()
+            mydict.update(net_dict)
+        return mydict 
+
+    def add_network_class(self, coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= True, is_estimate_Q= False, num_random_Q=0):
+        self.net = Network(self.rts_cv_but, coupling_parameter = coupling_parameter,  resolution_parameter = resolution_parameter,is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q=num_random_Q)
+        self.net.filename = self.fullfilename
+
 
     def get_rt_change_variable_sequence(self,rts_nr, rts_ra):
         ''' getting the response times (rts) and inter_key intervals (ipis)

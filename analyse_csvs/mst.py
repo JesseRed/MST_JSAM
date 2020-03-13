@@ -10,6 +10,7 @@ import networkx
 import time
 from filehandler import FileHandler
 from helper_functions import tolist_ck
+from network import Network
 
 class MST():
     def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 7, path_output = ".\\Data_python", _id = "nox_id"):
@@ -31,7 +32,7 @@ class MST():
         
         
         self.corrsq = self.estimate_correct_seqences()
-        self.improvement = self.estimate_improvement()
+        self.corrsq_slope = self.estimate_slope()
         #self.estimate_chunks() 
 
     def save(self):
@@ -42,14 +43,23 @@ class MST():
         ''' generating a dictionary with all available information of this class
         '''
         mydict = {
+            'experiment' :              'MST',
             'ipi' :                     tolist_ck(self.ipi),
             'hits':                     tolist_ck(self.hits),
             'ipi_cor' :                 tolist_ck(self.ipi_cor),
             'sequence_length' :         self.sequence_length,
             'corrsq' :                  tolist_ck(self.corrsq),
-            'corrsq_slope' :            tolist_ck(self.improvement)
+            'corrsq_slope' :            tolist_ck(self.corrsq_slope)
         }
+        # ergaenze die Network Daten falls vorhanden
+        if hasattr(self,'net'):
+            net_dict = self.net.get_results_as_json()
+            mydict.update(net_dict)
         return mydict
+
+    def add_network_class(self, coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= True, is_estimate_Q= False, num_random_Q=0):
+        self.net = Network(self.ipi_cor, coupling_parameter = coupling_parameter,  resolution_parameter = resolution_parameter,is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q=num_random_Q)
+        self.net.filename = self.fullfilename
 
     def get_inter_key_intervals_only_cor(self, num_cor_press):
         """reduziert die ipi (inter Press Intervals) auf nur die korrekten Druecker
@@ -229,12 +239,12 @@ class MST():
         #print(f"{corrsq}")   
         return corrsq
 
-    def estimate_improvement(self):
+    def estimate_slope(self):
         if not hasattr(self,'corrsq'):
             self.estimate_correct_seqences()
         x = np.arange(len(self.corrsq))
-        improvement,b = np.polyfit(x, self.corrsq, 1)
-        return improvement
+        slope,b = np.polyfit(x, self.corrsq, 1)
+        return slope
 
     
 

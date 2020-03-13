@@ -11,8 +11,6 @@ import statistics
 import scipy
 import networkx
 import time
-from mst import MST
-from srtt import SRTT
 from sim import SIM
 import random
 import pickle
@@ -20,13 +18,16 @@ import json
 from datetime import datetime
 from sklearn.cluster import AgglomerativeClustering
 import scipy.cluster.hierarchy as sch
-
+from helper_functions import tolist_ck
 
 class Network():
-    def __init__(self, ipi, coupling_parameter = 0.03,  resolution_parameter = 0.9):
+    def __init__(self, ipi, coupling_parameter = 0.03,  resolution_parameter = 0.9, is_estimate_clustering= True, is_estimate_Q= False, num_random_Q=0 ):
         # whether in the adaptation process it will be tried to set the
         # node in the next trial to the same node of the previous
         self.is_adapt_communities_across_trials = False 
+        self.is_estimate_clustering = is_estimate_clustering
+        self.is_estimate_Q = is_estimate_Q
+        self.num_random_Q = num_random_Q
         
         self.coupling_parameter = coupling_parameter
         self.resolution_parameter = resolution_parameter    
@@ -47,7 +48,17 @@ class Network():
         self.m = np.sum(self.k, axis=0)
         self.gamma = np.zeros((self.A.shape[2]))+self.resolution_parameter
 
+        if self.is_estimate_clustering:
+            self.clustering()
         
+        if self.is_estimate_Q:
+            g_real,q_real = self.estimate_chunks(is_random = False)
+            self.phi_real = self.estimate_chunk_magnitudes(g_real)
+            if self.num_random_Q>0:
+                self.test_chunking_against_random(rand_iterations=self.num_random_Q)
+                results_json = self.get_results_as_json()
+            self.print_results(print_shuffled_results = (self.num_random_Q>0))
+
     def get_normalized_2D_array(self, ipi):
         ''' checking and preparing of input data
                 check whether ipi is a 3D list (mst) or a 2D array (SRTT)
@@ -527,28 +538,28 @@ class Network():
         
     def clustering(self):
         ipi = self.ipi
-
+        print('clustering ...')
         c = abs(np.corrcoef(ipi.T))
         c = np.nan_to_num(c)
-        sns.heatmap(c)
+        #sns.heatmap(c)
         c2 = np.zeros((ipi.shape[1],ipi.shape[1]))
         for i in range(ipi.shape[1]):
             for j in range(ipi.shape[1]):
                 c2[i,j], _ = pearsonr(ipi[:,i],ipi[:,j])
-        sns.heatmap(c2, annot = True)
+        #sns.heatmap(c2, annot = True)
 
-        print(f"c..... ")
-        print(f"{np.array2string(c, precision=2, separator = ' ')}")
-        print(f"--------------")
+        # print(f"c..... ")
+        # print(f"{np.array2string(c, precision=2, separator = ' ')}")
+        # print(f"--------------")
                 
 
 
-        plt.figure(figsize=(10, 7))  
-        plt.title("Dendrograms")  
+        #plt.figure(figsize=(10, 7))  
+        #plt.title("Dendrograms")  
         #print(c)
-        dendrogram = sch.dendrogram(sch.linkage(c, method='ward'))
-        plt.axhline(y=6, color='r', linestyle='--')
-        plt.show()
+        #dendrogram = sch.dendrogram(sch.linkage(c, method='ward'))
+        #plt.axhline(y=6, color='r', linestyle='--')
+        #plt.show()
 
         model = AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
         model.fit(c)
@@ -556,14 +567,14 @@ class Network():
         for i in range(c.shape[0]):
             c[i,i]=0
         X=c
-        sns.heatmap(c)
-        plt.scatter(X[labels==0, 0], X[labels==0, 1], s=50, marker='o', color='red')
-        plt.scatter(X[labels==1, 0], X[labels==1, 1], s=50, marker='o', color='blue')
-        plt.scatter(X[labels==2, 0], X[labels==2, 1], s=50, marker='o', color='green')
-        plt.scatter(X[labels==3, 0], X[labels==3, 1], s=50, marker='o', color='purple')
-        plt.scatter(X[labels==4, 0], X[labels==4, 1], s=50, marker='o', color='orange')
+        #sns.heatmap(c)
+        # plt.scatter(X[labels==0, 0], X[labels==0, 1], s=50, marker='o', color='red')
+        # plt.scatter(X[labels==1, 0], X[labels==1, 1], s=50, marker='o', color='blue')
+        # plt.scatter(X[labels==2, 0], X[labels==2, 1], s=50, marker='o', color='green')
+        # plt.scatter(X[labels==3, 0], X[labels==3, 1], s=50, marker='o', color='purple')
+        # plt.scatter(X[labels==4, 0], X[labels==4, 1], s=50, marker='o', color='orange')
 
-        plt.show()
+        # plt.show()
     
     def test_chunking_against_random(self, rand_iterations = 10):
         # teste ob das Netzwerk g_real mit dem Q sich 
@@ -614,50 +625,81 @@ class Network():
         y = self.phi_real[1:]
         slope,b = np.polyfit(x, y, 1)
         print(f"slope of phi_real = {slope}")
-        plt.plot(x, y, '.')
-        plt.plot(x, b + slope * x, '-')
-        plt.show()
+        #plt.plot(x, y, '.')
+        #plt.plot(x, b + slope * x, '-')
+        #plt.show()
 
     def get_results_as_json(self):
         ''' speicherung der relevanten Informationen in einm json file
         '''
-
-        phi_fake_list_arr = np.asarray(self.phi_fake_list)
-        phi_fake_list_mean = np.nanmean(phi_fake_list_arr,axis=0)
-        phi_fake_list_std = np.nanstd(phi_fake_list_arr,axis=0)
-        x = np.arange(len(self.phi_real)-1)
-        y = self.phi_real[1:]
-        phi_real_slope,b = np.polyfit(x, y, 1)
-        filename = 'net_results_x2.json'# + self.filename
         results = {
-            'input_file':           '04_2_SRTT_2020-02-06_12-17-15.txt',
             'ipi':                  self.ipi.tolist(),
-            'date_of_analysis':     datetime.today().strftime('%Y-%m-%d'),
-            'phi_real':             self.phi_real,
-            'phi_real_slope':       phi_real_slope,
-            'q_real':               self.q_real,
-            'q_real_t':             self.q_real_t,
-            'q_real_p':             self.q_real_p,
-            'q_fake_list':          self.q_fake_list,
-            'q_fake_list_mean':     sum(self.q_fake_list)/len(self.q_fake_list),
-            'g_real':               self.tolist_ck(self.g_real),
-            'g_fake_list':          self.tolist_ck(self.g_fake_list), # arrays verschachtelt in einer Liste
-            'A':                    self.A.tolist()
+            'date_of_analysis':     datetime.today().strftime('%Y-%m-%d')
         }
+        if hasattr(self, 'filename'):
+            results.update({'input_file': self.filename})
+
+        if self.is_estimate_clustering:
+            results.update({'is_clustering_performed': 'True'})
         
-        with open(".\\Data_python\\"+filename, "w") as fp:   #Pickling
-                    json.dump(results, fp)
-        print(f"q_real = {self.q_real}")
-        print(f"q_fake_list_mean = {sum(self.q_fake_list)/len(self.q_fake_list)}")
+        if self.is_estimate_Q: #= True, is_estimate_Q= False, num_random_Q=0 
+            x = np.arange(len(self.phi_real)-1)
+            y = self.phi_real[1:]
+            phi_real_slope,b = np.polyfit(x, y, 1)
+            results.update({
+                'phi_real':             self.phi_real,
+                'phi_real_slope':       phi_real_slope,
+                'q_real':               self.q_real,
+                'g_real':               tolist_ck(self.g_real),
+                'A':                    self.A.tolist()
+            })
+
+        if self.num_random_Q>0: #= True, is_estimate_Q= False, num_random_Q=0 
+            self.q_real_t, self.q_real_p = scipy.stats.ttest_1samp(self.q_fake_list,self.q_real)
+            results.update({
+                'q_real_t':             self.q_real_t,
+                'q_real_p':             self.q_real_p,
+                'q_fake_list':          self.q_fake_list,
+                'q_fake_list_mean':     sum(self.q_fake_list)/len(self.q_fake_list),
+                'g_fake_list':          tolist_ck(self.g_fake_list) # arrays verschachtelt in einer Liste
+            })
+
+        # phi_fake_list_arr = np.asarray(self.phi_fake_list)
+        # phi_fake_list_mean = np.nanmean(phi_fake_list_arr,axis=0)
+        # phi_fake_list_std = np.nanstd(phi_fake_list_arr,axis=0)
+        # x = np.arange(len(self.phi_real)-1)
+        # y = self.phi_real[1:]
+        # phi_real_slope,b = np.polyfit(x, y, 1)
+        # filename = 'net_results_x2.json'# + self.filename
+        # results = {
+        #     'input_file':           '04_2_SRTT_2020-02-06_12-17-15.txt',
+        #     'ipi':                  self.ipi.tolist(),
+        #     'date_of_analysis':     datetime.today().strftime('%Y-%m-%d'),
+        #     'phi_real':             self.phi_real,
+        #     'phi_real_slope':       phi_real_slope,
+        #     'q_real':               self.q_real,
+        #     'q_real_t':             self.q_real_t,
+        #     'q_real_p':             self.q_real_p,
+        #     'q_fake_list':          self.q_fake_list,
+        #     'q_fake_list_mean':     sum(self.q_fake_list)/len(self.q_fake_list),
+        #     'g_real':               self.tolist_ck(self.g_real),
+        #     'g_fake_list':          self.tolist_ck(self.g_fake_list), # arrays verschachtelt in einer Liste
+        #     'A':                    self.A.tolist()
+        # }
+        # with open(".\\Data_python\\"+filename, "w") as fp:   #Pickling
+        #             json.dump(results, fp)
+        # print(f"q_real = {self.q_real}")
+        # print(f"q_fake_list_mean = {sum(self.q_fake_list)/len(self.q_fake_list)}")
         return results
 
 
             
 if __name__ == '__main__':
+    from mst import MST
     gofor = 'MST'
-    gofor = 'SRTT'
+    #gofor = 'SRTT'
     is_sim = False
-    is_estimate_Q = True
+    is_estimate_Q = False
     is_test_against_random = True
 
     if gofor == 'MST':
@@ -667,10 +709,12 @@ if __name__ == '__main__':
             p = ".\\Data_MST_Simulation"
 
         filename = os.path.join(p,"3Tag1_.csv")
-        mst = MST(filename, sequence_length = 10)
+        #mst = MST(filename, sequence_length = 10)
+        mst = MST(fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 10, path_output = ".\\Data_python", _id = "no_id")
+    
         net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
         net.filename = mst.filename
-        #net.clustering()
+        net.clustering()
 
     elif gofor == 'SRTT':
         filename = ".\\Data_SRTT\\03_3_SRTT_2020-02-05_09-06-38.txt"
@@ -695,9 +739,11 @@ if __name__ == '__main__':
 
     if gofor=='SRTT':
         srtt.clustering(srtt.rts_cv_seq)
+        net.clustering()
 #    srtt.clustering(srtt.rts_cv_but)
     if gofor=='MST':
-        net.clustering()
+        #net.clustering()
+        pass
 #    srtt.clustering(srtt.rts_cv_but)
         
     # net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)

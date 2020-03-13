@@ -9,28 +9,26 @@ from group import Group
 from scipy import stats 
 from myplots import my_violinplot, set_axis_style
 from my_statistics import cohend
+from statistic_ck import Statistic
+from group import Group
 
 class Group_analysis():
-    def __init__(self, group1_path= "./Data MST", group1_filepattern="Tag1", group2_path= "./Data MST", group2_filepattern="Tag2" ):
-        self.group1_path = group1_path
-        self.group1_filepattern = group1_filepattern
-        self.group2_path = group2_path
-        self.group2_filepattern = group2_filepattern
-        self.mst_g1 = MST_Group(mypath= self.group1_path, filepattern=self.group1_filepattern)
-        self.mst_g2 = MST_Group(mypath= self.group2_path, filepattern=self.group2_filepattern)
+    ''' Verwaltung von Gruppenanalysen
+        im Prinzip handelt es sich nur um eine Liste von Elementen der Klasse Group 
+        auf der dann analysen stattfinden 
+    '''
 
-    def add_group(self):
+    def __init__(self, analysis_path = ".\\Data_python\\analysis"): #group1_path= "./Data MST", group1_filepattern="Tag1", group2_path= "./Data MST", group2_filepattern="Tag2" ):
+        self.path = analysis_path
+        self.groups = [] # eine Liste von Gruppen fuer die Analyse, in dieser stehen alle Infos
+
+    def add_group(self, experiment = 'MST', path_inputfiles = ".\\Data MST", filepattern="Tag1", path_outputfiles = ".\\Data_python", sequence_length = 10, _id = None, is_estimate_network=False):
         print("adding additional groups for the analysis")
+        group = Group(experiment = experiment, path_inputfiles = path_inputfiles, filepattern= filepattern, path_outputfiles = path_outputfiles, sequence_length = sequence_length, _id = _id, is_estimate_network = is_estimate_network)
+        group.get_data()
+        group.save_data()
+        self.groups.append(group)
 
-    def perform_statistics(self):
-        self.statistic, self.pval = stats.ttest_ind(self.mst_g1.corrsq, self.mst_g2.corrsq)
-        #print(f"statistic = {self.statistic}")
-        for index, p in enumerate(self.pval):
-            print(f"Block[{index+1}] - pval = {p:.4}")
-
-        cd = cohend(np.asarray(self.mst_g1.corrsq[0]), np.asarray(self.mst_g2.corrsq[0]))
-        print(f"CohensD={cd:.3f}")
-        
 
     def plot(self):
         # https://matplotlib.org/gallery/statistics/violinplot.html#sphx-glr-gallery-statistics-violinplot-py
@@ -43,10 +41,45 @@ class Group_analysis():
 
         
 if __name__ == '__main__':
-    experiment = Group_analysis(group1_path= "./Data MST", group1_filepattern="Tag1", 
-                        group2_path= "./Data MST", group2_filepattern="Tag2")
-    experiment.perform_statistics()
-    #experiment.plot()
+    
+    is_perform_analysis = True
+    is_perform_statistic = False
+
+    experiment_name = 'MST'
+    experiment_name = 'SRTT'
+    analysis = Group_analysis(".\\Data_python\\analysis")
+    is_estimate_network = True
+    path_inputfiles = ".\\Data MST"
+    path_inputfiles = ".\\Data MST_test"
+    path_inputfiles = ".\\Data_SRTT_test"
+    
+    if is_perform_analysis:
+        filepattern = "Tag1"
+        filepattern = "01_"
+        _id = "MST_G1_"
+        _id = "SRTT_G1_"
+        analysis.add_group(experiment = experiment_name, path_inputfiles = path_inputfiles, filepattern=filepattern, path_outputfiles = ".\\Data_python", sequence_length = 10, _id = _id, is_estimate_network = is_estimate_network)
+        filepattern = "Tag2"
+        filepattern = "02_"
+        _id = "MST_G2_"
+        _id = "SRTT_G2_"
+        analysis.add_group(experiment = experiment_name, path_inputfiles = path_inputfiles, filepattern=filepattern, path_outputfiles = ".\\Data_python", sequence_length = 10, _id = _id, is_estimate_network = is_estimate_network)
+
+    if is_perform_statistic:
+        _ids = ["MST_G1_", "MST_G2_"]
+        my_stat = Statistic(experiment = experiment_name, group_list= [], data_path = ".\\Data_python", _ids = _ids)
+        my_stat.test_group_differences_ttest('corrsq_slope')
+        for key, val in my_stat.data[0][1].items():
+            print(key)
+        print(my_stat.data[1][0]['phi_real_slope'])
+        
+        y = my_stat.data[1][0]['phi_real']
+        x = list(range(len(y)))
+        plt.scatter(x,y)
+        plt.show()
+#    my_stat = Statistic(experiment = experiment_name, group_list= analysis.groups, data_path = ".\\Data_python", _ids = _ids)
+#    analysis.perform_statistics()
+
     
 
     
