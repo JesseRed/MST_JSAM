@@ -1,5 +1,6 @@
 import os, json
 import numpy as np
+import pandas as pd
 from numpy.random import randn
 from numpy.random import seed
 from numpy import mean
@@ -39,13 +40,16 @@ class Statistic():
             data.append(dict_list)
         return data
 
-    def test_group_differences_ttest(self, key):
+    def test_group_differences_ttest(self, key, is_independent=True):
         d = self.get_target_values_by_key(key)
         if len(d)==2:
-            self.test_group_differences_two_groups(key, d)
+            self.test_group_differences_two_groups(key, d, is_independent=is_independent)
     
-    def test_group_differences_two_groups(self, key, data):
-        t, p = stats.ttest_ind(data[0], data[1])
+    def test_group_differences_two_groups(self, key, data, is_independent=True):
+        if is_independent:
+            t, p = stats.ttest_ind(data[0], data[1])
+        else:
+            t, p = stats.ttest_rel(data[0], data[1])
         mean = []
         mean.append(sum(data[0])/len(data[0]))
         mean.append(sum(data[1])/len(data[1]))
@@ -68,12 +72,24 @@ class Statistic():
 
 
     def print_pt_2g(self, key, t, p, mean = 0, std = 0):
-        print(f"p = {p:.7}  with t = {t:.3}  (mean = {mean[0]:.3} +- {std[0]:.4}  vs. {mean[1]:.3} +- {std[1]:.4}")
+        print(f"{key} p = {p:.7}  with t = {t:.3}  (mean = {mean[0]:.3} +- {std[0]:.4}  vs. {mean[1]:.3} +- {std[1]:.4}")
 
+    def show_group_differences(self, key):
+        data = self.get_target_values_by_key(key)
+        data = np.asarray(data)
+        print(f"Group Results of {key}")
+        df = pd.DataFrame(data.T, columns = [self._ids[0], self._ids[1]])
+        print(df.head(20))
 
 if __name__ == "__main__":
     # seed random number generator
     experiment_name = 'MST'
+    experiment_name = 'ASTEROID'
     _ids = ["MST_G1_", "MST_G2_"]
+    _ids = ["ASTEROID_G1_", "ASTEROID_G2_"]
     my_stat = Statistic(experiment = experiment_name, group_list= [], data_path = ".\\Data_python", _ids = _ids)
-    my_stat.test_group_differences_ttest('corrsq_slope')
+    #my_stat.test_group_differences_ttest('corrsq_slope')
+    my_stat.test_group_differences_ttest('success_per_block_slope', is_independent=False)
+    my_stat.test_group_differences_ttest('abs_success', is_independent=False)
+    my_stat.show_group_differences('abs_success')
+    my_stat.show_group_differences('success_per_block_slope')

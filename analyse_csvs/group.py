@@ -6,6 +6,7 @@ from os import listdir, rename
 from os.path import isfile, join
 from mst import MST
 from srtt import SRTT
+from asteroid import ASTEROID
 from scipy import stats 
 import datetime
 
@@ -43,7 +44,10 @@ class Group():
             if self.experiment == 'MST':
                 subj_class = MST(fullfilename = filename, sequence_length = self.sequence_length, path_output = self.path_outputfiles, _id = self._id)
             if self.experiment == 'SRTT':
-                subj_class = SRTT(filename)
+                subj_class = SRTT(fullfilename = filename, path_output = self.path_outputfiles, _id = self._id)
+            #    subj_class = SRTT(filename)
+            if self.experiment == 'ASTEROID':
+                subj_class = ASTEROID(fullfilename = filename, path_output = self.path_outputfiles, _id = self._id)
             if self.is_estimate_network:
                 subj_class.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= True, is_estimate_Q= True, num_random_Q=3)
         

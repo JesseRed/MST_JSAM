@@ -42,33 +42,76 @@ class Group_analysis():
         
 if __name__ == '__main__':
     
-    is_perform_analysis = True
-    is_perform_statistic = False
+    is_perform_analysis = False
+    is_estimate_network = False
+    is_perform_statistic = True
 
     experiment_name = 'MST'
-    experiment_name = 'SRTT'
-    analysis = Group_analysis(".\\Data_python\\analysis")
-    is_estimate_network = True
-    path_inputfiles = ".\\Data MST"
-    path_inputfiles = ".\\Data MST_test"
-    path_inputfiles = ".\\Data_SRTT_test"
+#    experiment_name = 'SRTT'
+    experiment_name = 'ASTEROID'
+
+    if experiment_name ==  'MST':
+        path_inputfiles = ".\\Data MST"
+        path_inputfiles = ".\\Data MST_test"
+        filepattern = "Tag1"
+        _id = "MST_G1_"
+        analysis = Group_analysis(".\\Data_python\\analysis")
+    
+    if experiment_name == 'SRTT':
+        path_inputfiles = ".\\Data_SRTT_test"
+        filepattern = "01_"
+        _id = "SRTT_G1_"
+        analysis = Group_analysis(".\\Data_python\\analysis")
+        
+    if experiment_name == 'ASTEROID':
+        path_inputfiles = ".\\Data_Asteroid"
+        filepattern = "Asteroid1_"
+        _id = "ASTEROID_G1_"
+        analysis = Group_analysis(".\\Data_python\\analysis")
+        
+
     
     if is_perform_analysis:
-        filepattern = "Tag1"
-        filepattern = "01_"
-        _id = "MST_G1_"
-        _id = "SRTT_G1_"
-        analysis.add_group(experiment = experiment_name, path_inputfiles = path_inputfiles, filepattern=filepattern, path_outputfiles = ".\\Data_python", sequence_length = 10, _id = _id, is_estimate_network = is_estimate_network)
-        filepattern = "Tag2"
-        filepattern = "02_"
-        _id = "MST_G2_"
-        _id = "SRTT_G2_"
         analysis.add_group(experiment = experiment_name, path_inputfiles = path_inputfiles, filepattern=filepattern, path_outputfiles = ".\\Data_python", sequence_length = 10, _id = _id, is_estimate_network = is_estimate_network)
 
+
+    if experiment_name ==  'MST':
+        path_inputfiles = ".\\Data MST"
+        path_inputfiles = ".\\Data MST_test"
+        filepattern = "Tag2"
+        _id = "MST_G2_"
+        analysis = Group_analysis(".\\Data_python\\analysis")
+    
+    if experiment_name == 'SRTT':
+        path_inputfiles = ".\\Data_SRTT_test"
+        filepattern = "02_"
+        _id = "SRTT_G2_"
+        analysis = Group_analysis(".\\Data_python\\analysis")
+
+
+    if experiment_name == 'ASTEROID':
+        path_inputfiles = ".\\Data_Asteroid"
+        filepattern = "Asteroid2_"
+        _id = "ASTEROID_G2_"
+        analysis = Group_analysis(".\\Data_python\\analysis")
+        
+
+    if is_perform_analysis:
+        analysis.add_group(experiment = experiment_name, path_inputfiles = path_inputfiles, filepattern=filepattern, path_outputfiles = ".\\Data_python", sequence_length = 10, _id = _id, is_estimate_network = is_estimate_network)
+
+
     if is_perform_statistic:
-        _ids = ["MST_G1_", "MST_G2_"]
-        my_stat = Statistic(experiment = experiment_name, group_list= [], data_path = ".\\Data_python", _ids = _ids)
-        my_stat.test_group_differences_ttest('corrsq_slope')
+        if experiment_name == 'MST':
+            _ids = ["MST_G1_", "MST_G2_"]
+        if experiment_name == 'SRTT':
+            _ids = ["SRTT_G1_", "SRTT_G2_"]
+        if experiment_name == 'ASTEROID':
+            _ids = ["ASTEROID_G1_", "ASTEROID_G2_"]
+
+        my_stat = Statistic(experiment=experiment_name, group_list=[], data_path=".\\Data_python", _ids=_ids)
+        #my_stat.test_group_differences_ttest('corrsq_slope')
+        my_stat.test_group_differences_ttest('success_per_block')
+        my_stat.test_group_differences_ttest('abs_success')
         for key, val in my_stat.data[0][1].items():
             print(key)
         print(my_stat.data[1][0]['phi_real_slope'])
