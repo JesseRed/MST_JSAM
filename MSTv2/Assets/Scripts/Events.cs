@@ -52,6 +52,7 @@ public class Events : MonoBehaviour
     private float currentBlockStartTime;
     private float lastButtonPressedTime;
     private string currenttextnachricht = "";
+    private string sequence = "";
     private GameObject panelPrimer;
     void Awake()
     {
@@ -151,6 +152,7 @@ public class Events : MonoBehaviour
             currentBlockStartTime = Time.time;
             //print(block.expSequence);
             currenttextnachricht = block.expEndBlockMessage;
+            sequence = block.expStartBlockPrimer;
             if (currentBlock.expStartBlockPause>0){
                 yield return StartCoroutine(startBlockPrimer(block.expStartBlockPause, block.expStartBlockPrimer));
             }
@@ -246,7 +248,7 @@ public class Events : MonoBehaviour
         audioSource.Play();
         print("button pressed was : " + num);
         lastButtonPressed = num;
-        gameSession.playerData.AddData(currentBlockIdx, eventNumInBlock, Time.time-currentBlockStartTime, isHit,currentTargetNum,num);
+        gameSession.playerData.AddData(currentBlockIdx, eventNumInBlock, Time.time-currentBlockStartTime, isHit,currentTargetNum,num, sequence);
     }
 
     private string createSequenceString(int num_active)

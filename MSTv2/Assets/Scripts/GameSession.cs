@@ -134,9 +134,9 @@ public class GameSession : MonoBehaviour
             playerTrackEntries = new List<PlayerTrackEntry>();
         }
 
-        public void AddData(int iblockIdx, int ieventNum, float itimeSinceBlockStart, int iisHit, int itarget, int ipressed)
+        public void AddData(int iblockIdx, int ieventNum, float itimeSinceBlockStart, int iisHit, int itarget, int ipressed, string isequence)
         {
-            playerTrackEntries.Add(new PlayerTrackEntry(iblockIdx, ieventNum, itimeSinceBlockStart, iisHit, itarget, ipressed));
+            playerTrackEntries.Add(new PlayerTrackEntry(iblockIdx, ieventNum, itimeSinceBlockStart, iisHit, itarget, ipressed, isequence));
         }
 
         public void SaveDataAsCSV(string status)
@@ -150,7 +150,7 @@ public class GameSession : MonoBehaviour
             {
                 // heading line for csv File 
                 string line = "BlockNumber" + fieldSeperator + "EventNumber" +fieldSeperator + "Time Since Block start" + 
-                fieldSeperator + "isHit" + fieldSeperator + "target" + fieldSeperator + "pressed";
+                fieldSeperator + "isHit" + fieldSeperator + "target" + fieldSeperator + "pressed" + fieldSeperator + "sequence" ;
 
                 sw.WriteLine(line);
                 for (int i = 0; i < playerTrackEntries.Count; i++)
@@ -220,8 +220,9 @@ public class GameSession : MonoBehaviour
         private int target;
         private int pressed;
         public char fieldSeperator = ';'; // It defines field seperate chracter
+        public string sequence;
 
-        public PlayerTrackEntry(int iblockIdx, int ieventNum,float itimeSinceBlockStart, int iisHit, int iTarget, int ipressed)
+        public PlayerTrackEntry(int iblockIdx, int ieventNum,float itimeSinceBlockStart, int iisHit, int iTarget, int ipressed, string isequence)
         {
             blockIdx = iblockIdx;
             timeSinceBlockStart = itimeSinceBlockStart;
@@ -229,13 +230,15 @@ public class GameSession : MonoBehaviour
             isHit = iisHit;
             target = iTarget;
             pressed = ipressed;
+            sequence = isequence;
         }
 
         public string getEntryString()
         {
             string line = blockIdx.ToString() + fieldSeperator + eventNum.ToString() + 
             fieldSeperator + timeSinceBlockStart.ToString() + fieldSeperator + isHit.ToString() + 
-            fieldSeperator + target.ToString() + fieldSeperator + pressed.ToString();
+            fieldSeperator + target.ToString() + fieldSeperator + pressed.ToString() + 
+            fieldSeperator + sequence;
             return line;
         }
     }
