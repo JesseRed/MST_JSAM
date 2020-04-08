@@ -16,7 +16,9 @@ def tolist_ck(A):
             # if isinstance(e, np.ndarray):
             #     B.append(e.tolist())
         return B
-    elif isinstance(A,np.float32):
-        return str(A)
+    elif isinstance(A, np.float32):
+        return np.float(A)
+    elif isinstance(A, np.int8):
+         return np.int(A)
     else:
         return A

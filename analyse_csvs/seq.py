@@ -27,12 +27,15 @@ class SEQ():
         #print(f"size = {len(self.ipi)}")
         self.sequence_length = sequence_length
         self.ipi_cor, self.color_cor = self.get_inter_key_intervals_only_cor2(self.sequence_length) # nur Korrekte Sequencen
+        # print(self.ipi_cor)
+        # print(type(self.ipi_cor))
+        # print(f"after get_inter_key_interals_only_cor2 with len(ipi_cor) = {len(self.ipi_cor)}")
         #print(f'starting MST with filename : {self.filename}')
         #self.printlist3(self.ipi_cor)
         #print(self.ipi_cor)
         
         #print('now estimate_correct_sequences')
-        self.paradigmen_time = self.estimate_correct_seqences()
+        self.paradigmen_time,self.ipi_cor_paradigmen = self.estimate_correct_seqences()
         self.paradigmen_slope = self.estimate_slope()
         #self.estimate_chunks() 
         self.my_plot()
@@ -46,7 +49,7 @@ class SEQ():
         g1 = ([x*2 for x in range(len(self.paradigmen_time[1]))],self.paradigmen_time[1])
         g2 = ([x*2.2 for x in range(len(self.paradigmen_time[6]))],self.paradigmen_time[6])
         g3 = (range(len(self.paradigmen_time[8])),self.paradigmen_time[8])
-        print(type(g1))
+
         data = (g1, g2, g3)
         colors = ("blue", "green", "red")
         groups = ("blue", "green", "red")
@@ -77,6 +80,7 @@ class SEQ():
             'hits':                     tolist_ck(self.hits),
             'color':                    tolist_ck(self.color),
             'ipi_cor' :                 tolist_ck(self.ipi_cor),
+            'color_cor':                tolist_ck(self.color_cor),
             'sequence_length' :         self.sequence_length,
             'paradigmencorrsq' :        self.paradigmen_time,
             'corrsq_slope_b' :          tolist_ck(self.paradigmen_slope)
@@ -88,7 +92,8 @@ class SEQ():
         return mydict
 
     def add_network_class(self, coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= True, is_estimate_Q= False, num_random_Q=0):
-        self.net = Network(self.ipi_cor, coupling_parameter = coupling_parameter,  resolution_parameter = resolution_parameter,is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q=num_random_Q)
+        #self.net = Network(self.ipi_cor, coupling_parameter = coupling_parameter,  resolution_parameter = resolution_parameter,is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q=num_random_Q)
+        self.net = Network(self.ipi_cor_paradigmen[8], coupling_parameter = coupling_parameter,  resolution_parameter = resolution_parameter,is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q=num_random_Q)
         self.net.filename = self.fullfilename
 
     
@@ -111,7 +116,6 @@ class SEQ():
             # print(f'block number: {idx} mit blocklaenge von: {i.shape}')
             # am Anfang des blockes gibt es kein ipi fuer den ersten Tastendruck
             # hier fuege ich einen dummy des durchschnitts der Tastendruecke ein           
-
             ipi = np.asarray(i)
             h = self.hits[idx]
             color = self.color[idx]
@@ -169,10 +173,11 @@ class SEQ():
     def estimate_correct_seqences(self):
         # entsprechend der color werden Ergebnisse in diese Struktur geschrieben ... alternativ eine eigene Klasse
         paradigmen_time = self.initialize_num_dict()
-
+        ipi_cor_paradigmen = self.initialize_num_dict()
         for idx, ipi in enumerate(self.ipi_cor):
-            paradigmen_time[self.color_cor[idx]].append(sum(ipi[1:]))
-        return paradigmen_time
+            paradigmen_time[self.color_cor[idx]].append(sum(ipi))
+            ipi_cor_paradigmen[self.color_cor[idx]].append(ipi)
+        return (paradigmen_time, ipi_cor_paradigmen)
 
     def estimate_slope(self):
         if not hasattr(self,'paradigmen_time'):

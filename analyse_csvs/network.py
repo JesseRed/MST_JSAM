@@ -69,7 +69,6 @@ class Network():
         ipi_arr = (ipi if isinstance(ipi,np.ndarray) else self.convert_to_array2D(ipi))
         # print(self.ipi_arr.shape)
         m, std = self.get_ipi_mean_arr(ipi_arr)
-
         # self.ipi_norm = self.get_normalized_ipi(ipi, m, std)
         ipi_norm_arr = self.get_normalized_ipi_arr(ipi_arr, m, std)
         return ipi_norm_arr
@@ -393,11 +392,14 @@ class Network():
         return A
     
     def convert_to_array2D(self, list3):
-        y = []
-        for block in list3:
-             for sequence in block:
-                 y.append(sequence)
-        y_mat = np.stack(y)
+        if isinstance(list3[0],np.ndarray):
+            y_mat = np.asarray(list3)
+        else:
+            y = []
+            for block in list3:
+                for sequence in block:
+                    y.append(sequence)
+            y_mat = np.stack(y)
         return y_mat # array der dimension N x M   (N anzahl der korrekten Sequenzen, M Anzahl der Elemente pro sequenz)
         
     def get_simple_weights(self, ipi):
@@ -554,12 +556,12 @@ class Network():
                 
 
 
-        #plt.figure(figsize=(10, 7))  
-        #plt.title("Dendrograms")  
+        plt.figure(figsize=(10, 7))  
+        plt.title("Dendrograms")  
         #print(c)
-        #dendrogram = sch.dendrogram(sch.linkage(c, method='ward'))
-        #plt.axhline(y=6, color='r', linestyle='--')
-        #plt.show()
+        dendrogram = sch.dendrogram(sch.linkage(c, method='ward'))
+        plt.axhline(y=6, color='r', linestyle='--')
+        plt.show()
 
         model = AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
         model.fit(c)
