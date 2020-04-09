@@ -27,6 +27,7 @@ public class Events : MonoBehaviour
     public int[] expBlock;
     public int[] expTrial;
     public int[] expRan;
+    public int[] expSeqLength;
     private float timeOfSequenceStart;
     private float timeOfItemStart;
     private int timeSinceExpStart;
@@ -215,7 +216,7 @@ public class Events : MonoBehaviour
         for (seqIndex = 0; seqIndex < expTrial[blockIndex]; seqIndex++)
         {
             //            StartCoroutine(presentSequence(SeqNonRandom.GetRange(0, 12)));
-            yield return StartCoroutine(presentSequence(activeSequence));
+            yield return StartCoroutine(presentSequence(activeSequence, expSeqLength[blockIndex]));
             print("sequence Index = " + seqIndex);
             // flashing of the cross
             yield return StartCoroutine(flashingOfTheCross(250));
@@ -229,11 +230,11 @@ public class Events : MonoBehaviour
     }
 
     // Eine ganze Sequence
-    IEnumerator presentSequence(List<Vector3Int> sequence)
+    IEnumerator presentSequence(List<Vector3Int> sequence, int num_Items)
     {
 
         timeOfSequenceStart = Time.realtimeSinceStartup;
-        for (int itemIndex = 0; itemIndex < 12; itemIndex++)
+        for (int itemIndex = 0; itemIndex < num_Items; itemIndex++)
         {
             while (isPause)
             {
@@ -406,6 +407,7 @@ public class Events : MonoBehaviour
         expBlock = new int[t];
         expTrial = new int[t];
         expRan = new int[t];
+        expSeqLength = new int[t];
 
         for (int i = 0; i < config.Count; i++)
         {
@@ -414,6 +416,7 @@ public class Events : MonoBehaviour
             expBlock[i] = config[i][0];
             expTrial[i] = config[i][1];
             expRan[i] = config[i][2];
+            expSeqLength[i] = config[i][3];
         }
         experimentConfig = config.ToArray();
     }
