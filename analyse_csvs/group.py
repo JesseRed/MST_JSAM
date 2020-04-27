@@ -73,9 +73,14 @@ class Group():
 
 if __name__ == '__main__':
     print(f"Gruppe 1")
-    seq_group1 = Group(experiment = 'SEQ', path_inputfiles = ".\\Data_Seq_8", filepattern="Carsten", path_outputfiles = ".\\Data_python", sequence_length = 8, is_estimate_network=True)
+    # seq_group1 = Group(experiment = 'SEQ', path_inputfiles = ".\\Data\\SEQ", filepattern="Elisabeth", path_outputfiles = ".\\Data_python", sequence_length = 8, is_estimate_network=True)
+    seq_group1 = Group(experiment = 'MST', path_inputfiles = ".\\Data\\MST", filepattern="Elisabeth", path_outputfiles = ".\\Data_python", sequence_length = 8, is_estimate_network=True)
+    # seq_group1 = Group(experiment = 'SRTT', path_inputfiles = ".\\Data\\SRTT", filepattern="Elisabeth", path_outputfiles = ".\\Data_python", sequence_length = 8, is_estimate_network=True)
     seq_group1.get_data()
     seq_group1.save_data()
+    # seq_group1 = Group(experiment = 'SEQ', path_inputfiles = ".\\Data_Seq_8", filepattern="Carsten", path_outputfiles = ".\\Data_python", sequence_length = 8, is_estimate_network=True)
+    # seq_group1.get_data()
+    # seq_group1.save_data()
     # print(f"Gruppe 1")
     # mst_group1 = Group(experiment = 'MST', path_inputfiles = ".\\Data MST", filepattern="Tag1", path_outputfiles = ".\\Data_python", sequence_length = 10)
     # mst_group1.get_data()
@@ -87,7 +92,7 @@ if __name__ == '__main__':
     #print(mst_group1.corrsq)
 
 #    statistic, pval = stats.ttest_ind(mst_group1.corrsq, mst_group2.corrsq)
-    statistic, pval = stats.ttest_ind(seq_group1.corrsq, seq_group2.corrsq)
+    # statistic, pval = stats.ttest_ind(seq_group1.corrsq, seq_group2.corrsq)
     # print(f"statistic = {statistic}")
     # for i in pval:
     #     print(f"Block[i+1] - pval = {i:.4}")
