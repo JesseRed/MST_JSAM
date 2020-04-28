@@ -41,7 +41,7 @@ class MST_Group():
         print(f"Standardabweichung der lersteigung = {np.std(improvement)}")
 
 if __name__ == '__main__':
-    mst_group1 = MST_Group(mypath= "./Data MST", filepattern="Tag1")
-    mst_group2 = MST_Group(mypath= "./Data MST", filepattern="Tag2")
+    mst_group1 = MST_Group(mypath= "./Data_Rogens/MST", filepattern="REST1")
+    mst_group2 = MST_Group(mypath= "./Data_Rogens/MST", filepattern="REST2")
     
 

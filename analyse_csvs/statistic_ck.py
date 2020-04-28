@@ -9,6 +9,7 @@ from math import sqrt
 from scipy import stats 
 from scipy.stats import ttest_1samp, ttest_ind, ttest_rel
 import statistics
+import matplotlib.pyplot as plt
 
 class Statistic():
     def __init__(self, experiment = 'MST', group_list=[] , data_path = ".\\Data_python", _ids = None):
@@ -35,7 +36,7 @@ class Statistic():
             filenames = [filename for filename in os.listdir(data_path) if filename.startswith(prefix)]
             dict_list = []
             for filename in filenames:
-                with open(os.path.join(data_path,filename), "r") as fp:   #Pickling
+                with open(os.path.join(data_path,filename), "r") as fp:   
                     dict_list.append(json.load(fp))
             data.append(dict_list)
         return data
@@ -79,8 +80,26 @@ class Statistic():
         data = np.asarray(data)
         print(f"Group Results of {key}")
         df = pd.DataFrame(data.T, columns = [self._ids[0], self._ids[1]])
-        print(df.head(20))
+        print(df.head(30))
 
+    def plot_one_group_sequence(self, key):
+        data = self.get_target_values_by_key(key)
+        print(data)
+        print("---")
+        data = data[0]
+        print(np.asarray(data))
+        #print(data)
+        #print(data.shape)
+        for subj in data:
+            plt.plot(subj)
+        
+        plt.show()
+        # plt.plot( 'x', 'y1', data=data, marker='o', markerfacecolor='blue', markersize=12, color='skyblue', linewidth=4)
+        # plt.plot( 'x', 'y2', data=df, marker='', color='olive', linewidth=2)
+        # plt.plot( 'x', 'y3', data=df, marker='', color='olive', linewidth=2, linestyle='dashed', label="toto")
+        # plt.legend()
+
+    
 if __name__ == "__main__":
     # seed random number generator
     experiment_name = 'MST'

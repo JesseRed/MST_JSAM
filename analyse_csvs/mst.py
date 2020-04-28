@@ -21,7 +21,7 @@ class MST():
         self.path_output = path_output
         self._id = _id
         self.filehandler = FileHandler(path_output=self.path_output, filename = self.filename, time_identifier = _id)
-        self.df = pd.read_csv(self.fullfilename, sep = ';' )
+        self.df = pd.read_csv(self.fullfilename, sep = ';', engine = "python")
         self.ipi, self.hits = self.get_inter_key_intervals()
         #print(f"size = {len(self.ipi)}")
         self.sequence_length = sequence_length
@@ -42,6 +42,9 @@ class MST():
     def create_dict(self):
         ''' generating a dictionary with all available information of this class
         '''
+        corrsq = tolist_ck(self.corrsq)
+        reverse_corrsq = corrsq.copy()
+        reverse_corrsq.reverse()
         mydict = {
             'experiment' :              'MST',
             'ipi' :                     tolist_ck(self.ipi),
@@ -49,7 +52,10 @@ class MST():
             'ipi_cor' :                 tolist_ck(self.ipi_cor),
             'sequence_length' :         self.sequence_length,
             'corrsq' :                  tolist_ck(self.corrsq),
-            'corrsq_slope' :            tolist_ck(self.corrsq_slope)
+            'corrsq_slope' :            tolist_ck(self.corrsq_slope),
+            'abs_corr_seq' :            sum(tolist_ck(self.corrsq)),
+            'pos_of_first_best_block' : corrsq.index(max(corrsq)),
+            'pos_of_last_best_block' :  abs((reverse_corrsq.index(max(corrsq)))-12)
         }
         # ergaenze die Network Daten falls vorhanden
         if hasattr(self,'net'):
