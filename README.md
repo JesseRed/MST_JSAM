@@ -1,2 +1,6 @@
 # MST_JSAM
-Manual Sequence Task for JSAM
+This repository contains the following learn paradigm as unity games and the currently available data
+Manual Sequence Task (MST)
+SRTT 
+8 Sequence learning Task
+
