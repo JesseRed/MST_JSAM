@@ -84,10 +84,10 @@ class Statistic():
 
     def plot_one_group_sequence(self, key):
         data = self.get_target_values_by_key(key)
-        print(data)
-        print("---")
+        #print(data)
+        #print("---")
         data = data[0]
-        print(np.asarray(data))
+        #print(np.asarray(data))
         #print(data)
         #print(data.shape)
         for subj in data:

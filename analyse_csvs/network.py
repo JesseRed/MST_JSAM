@@ -19,6 +19,9 @@ from datetime import datetime
 from sklearn.cluster import AgglomerativeClustering
 import scipy.cluster.hierarchy as sch
 from helper_functions import tolist_ck
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Network():
     def __init__(self, ipi, coupling_parameter = 0.03,  resolution_parameter = 0.9, is_estimate_clustering= True, is_estimate_Q= False, num_random_Q=0 ):
@@ -30,7 +33,8 @@ class Network():
         self.num_random_Q = num_random_Q
         
         self.coupling_parameter = coupling_parameter
-        self.resolution_parameter = resolution_parameter    
+        self.resolution_parameter = resolution_parameter   
+        #logger.info(f"dimension in network get_normalized_2D_array {self.ipi}") 
         self.ipi = self.get_normalized_2D_array(ipi)
         # self.ipi now 2D np.array trials x sequence_elements (key presses per trial)
         
@@ -67,7 +71,8 @@ class Network():
         '''
         # umwandlung in np.ndarray fals als liste uebergeben
         ipi_arr = (ipi if isinstance(ipi,np.ndarray) else self.convert_to_array2D(ipi))
-        # print(self.ipi_arr.shape)
+        
+        # logger.info(self.ipi_arr.shape)
         m, std = self.get_ipi_mean_arr(ipi_arr)
         # self.ipi_norm = self.get_normalized_ipi(ipi, m, std)
         ipi_norm_arr = self.get_normalized_ipi_arr(ipi_arr, m, std)
@@ -90,8 +95,8 @@ class Network():
         for each frequent sequence: (Wymbs et al. 2013)
         
         '''
-        print("estimating chunk magnitudes")
-        #print(g.T)
+        logger.info("estimating chunk magnitudes")
+        #logger.info(g.T)
         # erzeuge Zufallskonfiguration fuer P ... Null model
         ipi_shuffled = self.shuffle(self.ipi)
 #        P = self.get_adjacency_matrix(ipi_shuffled)
@@ -105,7 +110,7 @@ class Network():
         phi_arr = np.asarray(phi)
         phi_arr[np.isinf(phi_arr)]=np.NaN
         m = np.nanmean(phi_arr)
-        print(f"chunk magnitude m = {m}")
+        logger.info(f"chunk magnitude m = {m}")
         for i in range(phi_arr.shape[0]):
             phi_arr[i]=(phi_arr[i]-m)/m
 
@@ -154,7 +159,7 @@ class Network():
         g = self.initialize_g() # jedes node ist seine eigene community
         start = time.time()
         Qms_old = self.get_Qms_opt(g, A)
-        print(f"Qms execution time = {time.time()-start:.3} s")
+        logger.info(f"Qms execution time = {time.time()-start:.3} s")
         idx = 0
         while True:
             idx +=1
@@ -165,14 +170,14 @@ class Network():
                 break
             else:
                 Qms_old=Qms
-#            print(g.T)
-            print(f"------------------------------------------")
-            print(f"----------Durchlauf = {idx} --------------")
-            print(f"postadapt ... unique elements in g: {np.unique(g).shape[0]}")
-            print(f"adapt_communities execution time = {time.time()-start:.3} s")                    
-            print(f"durchlauf={idx} mit Qms = {Qms}")
+#            logger.info(g.T)
+            logger.info(f"------------------------------------------")
+            logger.info(f"----------Durchlauf = {idx} --------------")
+            logger.info(f"postadapt ... unique elements in g: {np.unique(g).shape[0]}")
+            logger.info(f"adapt_communities execution time = {time.time()-start:.3} s")                    
+            logger.info(f"durchlauf={idx} mit Qms = {Qms}")
         Qms = self.get_Qms_opt(g, A)
-        print(f"Final Qms = {Qms}")
+        logger.info(f"Final Qms = {Qms}")
         if not is_random:
             self.g_real = g
             self.q_real = Qms
@@ -185,15 +190,15 @@ class Network():
         # wenn sich eine Verbesserung einstellt dann wird die neue
         # Zuordnung beibehalten
 
-#        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+#        logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
  
         index = 0
         for s in range(g.shape[1]):
             for i in range(g.shape[0]):
                 index+=1
-                #print(f"{i} ... unique elements in g: {np.unique(g).shape[0]}")
-                #print(f"{g[:,0]}")
-                #print(f"g[i,s]= {g[i,s]}")
+                #logger.info(f"{i} ... unique elements in g: {np.unique(g).shape[0]}")
+                #logger.info(f"{g[:,0]}")
+                #logger.info(f"g[i,s]= {g[i,s]}")
                 community_org = g[i,s]
                 community_links = -1
                 community_rechts = -1
@@ -202,7 +207,7 @@ class Network():
                 q_links = -999
                 q_rechts = -999
                 q_unten = -999
-                #print(f"original Q0 = {q_org}")
+                #logger.info(f"original Q0 = {q_org}")
                 if i>0:
                     if not g[i,s]==g[i-1,s]:
                         g[i,s] = g[i-1,s]
@@ -224,7 +229,7 @@ class Network():
                             community_unten = g[i,s]
 
                 results = [q_org, q_links, q_rechts, q_unten]
-                #print(f"adapt communites results = {results}")
+                #logger.info(f"adapt communites results = {results}")
                 g_communities = [community_org, community_links, community_rechts, community_unten]
                 # ist Q wirklich immer positiv wenn es besser wird????
                 g[i,s] = g_communities[results.index(max(results))] # die community zuordnung des maximums
@@ -235,7 +240,7 @@ class Network():
 
 
         return g
-        #print(f"postadapt ... unique elements in g: {np.unique(g).shape[0]}")
+        #logger.info(f"postadapt ... unique elements in g: {np.unique(g).shape[0]}")
                 
                 
 
@@ -265,48 +270,48 @@ class Network():
                         x = x * self.get_delta_community(g[i,s],g[j,r])
                         summe = summe + x 
                         #if self.get_delta_community(g[i,s],g[j,r])>0:
-                            #print(self.get_delta_community(g[i,s],g[j,r]))
+                            #logger.info(self.get_delta_community(g[i,s],g[j,r]))
                         #if i==0:
-                        #    print(f"[i,j,s,r] = [{i},{j},{s},{r}]")
+                        #    logger.info(f"[i,j,s,r] = [{i},{j},{s},{r}]")
 #                        if i==0 and j==1 and s==0 and r==0:
-#                            print(f"A[{i},{j},{s}]={A[i,j,s]}")
+#                            logger.info(f"A[{i},{j},{s}]={A[i,j,s]}")
 #                            xxx = ((gamma[s]*k[i,s]*k[j,s])/(2*m[s]))
-#                            print(f"gamma[s]*k[i,s]*k[j,s])/(2*m[s]) = {xxx}")
-#                            print(f"delta_inter_slice[{s},{r}]={delta_inter_slice[s,r]}")
-#                            print(f"delta_intra_slice[{i},{j}]={delta_intra_slice[i,j]}")
-#                            print(f"C[{j},{s},{r}]={C[j,s,r]}]")
-#                            print(f"self.get_delta_community(g[{i},{s}],g[{j},{r}]) = {self.get_delta_community(g[i,s],g[j,r])}")
+#                            logger.info(f"gamma[s]*k[i,s]*k[j,s])/(2*m[s]) = {xxx}")
+#                            logger.info(f"delta_inter_slice[{s},{r}]={delta_inter_slice[s,r]}")
+#                            logger.info(f"delta_intra_slice[{i},{j}]={delta_intra_slice[i,j]}")
+#                            logger.info(f"C[{j},{s},{r}]={C[j,s,r]}]")
+#                            logger.info(f"self.get_delta_community(g[{i},{s}],g[{j},{r}]) = {self.get_delta_community(g[i,s],g[j,r])}")
 #        
         Qms = 1/self.my2 * summe
         
-        #print(f"estimation time = {time.time()-start} s")
+        #logger.info(f"estimation time = {time.time()-start} s")
         return Qms
     
     def get_Qms_optx(self, g, i, s):
         A = self.A
         C = self.C
-        print(f"----------------------")
-        print(f"start estimate Qms")
-        print(f"{g[:,0]}")
-        print(f"{g[:,1]}")
-        #print(f"C.shape = {C.shape}")
-        #print("C")
-        #print(C)
+        logger.info(f"----------------------")
+        logger.info(f"start estimate Qms")
+        logger.info(f"{g[:,0]}")
+        logger.info(f"{g[:,1]}")
+        #logger.info(f"C.shape = {C.shape}")
+        #logger.info("C")
+        #logger.info(C)
         c = np.sum(C,axis=2)
-        #print("c")
-        #print(c)
+        #logger.info("c")
+        #logger.info(c)
         k = np.sum(A,axis=0)
-        #print("k")
-        #print(k)
+        #logger.info("k")
+        #logger.info(k)
         kappa = k + c
-        #print("kappa")
-        #print(kappa)
+        #logger.info("kappa")
+        #logger.info(kappa)
         my2 = sum(sum(kappa))
-#        print("my2")
-#        print(my2)
+#        logger.info("my2")
+#        logger.info(my2)
         m = np.sum(k, axis=0)
-#        print("m")
-#        print(m)
+#        logger.info("m")
+#        logger.info(m)
         gamma = np.zeros((A.shape[2]))+self.resolution_parameter
         delta_intra_slice = self.get_delta_intra_slice(A)
         delta_inter_slice = self.get_delta_inter_slice(C)
@@ -324,22 +329,22 @@ class Network():
                         x = x * self.get_delta_community(g[i,s],g[j,r])
                         summe = summe + x 
                         #if self.get_delta_community(g[i,s],g[j,r])>0:
-                            #print(self.get_delta_community(g[i,s],g[j,r]))
+                            #logger.info(self.get_delta_community(g[i,s],g[j,r]))
                         if i==0 and j==1 and s==0 and r==0:
-                            print(f"A[{i},{j},{s}]={A[i,j,s]}")
+                            logger.info(f"A[{i},{j},{s}]={A[i,j,s]}")
                             xxx = ((gamma[s]*k[i,s]*k[j,s])/(2*m[s]))
-                            print(f"gamma[s]*k[i,s]*k[j,s])/(2*m[s]) = {xxx}")
-                            print(f"delta_inter_slice[{s},{r}]={delta_inter_slice[s,r]}")
-                            print(f"delta_intra_slice[{i},{j}]={delta_intra_slice[i,j]}")
-                            print(f"C[{j},{s},{r}={C[j,s,r]}]")
-                            print(f"self.get_delta_community(g[{i},{s}],g[{j},{r}]) = {self.get_delta_community(g[i,s],g[j,r])}")
-        print("summe")
-        print(summe)
+                            logger.info(f"gamma[s]*k[i,s]*k[j,s])/(2*m[s]) = {xxx}")
+                            logger.info(f"delta_inter_slice[{s},{r}]={delta_inter_slice[s,r]}")
+                            logger.info(f"delta_intra_slice[{i},{j}]={delta_intra_slice[i,j]}")
+                            logger.info(f"C[{j},{s},{r}={C[j,s,r]}]")
+                            logger.info(f"self.get_delta_community(g[{i},{s}],g[{j},{r}]) = {self.get_delta_community(g[i,s],g[j,r])}")
+        logger.info("summe")
+        logger.info(summe)
         
 
         Qms = 1/my2 * summe
-        print(f"Qms = {Qms}")
-        print(f"estimation time = {time.time()-start} s")
+        logger.info(f"Qms = {Qms}")
+        logger.info(f"estimation time = {time.time()-start} s")
         return Qms
     
     def get_delta_community(self, g1,g2):
@@ -369,7 +374,7 @@ class Network():
 
     def get_inter_slice_coupling(self, ipi, coupling_parameter):
         C = np.zeros((ipi.shape[1],ipi.shape[0],ipi.shape[0]))        
-        #print(f"C.shape = {C.shape}")
+        #logger.info(f"C.shape = {C.shape}")
         for j in range(C.shape[0]):
             for s in range(C.shape[1]-1):
                 C[j,s,s+1] = coupling_parameter                    
@@ -463,10 +468,10 @@ class Network():
 
     def printlist3(self, list3):
         for idx, x in enumerate(list3):
-            print(f"Block nummer: {idx+1}")
+            logger.info(f"Block nummer: {idx+1}")
             for y in x:
-                print(y)
-#               print(type(y[0]))#
+                logger.info(y)
+#               logger.info(type(y[0]))#
 #                
     def get_delta_q(self,g, i, s):
         A = self.A
@@ -540,7 +545,7 @@ class Network():
         
     def clustering(self):
         ipi = self.ipi
-        print('clustering ...')
+        logger.info('clustering ...')
         c = abs(np.corrcoef(ipi.T))
         c = np.nan_to_num(c)
         #sns.heatmap(c)
@@ -550,15 +555,15 @@ class Network():
                 c2[i,j], _ = pearsonr(ipi[:,i],ipi[:,j])
         #sns.heatmap(c2, annot = True)
 
-        # print(f"c..... ")
-        # print(f"{np.array2string(c, precision=2, separator = ' ')}")
-        # print(f"--------------")
+        # logger.info(f"c..... ")
+        # logger.info(f"{np.array2string(c, precision=2, separator = ' ')}")
+        # logger.info(f"--------------")
                 
 
 
         plt.figure(figsize=(10, 7))  
         plt.title("Dendrograms")  
-        #print(c)
+        #logger.info(c)
         dendrogram = sch.dendrogram(sch.linkage(c, method='ward'))
         plt.axhline(y=6, color='r', linestyle='--')
         plt.show()
@@ -612,21 +617,21 @@ class Network():
     def print_results(self, print_shuffled_results = True):
         ''' printing der relevanten Informationen
         '''
-        print(".....................")
-        print("---print relevant Information---")
-        print(f"inputfile = ")
-        print(f"Qmulti-trial = {self.q_real}")
+        logger.info(".....................")
+        logger.info("---print relevant Information---")
+        logger.info(f"inputfile = ")
+        logger.info(f"Qmulti-trial = {self.q_real}")
         if print_shuffled_results:
-            print(f"Qmulti-trial = {self.q_real} (p = {self.q_real_p}, t = {self.q_real_t})")
+            logger.info(f"Qmulti-trial = {self.q_real} (p = {self.q_real_p}, t = {self.q_real_t})")
             q_fake_list_mean = sum(self.q_fake_list)/len(self.q_fake_list)
             q_fake_list_std = np.std(np.asarray(self.q_fake_list), axis = 0)
-            print(f"Qmulti-trial-shuffled = {q_fake_list_mean} +- {q_fake_list_std:.4}")
-        #print(f"phi ....")
-        #print(f"phi_real = {self.phi_real}")
+            logger.info(f"Qmulti-trial-shuffled = {q_fake_list_mean} +- {q_fake_list_std:.4}")
+        #logger.info(f"phi ....")
+        #logger.info(f"phi_real = {self.phi_real}")
         x = np.arange(len(self.phi_real)-1)
         y = self.phi_real[1:]
         slope,b = np.polyfit(x, y, 1)
-        print(f"slope of phi_real = {slope}")
+        logger.info(f"slope of phi_real = {slope}")
         #plt.plot(x, y, '.')
         #plt.plot(x, b + slope * x, '-')
         #plt.show()
@@ -690,8 +695,8 @@ class Network():
         # }
         # with open(".\\Data_python\\"+filename, "w") as fp:   #Pickling
         #             json.dump(results, fp)
-        # print(f"q_real = {self.q_real}")
-        # print(f"q_fake_list_mean = {sum(self.q_fake_list)/len(self.q_fake_list)}")
+        # logger.info(f"q_real = {self.q_real}")
+        # logger.info(f"q_fake_list_mean = {sum(self.q_fake_list)/len(self.q_fake_list)}")
         return results
 
 
@@ -726,16 +731,16 @@ if __name__ == '__main__':
         net.filename = srtt.filename
 
 
-#    print(srtt.df.head())
+#    logger.info(srtt.df.head())
  #   net = Network(srtt.rts_cv_but, coupling_parameter = 0.03,  resolution_parameter = 0.9)
 
     if is_estimate_Q:
         g_real,q_real = net.estimate_chunks(is_random = False)
-        print(f"q_real = {q_real}")
+        logger.info(f"q_real = {q_real}")
         net.phi_real = net.estimate_chunk_magnitudes(g_real)
         if is_test_against_random:
             net.test_chunking_against_random(rand_iterations=3)
-            #print(f"q_real = {q_real}")
+            #logger.info(f"q_real = {q_real}")
             results_json = net.get_results_as_json()
         net.print_results(print_shuffled_results = is_test_against_random)
 
@@ -796,8 +801,8 @@ if __name__ == '__main__':
         
     
     #w_norm = mst.w_norm
-    #print(type(mst.ipi_cor))
-    #print(len(mst.ipi_cor))
+    #logger.info(type(mst.ipi_cor))
+    #logger.info(len(mst.ipi_cor))
 
 #model.fit(ta.reshape(-1,1),phia)
 #Out[36]: LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)

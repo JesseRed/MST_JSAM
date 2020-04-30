@@ -2,18 +2,26 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from os import listdir, rename
-import os
+import os, logging, time
 from os.path import isfile, join
 from statistics import mean, stdev
 import statistics
 import networkx
-import time
 from filehandler import FileHandler
 from helper_functions import tolist_ck
 from network import Network
 
+logger = logging.getLogger(__name__)
+
 class SEQ():
-    def __init__(self, fullfilename=".\\Data_Seq_8\\_Carsten_FRA1fertig.csv", sequence_length=8, path_output=".\\Data_python", _id="nox_id"):
+    def __init__(self, fullfilename=".\\Data_Seq_8\\_Carsten_FRA1fertig.csv", sequence_length=8, path_output=".\\Data_python", _id="nox_id", show_images = False, target_color = 8):        
+        """ die target color markiert die Zielfarbe die in das dict geschrieben wird
+            und fuer welches das outputfile erstellt wird
+            die anderen Farben werden werden zwar auch analysiert, bekommen aber im dictionary namen die 
+            anders heissen als die Namen beim MST , sonst koennen wir die ergebnisse nicht\
+            mit den anderen paradigmen vergleichen und die Netzwerkklasse muesste auch umgeschrieben werde
+        """
+        logger.info("Initialising class SEQ ...")
         self.fullfilename = fullfilename
         base = os.path.basename(self.fullfilename)
         self.filename = os.path.splitext(base)[0]
@@ -23,10 +31,17 @@ class SEQ():
         self._id = _id
         self.filehandler = FileHandler(path_output=self.path_output, filename=self.filename, time_identifier=_id)
         self.df = pd.read_csv(self.fullfilename, sep=';', engine='python')
+
         self.ipi, self.hits, self.color = self.get_inter_key_intervals()
+        # self.color eine farbcodierung der verschiedenen Seqenzen 
+        # es ist eine liste von np.arrays mit nummern fuer jede Sezenz, liste ueber die Bloecke
+
         #print(f"size = {len(self.ipi)}")
         self.sequence_length = sequence_length
         self.ipi_cor, self.color_cor = self.get_inter_key_intervals_only_cor2(self.sequence_length) # nur Korrekte Sequencen
+        self.target_col = target_color
+        self.color_dict = self.get_color_code_dict()
+        
         # print(self.ipi_cor)
         # print(type(self.ipi_cor))
         # print(f"after get_inter_key_interals_only_cor2 with len(ipi_cor) = {len(self.ipi_cor)}")
@@ -38,7 +53,8 @@ class SEQ():
         self.paradigmen_time,self.ipi_cor_paradigmen = self.estimate_correct_seqences()
         self.paradigmen_slope = self.estimate_slope()
         #self.estimate_chunks() 
-        self.my_plot()
+        if show_images:
+            self.my_plot()
 
 
     def my_plot(self):
@@ -74,26 +90,139 @@ class SEQ():
     def create_dict(self):
         ''' generating a dictionary with all available information of this class
         '''
+        # for seqence in self.color
+        dict_list = []
+        # mydict = {
+        #     "SEQUENCES"           :       dict_list
+        # }
+        ipi_all = tolist_ck(self.ipi)
+        hits_all = tolist_ck(self.hits)
+        color_all = tolist_ck(self.color)
+        ipi_cor_all = tolist_ck(self.ipi_cor)
+        color_cor_all = tolist_ck(self.color_cor)
+        ipi_cor = []
+        ipi_cor_blue = []
+        ipi_cor_green = []
+        
+        for idx, ipi in enumerate(ipi_cor_all):
+            color_code = color_cor_all[idx]
+            if color_code==self.target_col:
+                ipi_cor.append(ipi)
+            else:
+                color_string = list(self.color_dict.keys())[color_code]
+                if color_code == 1:
+                    ipi_cor_blue.append(ipi)
+                if color_code == 6:
+                    ipi_cor_green.append(ipi)
+
+        ipi = []
+        ipi_blue = []
+        ipi_green = []
+        hits = []
+        hits_blue = []
+        hits_green = []
+        color_list = list(self.color_dict.keys())
+        
+        for idx, ipix in enumerate(ipi_all):
+            color_code = color_all[idx][0]
+            
+            if color_code==self.target_col:
+                ipi.append(ipix)
+                hits.append(hits_all[idx])
+            else:
+                
+                color_string = color_list[color_code]
+                if color_code == 1:
+                    ipi_blue.append(ipix)
+                    hits_blue.append(hits_all[idx])
+                if color_code == 6:
+                    ipi_green.append(ipix)
+                    hits_green.append(hits_all[idx])
+                    
+        paradigmen_slope = tolist_ck(self.paradigmen_slope)
+        uniquecolorlist = list(set(tolist_ck(self.color_cor)))
+#        for c in uniquecolorlist:
         mydict = {
-            'experiment' :              'SEQ',
-            'ipi' :                     tolist_ck(self.ipi),
-            'hits':                     tolist_ck(self.hits),
-            'color':                    tolist_ck(self.color),
-            'ipi_cor' :                 tolist_ck(self.ipi_cor),
-            'color_cor':                tolist_ck(self.color_cor),
-            'sequence_length' :         self.sequence_length,
-            'paradigmencorrsq' :        self.paradigmen_time,
-            'corrsq_slope_b' :          tolist_ck(self.paradigmen_slope)
+            'experiment'            :   'SEQ',
+            'ipi_all'               :   tolist_ck(self.ipi),
+            'hits_all'              :   tolist_ck(self.hits),
+            'color_all'             :   tolist_ck(self.color),
+            'ipi'                   :   ipi, # die ipis der Zielfarbe
+            'hits'                  :   hits,
+            'ipi_blue'              :   ipi_blue,
+            'hits_blue'             :   hits_blue,
+            'ipi_green'             :   ipi_green,
+            'hits_green'            :   hits_green,
+            'ipi_cor'               :   ipi_cor, # Zielfarbe
+            'ipi_cor_blue'          :   ipi_cor_blue,
+            'ipi_cor_green'         :   ipi_cor_green,
+            'color_cor'             :   tolist_ck(self.color_cor),
+            'sequence_length'       :   tolist_ck(self.sequence_length),
+            'paradigmencorrsq_time' :   tolist_ck(self.paradigmen_time),
+            #'paradigmen_cor_seq'    :   tolist_ck(self.ipi_cor_paradigmen), # die ipi_cor nach paradigmen (1...10)
+            'corr_slope'            :   tolist_ck(paradigmen_slope[self.target_col][0]),
+            'corr_slope_blue'       :   tolist_ck(paradigmen_slope[1][0]),
+            'corr_slope_green'      :   tolist_ck(paradigmen_slope[6][0]),
+            'corrsq_slope_b'        :   tolist_ck(self.paradigmen_slope),
+            'abs_errors'            :   len(tolist_ck(self.ipi))-len(tolist_ck(self.ipi_cor)),
+            'abs_corr_seq'          :   len(tolist_ck(self.ipi_cor))
         }
+  #      dict_list.append()
+        # MST
+        # mydict = {
+        #     'experiment' :              'MST',
+        #     'ipi' :                     tolist_ck(self.ipi),
+        #     'hits':                     tolist_ck(self.hits),
+        #     'ipi_cor' :                 tolist_ck(self.ipi_cor),
+        #     'sequence_length' :         self.sequence_length,
+        #     'corrsq' :                  tolist_ck(self.corrsq),
+        #     'corrsq_slope' :            tolist_ck(self.corrsq_slope),
+        #     'corrsq_slope_to_max' :     tolist_ck(self.corrsq_slope_to_max), # regressionsgerade nur bis zum Maximum berechnet
+        #     'corrsq_slope_1_10' :       tolist_ck(self.corrsq_slope_1_10), # regressionsgerade nur 1-10
+        #     'errors_per_block'      :   tolist_ck(self.errors_per_block),
+        #     'abs_errors'            :   sum(tolist_ck(self.errors_per_block)),
+        #     'abs_corr_seq' :            sum(tolist_ck(self.corrsq)),
+        #     'pos_of_first_best_block' : corrsq.index(max(corrsq)),
+        #     'pos_of_last_best_block' :  abs((reverse_corrsq.index(max(corrsq)))-12),
+        #     'abs_corr_sequence'     :   sum(tolist_ck(self.corrsq))
+        # }
+
+
+
         # ergaenze die Network Daten falls vorhanden
         if hasattr(self,'net'):
             net_dict = self.net.get_results_as_json()
             mydict.update(net_dict)
         return mydict
 
+
+# corrsq = tolist_ck(self.corrsq)
+#         reverse_corrsq = corrsq.copy()
+#         reverse_corrsq.reverse()
+#         mydict = {
+#             'experiment' :              'MST',
+#             'ipi' :                     tolist_ck(self.ipi),
+#             'hits':                     tolist_ck(self.hits),
+#             'ipi_cor' :                 tolist_ck(self.ipi_cor),
+#             'sequence_length' :         self.sequence_length,
+#             'corrsq' :                  tolist_ck(self.corrsq),
+#             'corrsq_slope' :            tolist_ck(self.corrsq_slope),
+#             'corrsq_slope_to_max' :     tolist_ck(self.corrsq_slope_to_max), # regressionsgerade nur bis zum Maximum berechnet
+#             'corrsq_slope_1_10' :       tolist_ck(self.corrsq_slope_1_10), # regressionsgerade nur 1-10
+#             'errors_per_block'      :   tolist_ck(self.errors_per_block),
+#             'abs_errors'            :   sum(tolist_ck(self.errors_per_block)),
+#             'abs_corr_seq' :            sum(tolist_ck(self.corrsq)),
+#             'pos_of_first_best_block' : corrsq.index(max(corrsq)),
+#             'pos_of_last_best_block' :  abs((reverse_corrsq.index(max(corrsq)))-12),
+#             'abs_corr_sequence'     :   sum(tolist_ck(self.corrsq))
+#         }
+
+
+
+
     def add_network_class(self, coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= True, is_estimate_Q= False, num_random_Q=0):
         #self.net = Network(self.ipi_cor, coupling_parameter = coupling_parameter,  resolution_parameter = resolution_parameter,is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q=num_random_Q)
-        self.net = Network(self.ipi_cor_paradigmen[8], coupling_parameter = coupling_parameter,  resolution_parameter = resolution_parameter,is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q=num_random_Q)
+        self.net = Network(self.ipi_cor_paradigmen[self.target_col], coupling_parameter = coupling_parameter,  resolution_parameter = resolution_parameter,is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q=num_random_Q)
         self.net.filename = self.fullfilename
 
     
@@ -101,12 +230,7 @@ class SEQ():
     def get_inter_key_intervals_only_cor2(self, num_cor_press):
         """reduziert die ipi (inter Press Intervals) auf nur die korrekten Druecker
             dazu werden ausschliesslich korrekte Sequenzen herangezogen
-            Wir behaupten, dass man nicht mehr als 10 druecker chunkt
-            Daher ketten wir maximal 2 aneinander
-            Nachher die anhehaengte wird gedoppelt
-            hier muessen wir nacher darauf achten, dass wir keine Sequenzen nehmen die nur in der 2. 
-            Sequenz stattfinden da sie dann doppelte gezaehlt waeren
-            num_cor_press definiert wie viele korrekte vorhanden sein muessen um eine komplette "Sequenz" zu definieren
+            
         """        
         ipi_cor = []
         color_cor = []
@@ -120,7 +244,7 @@ class SEQ():
             h = self.hits[idx]
             color = self.color[idx]
             if sum(h) == self.sequence_length:
-                # es wurde korrekt gedrueckt
+                # es wurde eine Sequenz korrekt gedrueckt
                 ipi_cor.append(ipi[1:])
                 #print(f"get_inter_key_intervals_only_cor2 with append ipi.shape = {ipi.shape}")
                 color_cor.append(color[1])

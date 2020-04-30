@@ -16,20 +16,22 @@ from network import Network
 from helper_functions import tolist_ck
 
 class SRTT():
-    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", path_output = ".\\Data_python", _id = "no_id"):
+    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", path_output = ".\\Data_python", _id = "no_id", sequence_length = 12):
         self.fullfilename = fullfilename
         base=os.path.basename(self.fullfilename)
         self.filename = os.path.splitext(base)[0]
         self.path_output = path_output
         self._id = _id
         self.filehandler = FileHandler(path_output=self.path_output, filename = self.filename, time_identifier = _id)
-        
+        self.sequence_length = sequence_length
         self.df = pd.read_csv(self.fullfilename, sep = '\t' )
-        self.rts_nr, self.ipi_nr, self.but_nr = self.get_data_from_sequences(self.df,is_random=False)
-        self.rts_ra, self.ipi_ra, self.but_ra = self.get_data_from_sequences(self.df, is_random=True)
+        self.rts_nr, self.ipi_nr, self.but_nr, self.rts_err_nr, self.ipi_err_nr, self.but_err_nr, self.corr_seq_per_block_nr, self.err_seq_per_block_nr = self.get_data_from_sequences(self.df,is_random=False)
+        self.rts_ra, self.ipi_ra, self.but_ra, self.rts_err_ra, self.ipi_err_ra, self.but_err_ra, self.corr_seq_per_block_ra, self.err_seq_per_block_ra  = self.get_data_from_sequences(self.df, is_random=True)
+        #print(type(self.rts_nr))
         self.rts_cv_seq = self.get_rt_change_variable_sequence(self.rts_nr,self.rts_ra)# response time change variable
         self.rts_cv_but = self.get_rt_change_variable_button(self.rts_nr,self.rts_ra, self.but_nr, self.but_ra)# response time change variable
-        
+        #print(self.corr_seq_per_block_nr)
+        self.corrsq_slope = self.estimate_improvement(self.corr_seq_per_block_nr)
 
     def clustering(self,rts_cv):
         c = abs(np.corrcoef(rts_cv.T))
@@ -62,11 +64,52 @@ class SRTT():
     def create_dict(self):
         ''' generating a dictionary with all available information of this class
         '''
+        ipi = tolist_ck(self.rts_cv_but)
+
         mydict = {
             'experiment' :              'SRTT',
-            'rts_cv_seq' :              tolist_ck(self.rts_cv_seq),
-            'rts_cv_but':               tolist_ck(self.rts_cv_but)            
+            'ipi'           :           tolist_ck(self.rts_nr),            
+            'hits'                  :   [],
+            'ipi_cor'               :   tolist_ck(self.rts_nr), # das sind zwar nciht die ipi aber ich bin hier konsistent mit den anderen Paradigmen indem die Zielvariable ipi_cor heisst
+            'sequence_length'       :   self.sequence_length,
+            'corrsq'                :   tolist_ck(self.corr_seq_per_block_nr),
+            'corrsq_slope'          :   tolist_ck(self.corrsq_slope),
+            'errors_per_block'      :   tolist_ck(self.err_seq_per_block_nr),
+            'abs_errors'            :   sum(tolist_ck(self.err_seq_per_block_nr)),
+            'abs_corr_seq' :            sum(tolist_ck(self.corr_seq_per_block_nr)),
+            'rts_nr'                :   tolist_ck(self.rts_nr),
+            'rts_ra'                :   tolist_ck(self.rts_ra),
+            'rts_err_nr'            :   tolist_ck(self.rts_err_nr),
+            'rts_err_ra'            :   tolist_ck(self.rts_err_ra),
+            # 'rts_nr'                :   tolist_ck(self.rts_nr),
+            # 'rts_nr'                :   tolist_ck(self.rts_nr),
+            # 'rts_nr'                :   tolist_ck(self.rts_nr),
+            # 'rts_nr'                :   tolist_ck(self.rts_nr),
+            # 'rts_nr'                :   tolist_ck(self.rts_nr),
+            # 'rts_cv_seq' :              tolist_ck(self.rts_cv_seq),
+            # 'rts_cv_but':               tolist_ck(self.rts_cv_but),
+
         }
+
+        # mydict = {
+        #     'experiment' :              'MST',
+        #     'ipi' :                     tolist_ck(self.ipi),
+        #     'hits':                     tolist_ck(self.hits),
+        #     'ipi_cor' :                 tolist_ck(self.ipi_cor),
+        #     'sequence_length' :         self.sequence_length,
+        #     'corrsq' :                  tolist_ck(self.corrsq),
+        #     'corrsq_slope' :            tolist_ck(self.corrsq_slope),
+        #     'corrsq_slope_to_max' :     tolist_ck(self.corrsq_slope_to_max), # regressionsgerade nur bis zum Maximum berechnet
+        #     'corrsq_slope_1_10' :       tolist_ck(self.corrsq_slope_1_10), # regressionsgerade nur 1-10
+        #     'errors_per_block'      :   tolist_ck(self.errors_per_block),
+        #     'abs_errors'            :   sum(tolist_ck(self.errors_per_block)),
+        #     'abs_corr_seq' :            sum(tolist_ck(self.corrsq)),
+        #     'pos_of_first_best_block' : corrsq.index(max(corrsq)),
+        #     'pos_of_last_best_block' :  abs((reverse_corrsq.index(max(corrsq)))-12),
+        #     'abs_corr_sequence'     :   sum(tolist_ck(self.corrsq))
+        # }
+
+
         # ergaenze die Network Daten falls vorhanden
         if hasattr(self,'net'):
             net_dict = self.net.get_results_as_json()
@@ -88,6 +131,8 @@ class SRTT():
                 oder die gleiche Position in der Sequenz
                 ->ich mache erstmal die sequenzposition
         '''
+        #print(rts_ra)
+        #print(type(rts_ra))
         mean_ra = np.rint(np.mean(rts_ra, axis = 0)).astype(int)
         rts_cv = rts_nr-mean_ra
         # ich moechte nur positive WErte
@@ -130,40 +175,71 @@ class SRTT():
         ipi_cor = [] # correct sequences 
         rts_cor = []
         but_cor = []
+        ipi_err = [] # correct sequences 
+        rts_err = []
+        but_err = []
         num_miss =1
         rts = []
         but = []
         buttons = []
         old_time = -1
         ipi = [] # temporaeres speichern einer Sequenz 
+        corr_seq_per_block = []
+        corr_seq_in_block = 0
+        err_seq_per_block = []
+        err_seq_in_block = 0
+        new = True
+        block_idx = -1
+        block_idx_old = -1
         for idx,row in df.iterrows():
+            if new:
+                new = False
+                block_idx = row['block']
+            
+            if block_idx>=0 and (not row['block']==block_idx): # neuer Block
+                #print("new block")
+                block_idx = row['block']
+                corr_seq_per_block.append(corr_seq_in_block)
+                corr_seq_in_block = 0
+                err_seq_per_block.append(err_seq_in_block)
+                err_seq_in_block = 0
             #print(f"idx= {idx}")
-            rts.append(row['RT_1'])
+            rts.append(row['RT_1']/1000)
             but.append(row['Button'])
             if old_time>0:
                 #print(f"append with idx = {idx} and old_time= {old_time}")
-                ipi.append(row['time']-old_time)
-            old_time = row['time']
+                ipi.append(row['time']/1000-old_time)
+            old_time = row['time']/1000
             
-            if row['trial']%12==0: # sequenz fertig ... in den random steht bei sequenz immer 1 und trials werden hochgezaehlt
+            if row['trial']%self.sequence_length==0: # sequenz fertig ... in den random steht bei sequenz immer 1 und trials werden hochgezaehlt
                 
                 if num_miss ==0: # wir speichern nur correcte Sequenzen
                     ipi_cor.append(ipi)
                     rts_cor.append(rts)
                     but_cor.append(but)
+                    corr_seq_in_block+=1
+                else:
+                    ipi_err.append(ipi)
+                    rts_err.append(rts)
+                    but_err.append(but)
+                    err_seq_in_block+=1
                 old_time = -1
                 rts = []
                 ipi = []
                 but = []
                 num_miss = 0
+        # self.corr_seq_per_block = corr_seq_per_block
+        # self.err_seq_per_block = err_seq_per_block
+
+        return (np.asarray(rts_cor), np.asarray(ipi_cor), np.asarray(but_cor),
+            np.asarray(rts_err), np.asarray(ipi_err), np.asarray(but_err),corr_seq_per_block, err_seq_per_block)
         
-        return (np.asarray(rts_cor), np.asarray(ipi_cor), np.asarray(but_cor))
-        
-    def estimate_improvement(self):
-        X = [1,2,3,4,5,6,7,8,9,10,11,12]
-        if not hasattr(self,'corrsq'):
-            self.estimate_correct_seqences()
-        improvement,b = np.polyfit(X, self.corrsq, 1)
+    def estimate_improvement(self, corr_seq_per_block):
+        #print(corr_seq_per_block)
+        #print(type(corr_seq_per_block))
+
+        X = list(range(len(corr_seq_per_block)))
+        improvement,b = np.polyfit(X, corr_seq_per_block, 1)
         return improvement
         
 

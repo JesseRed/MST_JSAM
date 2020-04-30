@@ -1,0 +1,41 @@
+|Klarname|Probandenkürzel|VPN|Geschlecht|Geburtsjahr|Händigkeitsscore|Händigkeit|Sehstörungen|BDI-II|EQ-5D|SF-12|MoCA|MST Tag 1|MST Tag 2|Asteroid Tag 1|Asteroid Tag 2|SRT Tag 1|SRT Tag 2|SRTT Tag 1|SRTT Tag 2|Intervention|Gewicht|Körpergröße|Vorerkrankungen|Raucher|Alkohol (Häufigkeit x Gläser)|Drogen|Computerspielverhalten|Suchtverhalten|Religiös|Gedächtnisstörungen|Stress|Depression|psychische Erkrankungen|Lebenspartnerschaft|allein leben|Sport pro Woche|Sorgen|Haupttätigkeit|Medikation|Abschluss|
+0|Julia Wolff|REST_L_J_1|1|w|1995||r|j (kurzsichtig)|0|90|28|n.d.|x|x|x|x|||||nein|72|163|nein|noch nie|2-4 p.M. x 1|nein||nein|6|nein|5|vergangen|nein|ja|nein|1-3 h|k.A.|Ab/St|Antidepressiva (Venlafaxin 37,5 mg)||
+1|Lisa Lange|REST_L_J_2|2|w|1985||r|n|1|100|26|n.d.|x|x|x|x|||||nein|69|161|Hypertonie|noch nie|2-4 p.M. x 1|nein||nein|1|nein|3|nie|nein|ja|nein|1 h|keine|Ang|keine||
+2|Sophie Ernst|REST_L_J_3|3|w|1996||l|j (weitsichtig)|6|80|29|n.d.|x|x|x|x|||||nein|60|168|nein|noch nie|2-4 p.M. x 4-5|nein||nein|5|nein|4|nie|nein|nein|nein|1 h|Einsamkeit|Ab/St|keine||
+3|Levi Koers|REST_L_J_4|4|m|1998||r|j (weitsichtig)|1|90|21|n.d.|x|x|x|x|||||nein|75|186|nein|geg (1,5 über 1 Jahre)|2-4 p.M. x 4-5|nein||nein|6|nein|2|nie|nein|nein|nein|1-3 h|keine|Ab/St|keine||
+4|Ronja Ehrhardt|REST_L_J_5|5|w|1994||r|n|39|50|28|n.d.|x|x|x|x|||||nein|60|160|nein|ehem (k.A.)|2-4 p.M.  x 2-3|ja||nein|2|nein|8|vergangen|ja|ja|nein|1-3 h|Verarmung, Geldsorgen, Einsamkeit|Ab/St|keine||
+5|Matthias Roth|REST_L_J_6|6|m|1991||r|n|7|80|27|n.d.|x|x|x|x|||||nein|81|183|nein|noch nie|2-4 p.M.  x 2-3|nein||nein|2|nein|4|nie|nein|ja|nein|>3 h|keine|Ab/St|Allergiemedikamente||
+6|Michael Schreiber|REST_L_J_7|7|m|1997||r|n|9|80|30|n.d.|x|x|x|x|||||nein|90|186|nein|noch nie|2-3 p.W. x 2-3|nein||ja|7|nein|9|nie|nein|ja|nein|1-3 h|Geldsorgen, Einsamkeit|Ab/St|keine||
+7|Paula Severin|REST_L_J_8|8|w|1997||r|n|2|80|29|n.d.|x|x|x|x|||||nein|68|184|nein|geg (k.A.)|2-3 p.W. x 2-3|ja||nein|2|nein|1|nie|nein|ja|nein|1-3 h|keine|Ab/St|keine||
+8|Lukas Konstantin Dauer|REST_L_J_9|9|m|1994||r|n|1|80|29|n.d.|x|x|x|x|||||nein|66|180|nein|noch nie|2-3 p.W. x 2-3ja|||nein|5|nein|3|nie|nein|ja|nein|1-3 h|keine|Ab/St|keine||
+9|Jonas Rudolph|REST_L_J_10|10|m|1997||r|j (kurzsichtig)|0|100|24|n.d.|x|x|x|x|||||nein|75|173|nein|noch nie|1 p.M. x 2-3|nein||nein|1|nein|5|nie|nein|nein|nein|1-3 h|keine|Ab/St|keine||
+10|Robert Wieczorek|REST_L_J_11|11|m|1989||r|n|0|90|22|n.d.|x|x|x|x|||||nein|85|187|nein|noch nie|2-3 p.W. x 4-5|nein||nein|3|nein|8|nie|nein|nein|nein|>3 h|Geldsorgen |Ab/St|keine||
+11|Laura Kesper|REST_L_J_12|12|w|1994||r|n|3|90|29|n.d.|x|x|x|x|||||nein|64|180|nein|noch nie|2-4 p.M. x 2-3|nein||nein|1|nein|5|vergangen|nein|ja|nein|1-3 h|Einsamkeit|Ang|keine||
+12|Konrad Krieghoff|REST_L_J_13|13|m|2001||l|n|2|80|27|n.d.|x|x|x|x|||||nein|62|185|Hypertonie|noch nie|1 p.M. x 4-5|nein||nein|3|nein|8|nie|nein|nein|nein|1 h|keine|Ab/St|Beta-Blocker||
+13|Susanna Bräu|REST_L_J_14|14|w|2001||r|j (kurzsichtig)|8|90|29|n.d.|x|x|x|x|||||nein|68|175|nein|noch nie|2-3 p.W. x 2-3|nein||nein|1|nein|8|nie|nein|nein|nein|1 h|k.A.|Ab/St|keine||
+14|Anthony Meyer|REST_L_J_15|15|m|1997|||n|1|100|27|n.d.|x|x|||x|x|||nein|81|180||noch nie|2-4 p.M.  x 2-3|nein|1-mehrmals p.w.|nein|1|nein||nie|nein|nein|ja|>3 h|keine|Ang||Ausbildung|
+15|Paula Hörnig|REST_L_J_16|16|w|2000|||n|0|80|26|n.d.|x|x|||x|x|||nein|66|179||noch nie|2-3 p.W.x 1|nein|1-mehrmals p.w.|nein|1|nein||nie|nein|nein|nein|>3 h|keine|Ab/St||Abitur|
+16|Tim Queißert|REST_L_J_17|17|m|1995|||n|3|90|28|n.d.|x|x|||x|x|||nein|83|190||noch nie|2-3 p.W. x 2-3|nein|seltener|nein|5|nein||nie|nein|nein|nein|>3 h|keine|Ab/St||Studium|
+17|Fritz Grudsinski|REST_L_J_18|18|||||||||n.d.|x|x|||x|x|||nein|||||||||||||||||||||
+18|Sophia Peter|REST_L_J_19|19|w|1999|||j (kurzsichtig)|11|70|29|n.d.|x|x|||x|x|||nein|63|165||noch nie|2-4 p.M.  x 2-3|ja|täglich|nein|2|nein||nie|nein|nein|nein|>3 h|Geldsorgen, Einsamkeit|Ab/St||Studium|
+19|Julian Klos|REST_L_J_20|20|m|1996|||n|0|80|28|n.d.|x|x|||x|x|||nein|93|195||noch nie|2-4 p.M. x 4-5|nein|1-mehrmals p.w.|nein|1|nein||nie|nein|ja|nein|>3 h|keine|Ang||Studium|
+20|Melanie Koeplin|REST_L_J_21|21|||||||||n.d.|x|x|||x|x|||nein|||||||||||||||||||||
+21|Nell Schure|REST_L_J_22|22|w|1998|||n|11|90|29|n.d.|x|x|||x|x|||nein|60|170||geg (0-2 über 3 Jahre)|2-4 p.M.  x 2-3|nein|nie|nein|2|nein||nie|nein|ja|nein|1 h|Geldsorgen, Einsamkeit|Arbeitssuchend||Abitur|
+22|Isabell Bernhard|REST_L_J_23|23|w|2000|||n|25|70|31|n.d.|x|x|||x|x|||nein|60|176||noch nie|2-3 p.W. x 2-3|nein|nie|nein|2|nein||nie|nein|nein|nein|>3 h|Einsamkeit|Schüler||Abitur|
+23|Janina Bernhard|REST_L_J_24|24|w|1998|||j (kurzsichtig)|11|90|27|n.d.|x|x|||x|x|||nein|66|178||noch nie|2-4 p.M.  x 2-3|nein|seltener|nein|2|nein||nie|nein|ja|nein|>3 h|keine|Ab/St||Abitur|
+24|Philipp Mayer|REST_L_J_25|25|m|1997|||n|4|90|27|n.d.|x|x|||x|x|||nein|95|198||noch nie|1 p.M. X 1|nein|1-mehrmals p.w.|nein|2|nein||nie|nein|ja|ja|>3 h|keine|Ang||Ausbildung|
+25|Elisabeth Zeipert|REST_L_J_26|26|w|1998|||j (kurzsichtig)|0|90|29|n.d.|x|x|||x|x|||nein|56|164||noch nie|2-4 p.M.  X 1|nein|seltener|nein|1|nein||nie|nein|ja|nein|1-3 h|keine|Ab/St||Abitur|
+26|Stefan Schulze|REST_L_J_27|27|m|1990|||n|2|70|29|n.d.|x|x|||x|x|||nein|72|173||noch nie|2-3 p.W. X 1|nein|nie|nein|1|nein||nie|nein|ja|ja|1 h|keine|Ang||Studium|
+27|Dorothea Staub|REST_L_J_28|28|w|1998|||n|15|90||n.d.|x|x|||x|x|||nein|64|170||ehem (5 über 6 Jahre)|2-4 p.M.  X 4-5|nein|1-mehrmals p.w.|nein|1|nein||nie|nein|ja|nein|1 h|Geldsorgen, Einsamkeit|Ab/St||Abitur|
+28|Laura Julia Schmidt|REST_L_J_29|29|w|1999|||n|7|70||n.d.|x|x|||x|x|||nein|76|176||ehem (k.A.)|2-4 p.M.  X 4-5|nein|seltener|nein|3|nein||nie|nein|ja|nein|1 h|keine|Ab/St||Abitur|
+29|Lea Hofmann|REST_L_J_30|30|w|1996|||n|4|90||n.d.|x|x|||x|x|||nein|58|170||noch nie|2-4 p.M.  x 2-3|nein|seltener|nein|3|nein||nie|nein|nein|ja|>3 h|Geldsorgen, Einsamkeit|Ab/St||Studium|
+30|Julia Leykauf|REST_L_J_31|31|w|1996|||j (Hornhautverkrümmung, kurzsichtig)|7|80||n.d.|x|x|||x|x|||nein|60|170||noch nie|2-4 p.M.  X 1|nein|nie|nein|5|nein||nie|nein|ja|nein|1-3 h|Einsamkeit|Ang||Studium|
+31|Lisa Wittmann|REST_L_J_32|32|w|1992|||j (kurzsichtig)|4|90||n.d.|x|x|||x|x|||nein|79|165||noch nie|2-4 p.M.  x 2-3|nein|seltener|nein|4|nein||nie|nein|ja|nein|1-3 h|Einsamkeit|Ang||Studium|
+32|Steven Herrmann|REST_L_J_33|33|m|1988|||j (kurzsichtig)|0|80||n.d.|x|x|||x|x|||nein|95|178||ehem (k.A.)|2-4 p.M.  x 2-3|nein|seltener|nein|1|nein||nie|nein|ja|nein|1-3 h|k.A.|Ang||Studium|
+33|Nora Richter|REST_L_J_34|34|w|1997|||j (kurzsichtig)|8|80||n.d.|x|x|||x|x|||nein|65|170||noch nie|2-4 p.M.  X 4-5|nein|1-mehrmals p.w.|nein|9|nein||nie|nein|nein|ja|1-3 h|Einsamkeit|Ab/St||Abitur|
+34|Anna Melina Pscheidt|REST_L_J_35|35|w|1995|||j (kurzsichtig)|4|100||n.d.|x|x|||x|x|||nein|59|169||noch nie|1 p.M. x 2-3|nein|nie|nein|7|nein||nie|nein|ja|nein|1-3 h|keine|Ang||Studium|
+35|Hans Kirschner|REST_L_J_36|36|m|1995|||n|8|90||n.d.|x|x|||x|x|||nein|70|177||noch nie|1 p.M. x 4-5|ja|1-mehrmals p.w.|nein|3|nein||nie|nein|ja|nein|>3 h|Einsamkeit, Geldsorgen|Ang||Abitur|
+36|Victor Ernst|REST_L_J_37|37|m|1999|||n|0|100||n.d.|x|x|||x|x|||nein|65|177||noch nie|2-4 p.M.  X 4-5|nein|1-mehrmals p.w.|nein|4|nein||nie|nein|nein|nein|>3 h|keine|Ab/St||Abitur|
+37|Marlene Krause|REST_L_J_38|38|w|1996|||n|5|70||n.d.|x|x|||x|x|||nein|68|171||noch nie|2-4 p.M.  X 4-5|nein|nie|nein|4|nein||nie|nein|ja|nein|1-3 h|k.A.|Ang||Studium|
+38|Anna Wagenknecht|REST_L_J_39|39|||||||||n.d.|x|x|||x|x|||nein|||||||||||||||||||||
+39|Martin Lange|REST_L_J_40|40|||||||||n.d.|x|x|||x|x|||nein|||||||||||||||||||||

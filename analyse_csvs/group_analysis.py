@@ -10,7 +10,10 @@ from scipy import stats
 from myplots import my_violinplot, set_axis_style
 from my_statistics import cohend
 from statistic_ck import Statistic
-from group import Group
+import experiments_config #import estimate_Rogens
+import logging 
+from lern_table import LearnTable
+logger = logging.getLogger(__name__)
 
 class Group_analysis():
     ''' Verwaltung von Gruppenanalysen
@@ -22,12 +25,18 @@ class Group_analysis():
         self.path = analysis_path
         self.groups = [] # eine Liste von Gruppen fuer die Analyse, in dieser stehen alle Infos
 
-    def add_group(self, experiment = 'MST', path_inputfiles = ".\\Data MST", filepattern="Tag1", path_outputfiles = ".\\Data_python", sequence_length = 10, _id = None, is_estimate_network=False):
-        print("adding additional groups for the analysis")
-        group = Group(experiment = experiment, path_inputfiles = path_inputfiles, filepattern= filepattern, path_outputfiles = path_outputfiles, sequence_length = sequence_length, _id = _id, is_estimate_network = is_estimate_network)
+    def add_group(self, experiment = 'MST', path_inputfiles = ".\\Data MST", filepattern="Tag1", 
+        path_outputfiles = ".\\Data_python", sequence_length = 10, _id = None, 
+        is_estimate_network=False, is_clustering = False, is_estimate_Q = True, 
+        num_random_Q = 10, coupling_parameter = 0.3, resolution_parameter = 0.9,
+        is_multiprocessing = False, show_images = False, target_color = 8):
+
+        logger.info(f"adding additional groups for the analysis")
+        group = Group(experiment = experiment, path_inputfiles = path_inputfiles, filepattern= filepattern, path_outputfiles = path_outputfiles, sequence_length = sequence_length, _id = _id, is_estimate_network = is_estimate_network, is_clustering = is_clustering, is_estimate_Q = is_estimate_Q,  num_random_Q = num_random_Q, coupling_parameter = coupling_parameter, resolution_parameter = resolution_parameter, is_multiprocessing = is_multiprocessing, show_images = show_images, target_color = target_color)
         group.get_data()
-        group.save_data()
+        #group.save_data()
         self.groups.append(group)
+
 
 
     def plot(self):
@@ -39,39 +48,42 @@ class Group_analysis():
         my_forestplot(self.mst_g1.corrsq, self.mst_g2.corrsq)
         
 
+
+
+
         
 if __name__ == '__main__':
-    
-    is_perform_analysis = True
-    is_estimate_network = False
-    is_perform_statistic = False
+    experiments_config.estimate_Rogens()
+#     is_perform_analysis = True
+#     is_estimate_network = False
+#     is_perform_statistic = False
 
-    experiment_name = 'MST'
-#    experiment_name = 'SRTT'
-    #experiment_name = 'ASTEROID'
+#     experiment_name = 'MST'
+# #    experiment_name = 'SRTT'
+#     #experiment_name = 'ASTEROID'
 
 
-    if experiment_name ==  'MST':
-        path_inputfiles = ".\\Data_Rogens\\MST"
-        filepattern1 = "REST1"
-        filepattern2 = "REST2"
-        _ids = ["MST_G1_", "MST_G2"]
-        analysis = Group_analysis(".\\Results\\Rogens")
-    
-
+#     if experiment_name ==  'MST':
+#         path_inputfiles = ".\\Data_Rogens\\MST"
+#         filepattern1 = "REST1"
+#         filepattern2 = "REST2"
+#         _ids = ["MST_G1_", "MST_G2"]
+#         analysis = Group_analysis(".\\Results\\Rogens")
     
 
-    if is_perform_analysis:
-        analysis.add_group(experiment = experiment_name, path_inputfiles = path_inputfiles, filepattern=filepattern1, path_outputfiles = ".\\Results\\Rogens", sequence_length = 10, _id = _ids[0], is_estimate_network = is_estimate_network)
-        analysis.add_group(experiment = experiment_name, path_inputfiles = path_inputfiles, filepattern=filepattern2, path_outputfiles = ".\\Results\\Rogens", sequence_length = 10, _id = _ids[1], is_estimate_network = is_estimate_network)
     
-    my_stat = Statistic(experiment=experiment_name, group_list=analysis.groups, data_path=".\\Results\\Rogens", _ids=_ids)
-    keys = ["corrsq_slope", "abs_corr_seq", "pos_of_first_best_block", "pos_of_last_best_block"]
-    for key in keys:
-        my_stat.test_group_differences_ttest(key = key, is_independent = False)
-        my_stat.show_group_differences(key)
+
+# #     if is_perform_analysis:
+# #         analysis.add_group(experiment = experiment_name, path_inputfiles = path_inputfiles, filepattern=filepattern1, path_outputfiles = ".\\Results\\Rogens", sequence_length = 10, _id = _ids[0], is_estimate_network = is_estimate_network)
+# #         analysis.add_group(experiment = experiment_name, path_inputfiles = path_inputfiles, filepattern=filepattern2, path_outputfiles = ".\\Results\\Rogens", sequence_length = 10, _id = _ids[1], is_estimate_network = is_estimate_network)
     
-    my_stat.plot_one_group_sequence("corrsq")
+#     my_stat = Statistic(experiment=experiment_name, group_list=analysis.groups, data_path=".\\Results\\Rogens", _ids=_ids)
+#     keys = ["corrsq_slope", "abs_corr_seq", "pos_of_first_best_block", "pos_of_last_best_block"]
+#     for key in keys:
+#         my_stat.test_group_differences_ttest(key = key, is_independent = False)
+#         my_stat.show_group_differences(key)
+    
+#     my_stat.plot_one_group_sequence("corrsq")
     
 #     if experiment_name == 'SRTT':
 #         path_inputfiles = ".\\Data_SRTT_test"

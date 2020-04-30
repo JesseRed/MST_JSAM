@@ -23,9 +23,13 @@ class FileHandler():
         #print(f"write to file")
         # append old content if it exist
         if os.path.isfile(self.filename):
-            with open(self.filename, "r") as fp:
-                dict_in_file = json.load(fp)
-            mydict.update(dict_in_file)
+            try:
+                with open(self.filename, "r") as fp:
+                    dict_in_file = json.load(fp)
+                mydict.update(dict_in_file)
+            except:
+                os.remove(self.filename)
+                print("update failed writing new...")
         # nun kann ich schreiben
         self.__save_dict_as_json(mydict)
 
