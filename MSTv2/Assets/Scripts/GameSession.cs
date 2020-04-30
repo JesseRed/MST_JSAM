@@ -53,10 +53,11 @@ public class GameSession : MonoBehaviour
     public void InitializePlayerDataStructure()
     {
         // hole mir die Daten und initialisiere die Classe mit den PlayerData
-        string vorname = GameObject.Find("VornameText").GetComponent<TextMeshProUGUI>().text;
-        string nachname = GameObject.Find("NachnameText").GetComponent<TextMeshProUGUI>().text;
-        string gebDat = GameObject.Find("GebDatText").GetComponent<TextMeshProUGUI>().text;
-        string trainingsDaystring = GameObject.Find("TrainingsDayText").GetComponent<TextMeshProUGUI>().text;
+        string vorname = GameObject.Find("VornameInputField").GetComponent<TMP_InputField>().text;
+        string nachname = GameObject.Find("NachnameInputField").GetComponent<TMP_InputField>().text;
+
+        string gebDat = GameObject.Find("GebDatumInputField").GetComponent<TMP_InputField>().text;
+        string trainingsDaystring = GameObject.Find("TrainingsTagInputField").GetComponent<TMP_InputField>().text;
         // string studyname = GameObject.Find("StudynameText").GetComponent<TextMeshProUGUI>().text;
         string studyname = "VOID";
         Toggle restToggle = GameObject.Find("ToggleREST").GetComponent<Toggle>();
@@ -68,15 +69,16 @@ public class GameSession : MonoBehaviour
         if (seqToggle.isOn) { studyname = "SEQ";  }
         if (fraToggle.isOn) { studyname = "FRA";  }
         if (tauToggle.isOn) { studyname = "TAU";  }
-        trainingsDaystring = trainingsDaystring.Substring(0,trainingsDaystring.Length-1);
+        // trainingsDaystring = trainingsDaystring.Substring(0,trainingsDaystring.Length-1);
 
         int trainingsDay;
         trainingsDay = int.Parse(trainingsDaystring);
 
-        string vpNummerstring = GameObject.Find("VPNummerText").GetComponent<TextMeshProUGUI>().text;
-        vpNummerstring = vpNummerstring.Substring(0,vpNummerstring.Length-1);
-        string vpNummer;
-        vpNummer = vpNummerstring;
+        string vpNummer = GameObject.Find("VP_Nummer").GetComponent<TMP_InputField>().text;
+        // int vpNummer = int.Parse(vpNummerstring)
+        // vpNummerstring = vpNummerstring.Substring(0,vpNummerstring.Length-1);
+        // string vpNummer;
+        // vpNummer = vpNummerstring;
         // int.TryParse(vpNummerstring, out vpNummer);
         string appdatapath = Application.dataPath;
         string fileDesignName;
@@ -143,7 +145,7 @@ public class GameSession : MonoBehaviour
         {
             char x = Path.DirectorySeparatorChar;
             string path = Application.dataPath + x + relativeFilePath;
-            string filename = path + '/' + vpNummer + '_' + vorname + nachname + studyname + trainingsDay.ToString() + status + ".csv";
+            string filename = path + '/' + vpNummer + '_' + vorname +  '_' + nachname +  '_' + studyname +  '_' + trainingsDay.ToString() +  '_' + status + ".csv";
             // string filename = path + '/' + vpNummer + vorname + nachname + gebDatum + trainingsDay.ToString() + status + ".csv";
             print("filename = " + filename);
             using (StreamWriter sw = new StreamWriter(filename))
