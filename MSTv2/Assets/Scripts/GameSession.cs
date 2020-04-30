@@ -145,7 +145,8 @@ public class GameSession : MonoBehaviour
         {
             char x = Path.DirectorySeparatorChar;
             string path = Application.dataPath + x + relativeFilePath;
-            string filename = path + '/' + vpNummer + '_' + vorname +  '_' + nachname +  '_' + studyname +  '_' + trainingsDay.ToString() +  '_' + status + ".csv";
+            string filename = path + '/' + vpNummer + '_' + vorname +  '_' + nachname +  '_' +  gebDatum  + '_' + studyname + '_' + trainingsDay.ToString() +  '_' + status + ".csv";
+
             // string filename = path + '/' + vpNummer + vorname + nachname + gebDatum + trainingsDay.ToString() + status + ".csv";
             print("filename = " + filename);
             using (StreamWriter sw = new StreamWriter(filename))
