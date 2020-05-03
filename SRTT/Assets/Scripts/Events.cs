@@ -32,8 +32,13 @@ public class Events : MonoBehaviour
     private float timeOfItemStart;
     private int timeSinceExpStart;
     private int numHit;
+    private int numRsp;
+    private int Resp_1;
+    private int Resp_2;
+    private int RT_2;
+    private int RT_1;
     private float timeOfApplicationStart;
-    private bool eventButtonPressed = false;
+ 
     private float additionalWaitingTime = 0f;
     //public GameObject CSVParsing;
     public string relativeSavePath = "Assets/Data/";
@@ -55,10 +60,10 @@ public class Events : MonoBehaviour
     //[SerializeField] Dictionary<string, int> colorDict = new Dictionary<string, int>();
 
     SpriteRenderer m_SpriteRenderer;
-    private int buttonPressed;
+   
     // Use this for initialization
     private List<int> resultButtonPressed = new List<int>();
-    private int timeBetweenItemShownAndButton;
+    
     public bool isTutorial;
     public bool isPause = false;
     public GameObject panelPause;
@@ -81,12 +86,14 @@ public class Events : MonoBehaviour
         StartCoroutine(startPresentation());
         panelPause = GameObject.Find("PanelPause");
         panelPause.SetActive(false);
+        timeOfItemStart = 0;
         //print(panelPause.name);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //print("update " + Time.realtimeSinceStartup.ToString());
 
         if (Input.GetKeyDown("escape") && isTutorial == false)
         {
@@ -119,28 +126,63 @@ public class Events : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown("f"))
+        if (Input.GetKeyDown("f"))  // red
         {
-            print("f (1ed) was pressed");
-            RedButtonPressed();
+            SetButtonResponses(0);
         }
-        if (Input.GetKeyDown("g"))
+
+        if (Input.GetKeyDown("g")) // yellow
         {
-            print("g (2yellow) was pressed");
-            YelloButtonPressed();
+            SetButtonResponses(1);
         }
-        if (Input.GetKeyDown("h"))
+
+        if (Input.GetKeyDown("h")) // blue
         {
-            print("h (3blue) was pressed");
-            BlueButtonPressed();
+            SetButtonResponses(2);
         }
-        if (Input.GetKeyDown("j"))
+
+        if (Input.GetKeyDown("j")) // green
         {
-            print("j (4green) was pressed");
-            GreenButtonPressed();
+            SetButtonResponses(3);
         }
         //print(Time.time.ToString());
     }
+    private void SetButtonResponses(int key){
+        numRsp++;
+        if (numRsp == 1){
+            RT_1 = Mathf.RoundToInt((Time.realtimeSinceStartup - timeOfItemStart) * 1000);;
+            Resp_1 = key;
+        }
+        if (numRsp == 2){
+            RT_2 = Mathf.RoundToInt((Time.realtimeSinceStartup - timeOfItemStart) * 1000);;
+            Resp_2 = key;
+        }
+    }
+
+
+
+    
+
+    // public void RedButtonPressed() { RegisterButton(0); }
+    // public void YelloButtonPressed() { RegisterButton(1); }
+    // public void BlueButtonPressed() { RegisterButton(2); }
+    // public void GreenButtonPressed() { RegisterButton(3); }
+
+
+
+    // public void RegisterButton(int colNumber)
+    // { //0 = red, 1 = yellow, 2= blue, 3 = green
+    //     buttonPressed = colNumber;
+    //     //print("In Block " + itemBlockIndex.ToString() + "pressed: " + buttonPressed.ToString());
+    //     //resultButtonPressed[globalIndex] = 1;
+    //     timeBetweenItemShownAndButton = Mathf.RoundToInt((Time.realtimeSinceStartup - timeOfItemStart) * 1000);
+    //     //print("Button pressed at time  " + Time.realtimeSinceStartup.ToString());
+    
+            
+    //     //timeSinceExpStart = Mathf.RoundToInt(Time.realtimeSinceStartup * 1000);
+
+    // }
+
 
     private IEnumerator WaitAndEnd(int sec)
     {
@@ -185,8 +227,8 @@ public class Events : MonoBehaviour
                 blockType = "fixed";
             }
             yield return StartCoroutine(startBlock());
-            print("block Index = " + blockIndex);
-            print("saving ...");
+            //print("block Index = " + blockIndex);
+            //print("saving ...");
             gameSession.playerData.SaveDataAsCSV();
         }
         // alles abgeschlossen  ... speichere nun die Daten
@@ -236,48 +278,64 @@ public class Events : MonoBehaviour
         timeOfSequenceStart = Time.realtimeSinceStartup;
         for (int itemIndex = 0; itemIndex < num_Items; itemIndex++)
         {
+            //print("start in for loop in presentSequence ... at time " + Time.realtimeSinceStartup.ToString());
+
             while (isPause)
             {
                 yield return null;
             }
             // hier wird ein Item praesentiert und auf eine Antwort gewartet
-            print(itemIndex.ToString() + " und Block Index = " + itemBlockIndex.ToString());
+            //print(itemIndex.ToString() + " und Block Index = " + itemBlockIndex.ToString());
             // hier muessen nun mittels seqIndex die richtigen Infos fuer Position und Farbe geholt werden
-            buttonPressed = -1;
+
             int targetColor = sequence[itemBlockIndex][0];
             int targetCircle = sequence[itemBlockIndex][1];
             int targetTime = sequence[itemBlockIndex][2];
-            print("itemBlockIndex = " + itemBlockIndex.ToString() + "  Inhalt:" + targetColor.ToString() + " " + targetCircle.ToString() + " " + targetTime.ToString());
-            eventButtonPressed = false; // beschreibt das allegmeine Event das irgendein Button gedrueckt wird
+            //print("itemBlockIndex = " + itemBlockIndex.ToString() + "  Inhalt:" + targetColor.ToString() + " " + targetCircle.ToString() + " " + targetTime.ToString());
             additionalWaitingTime = 0f;
-            timeBetweenItemShownAndButton = 0; // Mathf.RoundToInt((Time.realtimeSinceStartup - timeOfItemStart) * 1000);
-
+            
+            //print("before StartCorouting(presentItem) ... at time " + Time.realtimeSinceStartup.ToString());
             yield return StartCoroutine(presentItem(targetCircle, targetColor, targetTime));
-            if (buttonPressed == -1)
+            // after presentItem is completed (yield return whaits for completion) of item presentation reset responses
+            timeOfItemStart = Time.realtimeSinceStartup;
+            numRsp = 0;
+            RT_1 = -1;
+            RT_2 = -1;
+            Resp_1 = -1;
+            Resp_2 = -1;
+            if (Resp_1 == -1)
             {
-                print("no button was pressed");
+                //print("no button was pressed");
                 yield return StartCoroutine(WaitForPress());
-                timeSinceExpStart = Mathf.RoundToInt(Time.realtimeSinceStartup * 1000);
-                if (buttonPressed == -1)
+                
+                if (Resp_1 == -1)
                 {
-                    RegisterButton(-1);
-                    timeBetweenItemShownAndButton = Mathf.RoundToInt((itemTimeIfNotPressed) * 1000);
+                    //RegisterButton(-1);
+                    // es gibt keine Response Time
+                    //RT_1 = Mathf.RoundToInt((itemTimeIfNotPressed) * 1000);
+                    
+                    
                 }
 
             }
+            //print("after button was pressed or not pressd ... at time " + Time.realtimeSinceStartup.ToString());
+
             m_SpriteRenderer.color = Color.white;
             // save Result in Results Class
-            //results.SetItemInformation( itemIndex, seqIndex,itemBlockIndex, buttonPressed, targetColor,
-            //    itemWaitTime, timeBetweenItemShownAndButton);
+            //results.SetItemInformation( itemIndex, seqIndex,itemBlockIndex, RT_1, targetColor,
             // nun wird der itemBlockIndex erhoeht
             resultsPresented.Add(sequence[itemBlockIndex]);
-            resultsPressed.Add(new Vector3Int(blockIndex, buttonPressed, timeBetweenItemShownAndButton));
+            resultsPressed.Add(new Vector3Int(blockIndex, RT_2, RT_1));
             // an dieser Stelle haben ist die presentation eines Items abgeschlossen und wir haben alle
             // Informationen um dieses Item und die Reaktion darauf zu speichern
-            if (buttonPressed==targetColor){
+            if (Resp_1==targetColor){
                 numHit += 1;
             }
-            gameSession.playerData.AddData(blockType, blockIndex, seqIndex, itemIndex, timeSinceExpStart, buttonPressed, targetColor, targetCircle, targetTime, timeBetweenItemShownAndButton, numHit);
+            // ich habe mich entschieden unter "Time" die logging time zu schreiben 
+            // und nicht die Eventtime, da es sonst uneindeutig wird wenn es kein Event gibt
+            timeSinceExpStart = Mathf.RoundToInt(Time.realtimeSinceStartup * 1000);
+            gameSession.playerData.AddData(blockType, blockIndex, seqIndex, itemIndex, timeSinceExpStart, Resp_1, targetColor, targetCircle, targetTime, RT_1, numHit, numRsp, RT_2, Resp_2);
+            //print("logged ... at time " + Time.realtimeSinceStartup.ToString());
             itemBlockIndex++;
             // Abfrage der Pausefunktion
 
@@ -290,7 +348,7 @@ public class Events : MonoBehaviour
         //print("entering presentItem");
         // circleNumber von 0 bis 5 , benannt im Uhrzeigersinn, start auf 10 Uhr
         // Color number 0 = red, 1 = yellow, 2= blue, 3 = green
-        timeOfItemStart = Time.realtimeSinceStartup;
+        
         //itemWaitTime = UnityEngine.Random.Range(minItemPresentationTime, maxItemPresentationTime);
         float itemWaitTime = (float)targetTime / 1000;
         m_SpriteRenderer = Circles[circleNumber].GetComponent<SpriteRenderer>();
@@ -315,7 +373,8 @@ public class Events : MonoBehaviour
                 break;
 
         }
-        print("present item itemWaitTime = " + itemWaitTime.ToString());
+        
+        // print("present item itemWaitTime = " + itemWaitTime.ToString());
         yield return new WaitForSeconds(itemWaitTime);//WaitForSecondsRealtime(itemWaitTime);
     }
 
@@ -323,16 +382,17 @@ public class Events : MonoBehaviour
     {
         float timeToWait = itemTimeIfNotPressed - (Time.realtimeSinceStartup - timeOfItemStart);
 
-        print("Additional waiting time .... to max Wait = " + timeToWait.ToString());
+        //print("Additional waiting time .... to max Wait = " + timeToWait.ToString());
         float td = 0f;
         float t_init = Time.realtimeSinceStartup;
         while (td < timeToWait)
         {
             yield return new WaitForSeconds(0.002f);
             // wenn der button gepresst wurde
-            if (buttonPressed != -1)
+            if (Resp_1 != -1)
             {
                 additionalWaitingTime = td;
+                //timeSinceExpStart = Mathf.RoundToInt(Time.realtimeSinceStartup * 1000);
                 break;
             }
             td = Time.realtimeSinceStartup - t_init;
@@ -342,26 +402,9 @@ public class Events : MonoBehaviour
 
 
 
-    public void RedButtonPressed() { RegisterButton(0); }
-    public void YelloButtonPressed() { RegisterButton(1); }
-    public void BlueButtonPressed() { RegisterButton(2); }
-    public void GreenButtonPressed() { RegisterButton(3); }
-
-
-
-    public void RegisterButton(int colNumber)
-    { //0 = red, 1 = yellow, 2= blue, 3 = green
-        buttonPressed = colNumber;
-        print("In Block " + itemBlockIndex.ToString() + "pressed: " + buttonPressed.ToString());
-        //resultButtonPressed[globalIndex] = 1;
-        timeBetweenItemShownAndButton = Mathf.RoundToInt((Time.realtimeSinceStartup - timeOfItemStart) * 1000);
-
-    }
-
-
     IEnumerator flashingOfTheCross(int millisec)
     {
-        print("now flashing the cross");
+        //print("now flashing the cross");
         int i = 0;
         while (i < millisec)
         {
@@ -376,7 +419,7 @@ public class Events : MonoBehaviour
 
     private void ReadExperimentalDesign()
     {
-        print("Reading experimental Design");
+        //print("Reading experimental Design");
         string file = relativeReadPath + fileDesignName;
 
         List<int[]> config = new List<int[]>();
@@ -426,7 +469,7 @@ public class Events : MonoBehaviour
     private List<Vector3Int> ReadSequences(string filename)
     {
         List<Vector3Int> Sequence = new List<Vector3Int>();
-        print("Reading Sequences");
+        //print("Reading Sequences");
         string file = relativeReadPath + filename;
 
        // List<int[]> config = new List<int[]>();

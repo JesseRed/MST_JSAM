@@ -9,14 +9,16 @@ import statistics
 import networkx
 import time
 from filehandler import FileHandler
-from helper_functions import tolist_ck
+from helper_functions import tolist_ck, create_standard_df
 from network import Network
 import logging
+import helper_functions
+from experiment import Experiment
 logger = logging.getLogger(__name__)
 
 
 class MST():
-    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 7, path_output = ".\\Data_python", _id = "nox_id"):
+    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 4, path_output = ".\\Data_python", _id = "nox_id"):
         self.fullfilename = fullfilename
         base=os.path.basename(self.fullfilename)
         self.filename = os.path.splitext(base)[0]
@@ -24,21 +26,67 @@ class MST():
         self.path_output = path_output
         self._id = _id
         self.filehandler = FileHandler(path_output=self.path_output, filename = self.filename, time_identifier = _id)
-        self.df = pd.read_csv(self.fullfilename, sep = ';', engine = "python")
-        self.ipi, self.hits = self.get_inter_key_intervals()
+        self.input_df = pd.read_csv(self.fullfilename, sep = ';', engine = "python")
+        
+        self.df = self.generate_standard_log_file_from_input_df(self.input_df)
+        #!________________________
+        #! 02.05.2020 ich habe die Namensgebung in unity veraendert ... hier ggf. Anpassung ... auch wenn man mehr als 
+        #! einen einstelligen Traingingstage hat ... am besten mit string.split('_') dann arbeiten 
+        day = int(self.filename.split('fertig')[0][-1])
+        #!________________________
+        vpn = int(self.filename.split('_')[0])
+        #!_________________________
+        experiment = Experiment('MST', vpn, day, self.df)
+        print(experiment)
+        # self.ipi, self.hits = self.get_inter_key_intervals()
+        # self.sequence_length = sequence_length
+        # self.ipi_cor, self.errors_per_block = self.get_inter_key_intervals_only_cor2(self.sequence_length) # nur Korrekte Sequencen
+        # self.corrsq = self.estimate_correct_seqences()
+        # self.corrsq_slope, self.corrsq_slope_to_max, self.corrsq_slope_1_10 = self.estimate_slope()
+        
 
-        #logger.info(f"size = {len(self.ipi)}")
-        self.sequence_length = sequence_length
-        self.ipi_cor, self.errors_per_block = self.get_inter_key_intervals_only_cor2(self.sequence_length) # nur Korrekte Sequencen
-        #logger.info(self.ipi_cor)
-        #logger.info(f'starting MST with filename : {self.filename}')
-        #self.printlist3(self.ipi_cor)
-        #logger.info(self.ipi_cor)
-        
-        
-        self.corrsq = self.estimate_correct_seqences()
-        self.corrsq_slope, self.corrsq_slope_to_max, self.corrsq_slope_1_10 = self.estimate_slope()
-        #self.estimate_chunks() 
+    def generate_standard_log_file_from_input_df(self, input_df):
+        """ erstellt ein neues Dataframe welches dem allgemeinen Standard entspricht, damit es
+            mittels der abstraktionsklasse "Experiment" verarbeitet werden kann
+        """
+
+        df = helper_functions.create_standard_df()
+        df['BlockNumber'] = input_df['BlockNumber']
+        df['EventNumber'] = input_df['EventNumber']
+#        df['Time Since Block start'] = input_df['Time Since Block start']
+        df['Time Since Block start'] = pd.to_numeric(input_df['Time Since Block start'].str.replace(',','.'))*1000
+        df['Time Since Block start'] = df['Time Since Block start'].astype(int) #round()
+
+        df['isHit'] = input_df['isHit']
+        df['target'] = input_df['target']
+        df['pressed'] = input_df['pressed']
+        df['sequence'] = input_df['sequence']
+
+        # ersetzte die Sequenznamen durch Zahlen nach mit der wichtigsten beginnend 
+        #! das replacen muss von Hand erfolgen 
+        #! wenn das naechste mal ein Experiment designed wird und die Zahlen nach Wichtigkeit von 0
+        #! beginnend eingetragen werden dann muss man gar nichts mehr per hand anpassen
+        try:
+            df = df.replace('clear', 0)
+        except:
+            print('color code did not work')
+        # passe nun die BlockNumbers an 
+        df = self.generate_sequence_number(df)
+        df.rename({'Time Since Block start':'Time'}, axis = 'columns', inplace = True)
+        return df
+
+    def generate_sequence_number(self, df):
+        # im MST File sind keine Sequence Numbers enthalten
+        # da bei Fehlern die Sequenz nicht unterbrochen wird kann einfach hochgezaehlt werden
+            
+        sequence_number = 1
+        for idx in range(df.shape[0]):
+            df.loc[idx,'SequenceNumber'] = sequence_number
+            if (idx+1)%4 == 0:
+                sequence_number +=1
+        df['SequenceNumber'] = df['SequenceNumber'].astype(int)
+        return df
+
 
     def save(self):
         mydict = self.create_dict()
@@ -285,8 +333,9 @@ if __name__ == '__main__':
     #filename = ".\\Data MST\\3Tag1_.csv"
     #filename = ".\\Data_MST_Simulation\\3Tag1_.csv"
     #mst = MST(filename)
-    mst = MST(fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 7, path_output = ".\\Data_python", _id = "no_id")
-    mst.save()
+    mstfile = "G:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
+    mst = MST(fullfilename = mstfile, sequence_length = 4, path_output = ".\\Data_python", _id = "no_id")
+    #mst.save()
 #    ipi_cor = mst.ipi_cor
 #    ipi_norm = mst.ipi_norm
 #    ipi_norm_arr = mst.ipi_norm_arr

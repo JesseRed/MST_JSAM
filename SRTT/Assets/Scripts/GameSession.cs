@@ -99,9 +99,9 @@ public class GameSession : MonoBehaviour
             playerTrackEntries = new List<PlayerTrackEntry>();
         }
 
-        public void AddData(string blockType, int blockIdx, int seqNum, int itemNum, int timeSinceExpStart, int bp, int bt, int tc, int ta, int timex, int numHit)
+        public void AddData(string blockType, int blockIdx, int seqNum, int itemNum, int timeSinceExpStart, int bp, int bt, int tc, int ta, int timex, int numHit, int numRsp, int RT_2, int Resp_2)
         {
-            playerTrackEntries.Add(new PlayerTrackEntry(blockType, blockIdx, seqNum,  itemNum, timeSinceExpStart, bp, bt, tc, ta, timex, numHit));
+            playerTrackEntries.Add(new PlayerTrackEntry(blockType, blockIdx, seqNum,  itemNum, timeSinceExpStart, bp, bt, tc, ta, timex, numHit, numRsp, RT_2, Resp_2));
         }
 
         public void SaveDataAsCSV()
@@ -151,21 +151,29 @@ public class GameSession : MonoBehaviour
         private int timeAvailable;
         private int timeToButtonPress;
         private int numHit;
+        private int RT_1;
+        private int RT_2;
+        private int Resp_1;
+        private int Resp_2;
+        private int numRsp;
         public char fieldSeperator = '\t'; // It defines field seperate chracter
 
-        public PlayerTrackEntry(string iblockType, int bidx, int seqNum, int itemNum, int itimeSinceExpStart, int bp, int bt, int tc, int ta, int timex, int inumHit)
+        public PlayerTrackEntry(string iblockType, int bidx, int seqNum, int itemNum, int itimeSinceExpStart, int iResp_1, int bt, int tc, int ta, int iRT_1, int inumHit, int inumRsp, int iRT_2, int iResp_2)
         {
             blockType = iblockType;
             blockIdx = bidx;
             itemNumber = itemNum;
             sequenceNumber=seqNum;
             timeSinceExpStart = itimeSinceExpStart;
-            buttonPressed=bp;
             buttonTarget=bt;
             targetCircle = tc;
             timeAvailable=ta;
-            timeToButtonPress=timex;
             numHit = inumHit;
+            numRsp = inumRsp;
+            RT_2 = iRT_2;
+            Resp_2 = iResp_2;
+            RT_1 = iRT_1;
+            Resp_1 = iResp_1;
         }
 
         public string getEntryString()
@@ -177,18 +185,14 @@ public class GameSession : MonoBehaviour
         public string getEntryStringRalph()
         {
             targetCircle += 1; // Ralph faengt bei 1 an
-            int numRsp = 1;
-            int Resp_1 = 0;
             int R_Code = 1;
-            int Resp_2 = 4;
-            int RT_2 = 0;
 
             string line = blockType + fieldSeperator + blockIdx.ToString() + fieldSeperator + 
             sequenceNumber.ToString() + fieldSeperator + itemNumber.ToString() + fieldSeperator + 
             timeSinceExpStart.ToString() + fieldSeperator + targetCircle.ToString() + fieldSeperator +
-            buttonTarget.ToString() + fieldSeperator + buttonPressed.ToString() + fieldSeperator + 
+            buttonTarget.ToString() + fieldSeperator + Resp_1.ToString() + fieldSeperator + 
             numRsp.ToString() + fieldSeperator + Resp_1.ToString() + fieldSeperator +
-            timeToButtonPress.ToString() + fieldSeperator + R_Code.ToString() + 
+            RT_1.ToString() + fieldSeperator + R_Code.ToString() + fieldSeperator +
             Resp_2.ToString() + fieldSeperator + RT_2.ToString() + fieldSeperator +
             timeAvailable.ToString() + fieldSeperator + numHit.ToString();
             return line;

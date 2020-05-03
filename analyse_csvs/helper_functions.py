@@ -1,5 +1,5 @@
 import numpy as np
-
+import pandas as pd
 def tolist_ck(A):
     ''' Funktion wandelt in ein json serializeable format um
         d.h. arrays werden zu listen
@@ -22,3 +22,9 @@ def tolist_ck(A):
          return np.int(A)
     else:
         return A
+
+
+def create_standard_df():
+    df = pd.DataFrame(columns=['BlockNumber',  'SequenceNumber', 'EventNumber', 'Time Since Block start', 'isHit',
+        'target', 'pressed', 'sequence'])
+    return df

@@ -8,19 +8,85 @@ from statistics import mean, stdev
 import statistics
 import networkx
 from filehandler import FileHandler
-from helper_functions import tolist_ck
+from helper_functions import tolist_ck, create_standard_df
+import helper_functions
 from network import Network
-
+from experiment import Experiment
 logger = logging.getLogger(__name__)
 
 class SEQ():
     def __init__(self, fullfilename=".\\Data_Seq_8\\_Carsten_FRA1fertig.csv", sequence_length=8, path_output=".\\Data_python", _id="nox_id", show_images = False, target_color = 8):        
-        """ die target color markiert die Zielfarbe die in das dict geschrieben wird
+        """ die target color markiert die Zielfarbe welche als erstes in die Liste der paradigmen kommt ...
+            als letztes sollte immer die RandomSequenz
+
             und fuer welches das outputfile erstellt wird
             die anderen Farben werden werden zwar auch analysiert, bekommen aber im dictionary namen die 
             anders heissen als die Namen beim MST , sonst koennen wir die ergebnisse nicht\
             mit den anderen paradigmen vergleichen und die Netzwerkklasse muesste auch umgeschrieben werde
+
+            um eine bestmoegliche Vereinbarkeit von unterschiedlichen Paradigmen zu ermoeglichen sollte
+            am ende nicht in dictionaries gespeichert werden sondern in Listen
+            der erste eintrag ist dann die Zielfarbe bzw. im MST gibt es nur einen Listeneintrag
+            im SRTT gaebe es dann 2 Listeneintraege
+
+            # 01.05.2020 neue Idee ... um alles so einheitlich wie moeglich zu machen sollte diese Klasse nur ein
+            #                          neues dataframe anlegen das dann allgemeingueltig fuer alle Experimente
+            #                          identisch ist und das dann der Klasse Experiment zur Verfuegung gestellt 
+            #                          wird. Diese Klasse berechnet dann alle notwendigen und moeglichen Parameter.
+
+            INPUT-LOG-FILE
+            BlockNumber;    EventNumber;    Time Since Block start; isHit;  target; pressed;    sequence
+            1;              1;              4,211823;               0;      3;      2;          blue
+            1;              2;              4,916992;               1;      4;      4;          blue
+            1;              3;              5,841339;               0;      2;      3;          blue
+            1;              4;              6,983551;               1;      1;      1;          blue
+            1;              5;              8,57785;                1;      3;      3;          blue
+            1;              6;              9,028168;               1;      2;      2;          blue
+            1;              7;              9,610718;               1;      4;      4;          blue
+            1;              8;              9,974152;               1;      1;      1;          blue
+            2;              9;              4,085938;               1;      2;      2;          green
+            2;              10              ;4,741425;              1;      1;      1;          green
+            2;              11              ;5,252991;              1;      4;      4;          green
+            2;              12              ;5,817474;              1;      1;      1;          green
+            2;              13              ;6,494324;              1;      3;      3;          green
+            2;              14              ;6,921967;              1;      2;      2;          green
+            2;              15              ;7,720825;              1;      4;      4;          green
+            2;              16              ;8,553619;              1;      3;      3;          green
+            3;              17              ;4,288727;              1;      2;      2;          red
+            3;              18              ;4,866821;              1;      3;      3;          red
+            3;              19              ;5,340302;              1;      1;      1;          red
+
+
+            # Anmerkung ... BlockNumber ist hier offensichtlich die Sequenznummer ... pffff 
+
+
+            OUTPUT-PANDAS-FILE
+            BlockNumber     SequenceNumber; EventNumber;    Time Since Block start; isHit;  target; pressed;    sequence
+            1;              1;              1;              4,211823;               0;      3;      2;          1
+            1;              1;              2;              4,916992;               1;      4;      4;          1
+            1;              1;              3;              5,841339;               0;      2;      3;          1
+            1;              1;              4;              6,983551;               1;      1;      1;          1
+            1;              1;              5;              8,57785;                1;      3;      3;          1
+            1;              1;              6;              9,028168;               1;      2;      2;          1
+            1;              1;              7;              9,610718;               1;      4;      4;          1
+            1;              1;              8;              9,974152;               1;      1;      1;          1
+            1;              1;              9;              4,085938;               1;      2;      2;          2
+            1;              2;              10;             4,741425;               1;      1;      1;          2
+            1;              2;              11;             5,252991;               1;      4;      4;          2
+            1;              2;              12;             5,817474;               1;      1;      1;          2
+            1;              2;              13;             6,494324;               1;      3;      3;          2
+            1;              2;              14;             6,921967;               1;      2;      2;          2
+            1;              2;              15;             7,720825;               1;      4;      4;          2
+            1;              2;              16;             8,553619;               1;      3;      3;          2
+            1;              3;              17;             4,288727;               1;      2;      2;          0
+            1;              3;              18;             4,866821;               1;      3;      3;          0
+            1;              3;              19;             5,340302;               1;      1;      1;          0
+
+
+            # Anmerkung ... BlockNumber ist schwierig da wenn moeglich die gleichen Anzahlen an Sequenzen pro paradigma pro block vorkommen sollte
         """
+
+
         logger.info("Initialising class SEQ ...")
         self.fullfilename = fullfilename
         base = os.path.basename(self.fullfilename)
@@ -30,41 +96,108 @@ class SEQ():
         self.path_output = path_output
         self._id = _id
         self.filehandler = FileHandler(path_output=self.path_output, filename=self.filename, time_identifier=_id)
-        self.df = pd.read_csv(self.fullfilename, sep=';', engine='python')
-
-        self.ipi, self.hits, self.color = self.get_inter_key_intervals()
-        # self.color eine farbcodierung der verschiedenen Seqenzen 
-        # es ist eine liste von np.arrays mit nummern fuer jede Sezenz, liste ueber die Bloecke
-
-        #print(f"size = {len(self.ipi)}")
-        self.sequence_length = sequence_length
-        self.ipi_cor, self.color_cor = self.get_inter_key_intervals_only_cor2(self.sequence_length) # nur Korrekte Sequencen
-        self.target_col = target_color
-        self.color_dict = self.get_color_code_dict()
+        self.input_df = pd.read_csv(self.fullfilename, sep=';', engine='python')
         
-        # print(self.ipi_cor)
-        # print(type(self.ipi_cor))
-        # print(f"after get_inter_key_interals_only_cor2 with len(ipi_cor) = {len(self.ipi_cor)}")
-        #print(f'starting MST with filename : {self.filename}')
-        #self.printlist3(self.ipi_cor)
-        #print(self.ipi_cor)
         
-        #print('now estimate_correct_sequences')
-        self.paradigmen_time,self.ipi_cor_paradigmen = self.estimate_correct_seqences()
-        self.paradigmen_slope = self.estimate_slope()
+        self.df = self.generate_standard_log_file_from_input_df(self.input_df)
+
+        #!________________________
+        #! 02.05.2020 ich habe die Namensgebung in unity veraendert ... hier ggf. Anpassung ... auch wenn man mehr als 
+        #! einen einstelligen Traingingstage hat ... am besten mit string.split('_') dann arbeiten 
+        day = int(self.filename.split('fertig')[0][-1])
+        #!________________________
+        vpn = int(self.filename.split('_')[0])
+        #!_________________________
+        print(self.df.head())
+        experiment = Experiment('SEQ', vpn, day, self.df)
+        print(experiment)
+
+        # self.ipi, self.hits, self.color = self.get_inter_key_intervals()
+        # self.sequence_length = sequence_length
+        # self.ipi_cor, self.color_cor = self.get_inter_key_intervals_only_cor2(self.sequence_length) # nur Korrekte Sequencen
+        # self.target_col = target_color
+        # self.color_dict = self.get_color_code_dict()
+        # self.cor_seq_time_paradigmen,self.ipi_cor_paradigmen = self.estimate_color_dependent_dicts(self.ipi_cor)
+        # self.paradigmen_slope = self.estimate_slope()
+
+        
         #self.estimate_chunks() 
         if show_images:
             self.my_plot()
 
+    def generate_standard_log_file_from_input_df(self, input_df):
+        """ erstellt ein neues Dataframe welches dem allgemeinen Standard entspricht, damit es
+            mittels der abstraktionsklasse "Experiment" verarbeitet werden kann
+        """
+
+        df = helper_functions.create_standard_df()
+        df['SequenceNumber'] = input_df['BlockNumber'] # die BlockNumbers sind fals benannt in dieser Klasse
+        df['EventNumber'] = input_df['EventNumber']
+
+        
+        df['Time Since Block start'] = pd.to_numeric(input_df['Time Since Block start'].str.replace(',','.'))*1000
+        df['Time Since Block start'] = df['Time Since Block start'].astype(int) #round()
+        
+        df['isHit'] = input_df['isHit']
+        df['target'] = input_df['target']
+        df['pressed'] = input_df['pressed']
+        df['sequence'] = input_df['sequence']
+        # ersetzte die Sequenznamen durch Zahlen nach mit der wichtigsten beginnend 
+        #! das replacen muss von Hand erfolgen 
+        #! wenn das naechste mal ein Experiment designed wird und die Zahlen nach Wichtigkeit von 0
+        #! beginnend eingetragen werden dann muss man gar nichts mehr per hand anpassen
+        try:
+            df = df.replace('green', 2)
+            df = df.replace('blue', 1)
+            df = df.replace('red', 0)
+        except:
+            print('color code did not work')
+        # passe nun die BlockNumbers an 
+        df = self.generate_block_number(df)
+        df['BlockNumber'] = df['BlockNumber'].astype(int)
+        df.rename({'Time Since Block start':'Time'}, axis = 'columns', inplace = True)
+
+        return df
+
+
+    def generate_block_number(self, df):
+        block_series = df['BlockNumber'] # nur als Platzhalter
+        # es sollen 10 bloecke sein und in jedem Block soll
+        # eine gleiche Anzahl an Sequenzen aller Paradigmata sein
+        # die Blockzahl muss nicht zwingend aufsteigend sein um diese Bedingung zu erfuellen
+        # diese Methode muss NICHT manuell angepasst werden wenn wir ein neues Experiment haben solange oben die Colorcodes gesetzt sind
+        
+        num_seq = df['sequence'].nunique()
+        num_per_block = []
+        counters = []
+        current_block = []
+        for i in range(num_seq):
+            mask=df['sequence']==i
+            num_per_block.append(int(round(df[mask].shape[0]/10)))
+            counters.append(0)
+            current_block.append(1)
+
+        for idx,row in df.iterrows():
+            for sequence_num in range(num_seq):
+                if row.sequence == sequence_num:
+                    counters[sequence_num] += 1
+                    df.loc[idx,'BlockNumber'] = current_block[sequence_num]
+                    if counters[sequence_num]==num_per_block[sequence_num]:
+                        counters[sequence_num] = 0
+                        current_block[sequence_num] +=1
+
+        return df
+
+
 
     def my_plot(self):
 
-        g1 = np.asarray(self.paradigmen_time[1], dtype=np.float32)
-        g2 = np.asarray(self.paradigmen_time[6], dtype=np.float32)
-        g3 = np.asarray(self.paradigmen_time[8], dtype=np.float32)
-        g1 = ([x*2 for x in range(len(self.paradigmen_time[1]))],self.paradigmen_time[1])
-        g2 = ([x*2.2 for x in range(len(self.paradigmen_time[6]))],self.paradigmen_time[6])
-        g3 = (range(len(self.paradigmen_time[8])),self.paradigmen_time[8])
+        g1 = np.asarray(self.cor_seq_time_paradigmen[1], dtype=np.float32)
+        g2 = np.asarray(self.cor_seq_time_paradigmen[6], dtype=np.float32)
+        g3 = np.asarray(self.cor_seq_time_paradigmen[8], dtype=np.float32)
+        g1 = ([x*2 for x in range(len(self.cor_seq_time_paradigmen[1]))],self.cor_seq_time_paradigmen[1])
+        g2 = ([x*2.2 for x in range(len(self.cor_seq_time_paradigmen[6]))],self.cor_seq_time_paradigmen[6])
+        g3 = (range(len(self.cor_seq_time_paradigmen[8])),self.cor_seq_time_paradigmen[8])
 
         data = (g1, g2, g3)
         colors = ("blue", "green", "red")
@@ -158,14 +291,19 @@ class SEQ():
             'ipi_cor_green'         :   ipi_cor_green,
             'color_cor'             :   tolist_ck(self.color_cor),
             'sequence_length'       :   tolist_ck(self.sequence_length),
-            'paradigmencorrsq_time' :   tolist_ck(self.paradigmen_time),
+            'paradigmencorrsq_time' :   tolist_ck(self.cor_seq_time_paradigmen),
             #'paradigmen_cor_seq'    :   tolist_ck(self.ipi_cor_paradigmen), # die ipi_cor nach paradigmen (1...10)
-            'corr_slope'            :   tolist_ck(paradigmen_slope[self.target_col][0]),
-            'corr_slope_blue'       :   tolist_ck(paradigmen_slope[1][0]),
-            'corr_slope_green'      :   tolist_ck(paradigmen_slope[6][0]),
-            'corrsq_slope_b'        :   tolist_ck(self.paradigmen_slope),
-            'abs_errors'            :   len(tolist_ck(self.ipi))-len(tolist_ck(self.ipi_cor)),
-            'abs_corr_seq'          :   len(tolist_ck(self.ipi_cor))
+            'cor_seq_per_block'     :   0, # aufteilung in 60 sek bloecke und zaehlen der Anzahl der korrekten Sequenzen pro block daraus slope
+            'err_seq_per_block'            :   0, # aufteilung in 60 sek bloecke und zaehlen der Anzahl der korrekten Sequenzen pro block daraus slope
+            'cor_seq_per_block_slope'            :   0, # aufteilung in 60 sek bloecke und zaehlen der Anzahl der korrekten Sequenzen pro block daraus slope
+            'err_seq_per_block_slope'            :   0, # aufteilung in 60 sek bloecke und zaehlen der Anzahl der korrekten Sequenzen pro block daraus slope
+            'cor_seq_per_block_slope_to_max'    :    0,
+            'cor_seq_v_slope'            :   tolist_ck(paradigmen_slope[self.target_col][0]), # slope der Geschwindigkeit der Sequenzen
+            'cor_seq_v_slope_blue'       :   tolist_ck(paradigmen_slope[1][0]),
+            'cor_seq_v_slope_green'      :   tolist_ck(paradigmen_slope[6][0]),
+            'cor_seq_v_slope_b'        :   tolist_ck(self.paradigmen_slope),
+            'err_seq_abs'            :   len(tolist_ck(self.ipi))-len(tolist_ck(self.ipi_cor)),
+            'cor_seq_abs'          :   len(tolist_ck(self.ipi_cor))
         }
   #      dict_list.append()
         # MST
@@ -196,26 +334,6 @@ class SEQ():
         return mydict
 
 
-# corrsq = tolist_ck(self.corrsq)
-#         reverse_corrsq = corrsq.copy()
-#         reverse_corrsq.reverse()
-#         mydict = {
-#             'experiment' :              'MST',
-#             'ipi' :                     tolist_ck(self.ipi),
-#             'hits':                     tolist_ck(self.hits),
-#             'ipi_cor' :                 tolist_ck(self.ipi_cor),
-#             'sequence_length' :         self.sequence_length,
-#             'corrsq' :                  tolist_ck(self.corrsq),
-#             'corrsq_slope' :            tolist_ck(self.corrsq_slope),
-#             'corrsq_slope_to_max' :     tolist_ck(self.corrsq_slope_to_max), # regressionsgerade nur bis zum Maximum berechnet
-#             'corrsq_slope_1_10' :       tolist_ck(self.corrsq_slope_1_10), # regressionsgerade nur 1-10
-#             'errors_per_block'      :   tolist_ck(self.errors_per_block),
-#             'abs_errors'            :   sum(tolist_ck(self.errors_per_block)),
-#             'abs_corr_seq' :            sum(tolist_ck(self.corrsq)),
-#             'pos_of_first_best_block' : corrsq.index(max(corrsq)),
-#             'pos_of_last_best_block' :  abs((reverse_corrsq.index(max(corrsq)))-12),
-#             'abs_corr_sequence'     :   sum(tolist_ck(self.corrsq))
-#         }
 
 
 
@@ -294,20 +412,21 @@ class SEQ():
         color.append(np.asarray(block_color, dtype = np.int8))
         return (ipi, hits, color)
             
-    def estimate_correct_seqences(self):
+    def estimate_color_dependent_dicts(self, ipi):
         # entsprechend der color werden Ergebnisse in diese Struktur geschrieben ... alternativ eine eigene Klasse
-        paradigmen_time = self.initialize_num_dict()
-        ipi_cor_paradigmen = self.initialize_num_dict()
-        for idx, ipi in enumerate(self.ipi_cor):
-            paradigmen_time[self.color_cor[idx]].append(sum(ipi))
-            ipi_cor_paradigmen[self.color_cor[idx]].append(ipi)
-        return (paradigmen_time, ipi_cor_paradigmen)
+        # ipi kann hier alle ipis sein oder auch nur die correkten
+        seq_time_paradigmen = self.initialize_num_dict()
+        ipi_paradigmen = self.initialize_num_dict()
+        for idx, ipi in enumerate(ipi):
+            seq_time_paradigmen[self.color_cor[idx]].append(sum(ipi))
+            ipi_paradigmen[self.color_cor[idx]].append(ipi)
+        return (seq_time_paradigmen, ipi_paradigmen)
 
     def estimate_slope(self):
-        if not hasattr(self,'paradigmen_time'):
-            self.estimate_correct_seqences()
+        if not hasattr(self,'cor_seq_time_paradigmen'):
+            self.estimate_color_dependent_dicts()
         paradigmen_slope = self.initialize_num_dict()
-        for k, v in self.paradigmen_time.items():
+        for k, v in self.cor_seq_time_paradigmen.items():
 
             x = np.arange(len(v))
             if len(v) > 0:
@@ -356,9 +475,15 @@ class SEQ():
 if __name__ == '__main__':
     #filename = ".\\Data MST\\3Tag1_.csv"
     #filename = ".\\Data_MST_Simulation\\3Tag1_.csv"
+
     #mst = MST(filename)
-    seq = SEQ(fullfilename=".\\Data_Seq_8\\_Carsten_​FRA1fertig.csv", sequence_length=8, path_output=".\\Data_python", _id="nox_id")
-    seq.save()
+
+    filename= ".\\Data_Seq_8\\_Carsten_​FRA1fertig.csv"
+    filename= ".\\Data_Rogens\\SEQ8\\33_StevenHerrmannFRA2fertig.csv"
+
+    seq = SEQ(fullfilename=filename, sequence_length=8, path_output=".\\Data_python", _id="nox_id")
+    
+    #seq.save()
     #seq = SEQ(fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 7, path_output = ".\\Data_python", _id = "no_id")
     #mst.save()
 #    ipi_cor = mst.ipi_cor
