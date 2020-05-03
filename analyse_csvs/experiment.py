@@ -390,7 +390,7 @@ class Experiment:
 
         for current_paradigma in range(df['sequence'].min(), df['sequence'].max()+1):
             df_paradigma = df[df['sequence']==current_paradigma]
-            for current_block in range(df['BlockNumber'].min() ,df['BlockNumber'].max()+1):
+            for current_block in range(df_paradigma['BlockNumber'].min() ,df_paradigma['BlockNumber'].max()+1):
                 df_block = df_paradigma[df_paradigma['BlockNumber']==current_block]
                 
                 ipi_lsln_one_block = []
@@ -399,36 +399,36 @@ class Experiment:
                 hits_lsln_one_block = []
                 
                 # ueber alle Sequenzen in einem Block
-                print(df_block)
-                for current_seq in range(df_block['SequenceNumber'].min(), df_block['SequenceNumber'].max()+1):
-                    df_sequence = df_block[df_block['SequenceNumber']==current_seq]
-                    seq_tmp_time = 0
-                    ipi_ln = []
-                    hits_ln = []
-                
-                    # ueber die rows einer Sequenz
-                    for idx, row in df_sequence.iterrows():
-                        ipi_ln.append(row['Time']-seq_tmp_time)
-                        seq_tmp_time = row['Time']
-                        hits_ln.append(row['isHit'])
+                if not df_block.empty: # z.B. Block 7 in srtt ist empty
+                    for current_seq in range(df_block['SequenceNumber'].min(), df_block['SequenceNumber'].max()+1):
+                        df_sequence = df_block[df_block['SequenceNumber']==current_seq]
+                        seq_tmp_time = 0
+                        ipi_ln = []
+                        hits_ln = []
                     
-                            
-                    ipi_lsln_one_block.append(ipi_ln)
-                    ipi_lsln.append(ipi_ln)
-                    hits_lsln_one_block.append(hits_ln)
-                    hits_lsln.append(hits_ln)
+                        # ueber die rows einer Sequenz
+                        for idx, row in df_sequence.iterrows():
+                            ipi_ln.append(row['Time']-seq_tmp_time)
+                            seq_tmp_time = row['Time']
+                            hits_ln.append(row['isHit'])
+                        
+                                
+                        ipi_lsln_one_block.append(ipi_ln)
+                        ipi_lsln.append(ipi_ln)
+                        hits_lsln_one_block.append(hits_ln)
+                        hits_lsln.append(hits_ln)
 
-                    if sum(hits_ln)==self.sequence_length:
-                        cor_ipi_lsln_one_block.append(ipi_ln)
-                        cor_ipi_lsln.append(ipi_ln)
-                    else:
-                        err_ipi_lsln_one_block.append(ipi_ln)
-                        err_ipi_lsln.append(ipi_ln)
+                        if sum(hits_ln)==self.sequence_length:
+                            cor_ipi_lsln_one_block.append(ipi_ln)
+                            cor_ipi_lsln.append(ipi_ln)
+                        else:
+                            err_ipi_lsln_one_block.append(ipi_ln)
+                            err_ipi_lsln.append(ipi_ln)
 
-                ipi_lblsln.append(ipi_lsln_one_block)
-                cor_ipi_lblsln.append(cor_ipi_lsln_one_block)
-                err_ipi_lblsln.append(err_ipi_lsln_one_block)
-                hits_lblsln.append(hits_lsln_one_block)
+                    ipi_lblsln.append(ipi_lsln_one_block)
+                    cor_ipi_lblsln.append(cor_ipi_lsln_one_block)
+                    err_ipi_lblsln.append(err_ipi_lsln_one_block)
+                    hits_lblsln.append(hits_lsln_one_block)
             all_ipi_lplsln.append(ipi_lsln)
             all_ipi_lplblsln.append(ipi_lblsln)    
             cor_ipi_lplsln.append(cor_ipi_lsln)

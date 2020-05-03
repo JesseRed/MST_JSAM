@@ -17,7 +17,7 @@ from helper_functions import tolist_ck, create_standard_df
 from experiment import Experiment
 
 class SRTT():
-    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", path_output = ".\\Data_python", _id = "no_id", sequence_length = 12):
+    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", path_output = ".\\Data_python", _id = "no_id", sequence_length = 10):
         self.fullfilename = fullfilename
         base=os.path.basename(self.fullfilename)
         self.filename = os.path.splitext(base)[0]
@@ -40,7 +40,8 @@ class SRTT():
         #!________________________
         vpn = int(self.filename.split('_')[0])
         #!_________________________
-        print(self.df.head())
+        
+        self.df.to_csv("df_output_of_srtt.log",sep='\t')
         experiment = Experiment('SRTT', vpn, day, self.df)
         print(experiment)
 
@@ -65,7 +66,7 @@ class SRTT():
         df['pressed'] = input_df['Button']
         df['sequence'] = input_df['type']
 
-        df = self.get_time_since_block_start(df, input_df)
+        df = self.get_time_since_sequence_start(df, input_df)
         df = self.generate_isHit(df, input_df)
         
         # ersetzte die Sequenznamen durch Zahlen nach mit der wichtigsten beginnend 
@@ -93,11 +94,28 @@ class SRTT():
             df.loc[0,'Time'] = df.loc[1,'Time'] - 700
             
         df = self.make_SequenceNumber_increasing_across_block_borders(df)
+
         df['SequenceNumber'] = df['SequenceNumber'].astype(int) 
+        #df = self.adapt_Time_from_continious_to_within_Sequences(df)
 #        print(df.head())
         #df['sequn'] = df['SequenceNumber'].astype(int) 
         
         return df
+
+
+    # def adapt_Time_from_continious_to_within_Sequences(self, df):
+    #     current_block = df.loc[1,'BlockNumber']
+    #     sequence_start_time = 0
+    #     for idx in range(df.shape[0]):
+    #         if not df.loc[idx,'BlockNumber'] == current_block:
+    #             current_block = df.loc[idx,'BlockNumber']
+    #             sequence_start_time = 0
+    #         current_time = df.loc[idx,'Time']
+    #         df.loc[idx,'Time'] = current_time - sequence_start_time
+    #         if df.loc[idx,'EventNumber']==self.sequence_length:
+    #             sequence_start_time = current_time
+                
+    #     return df
 
     def make_SequenceNumber_increasing_across_block_borders(self, df):
         seq_len = self.sequence_length
@@ -117,6 +135,22 @@ class SRTT():
                 df.loc[idx,'isHit'] = 1
             else:
                 df.loc[idx,'isHit'] = 0
+        return df
+
+    def get_time_since_sequence_start(self, df, input_df):
+        # we take only the response time, this is not the real time but it is what we 
+        # are interested in for the comparision to MST and SEQ8
+        time_sum = 0
+        counter = 1
+        for idx in range(df.shape[0]):
+            time_sum += input_df.loc[idx,'RT_1']
+            df.loc[idx,'Time Since Block start'] = time_sum
+            if counter == self.sequence_length:
+                counter = 1
+                time_sum = 0
+            else:
+                counter += 1
+
         return df
 
     def get_time_since_block_start(self, df, input_df):

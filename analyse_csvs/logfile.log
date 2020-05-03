@@ -1,0 +1,5600 @@
+BlockNumber         1
+SequenceNumber      1
+EventNumber         1
+Time              998
+isHit               1
+target              3
+pressed             3
+sequence            1
+all_ipi_lsn       928
+Name: 0, dtype: int64
+BlockNumber          1
+SequenceNumber       1
+EventNumber          2
+Time              2265
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        965
+Name: 1, dtype: int64
+BlockNumber          1
+SequenceNumber       1
+EventNumber          3
+Time              3546
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn        833
+Name: 2, dtype: int64
+BlockNumber          1
+SequenceNumber       1
+EventNumber          4
+Time              4430
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        732
+Name: 3, dtype: int64
+BlockNumber          1
+SequenceNumber       1
+EventNumber          5
+Time              5179
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1000
+Name: 4, dtype: int64
+BlockNumber          1
+SequenceNumber       1
+EventNumber          6
+Time              6162
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn       1448
+Name: 5, dtype: int64
+BlockNumber          1
+SequenceNumber       1
+EventNumber          7
+Time              7212
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        965
+Name: 6, dtype: int64
+BlockNumber          1
+SequenceNumber       1
+EventNumber          8
+Time              8661
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        834
+Name: 7, dtype: int64
+BlockNumber           1
+SequenceNumber        1
+EventNumber           9
+Time              10094
+isHit                 1
+target                3
+pressed               3
+sequence              1
+all_ipi_lsn         750
+Name: 8, dtype: int64
+BlockNumber           1
+SequenceNumber        1
+EventNumber          10
+Time              11161
+isHit                 1
+target                2
+pressed               2
+sequence              1
+all_ipi_lsn        1849
+Name: 9, dtype: int64
+BlockNumber          1
+SequenceNumber       2
+EventNumber          1
+Time              1382
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1017
+Name: 10, dtype: int64
+BlockNumber          1
+SequenceNumber       2
+EventNumber          2
+Time              2531
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        981
+Name: 11, dtype: int64
+BlockNumber          1
+SequenceNumber       2
+EventNumber          3
+Time              3664
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        799
+Name: 12, dtype: int64
+BlockNumber          1
+SequenceNumber       2
+EventNumber          4
+Time              4831
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        950
+Name: 13, dtype: int64
+BlockNumber          1
+SequenceNumber       2
+EventNumber          5
+Time              5846
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1099
+Name: 14, dtype: int64
+BlockNumber          1
+SequenceNumber       2
+EventNumber          6
+Time              6730
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        934
+Name: 15, dtype: int64
+BlockNumber          1
+SequenceNumber       2
+EventNumber          7
+Time              8278
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1082
+Name: 16, dtype: int64
+BlockNumber          1
+SequenceNumber       2
+EventNumber          8
+Time              9861
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        784
+Name: 17, dtype: int64
+BlockNumber           1
+SequenceNumber        2
+EventNumber           9
+Time              10910
+isHit                 1
+target                1
+pressed               1
+sequence              1
+all_ipi_lsn        1182
+Name: 18, dtype: int64
+BlockNumber           1
+SequenceNumber        2
+EventNumber          10
+Time              11776
+isHit                 1
+target                0
+pressed               0
+sequence              1
+all_ipi_lsn        1000
+Name: 19, dtype: int64
+BlockNumber          1
+SequenceNumber       3
+EventNumber          1
+Time              1615
+isHit                0
+target               1
+pressed              2
+sequence             1
+all_ipi_lsn       1016
+Name: 20, dtype: int64
+BlockNumber          1
+SequenceNumber       3
+EventNumber          2
+Time              3748
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        899
+Name: 21, dtype: int64
+BlockNumber          1
+SequenceNumber       3
+EventNumber          3
+Time              5331
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn        866
+Name: 22, dtype: int64
+BlockNumber          1
+SequenceNumber       3
+EventNumber          4
+Time              6564
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        800
+Name: 23, dtype: int64
+BlockNumber          1
+SequenceNumber       3
+EventNumber          5
+Time              7596
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        799
+Name: 24, dtype: int64
+BlockNumber          1
+SequenceNumber       3
+EventNumber          6
+Time              8765
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        849
+Name: 25, dtype: int64
+BlockNumber           1
+SequenceNumber        3
+EventNumber           7
+Time              10381
+isHit                 1
+target                3
+pressed               3
+sequence              1
+all_ipi_lsn        1118
+Name: 26, dtype: int64
+BlockNumber           1
+SequenceNumber        3
+EventNumber           8
+Time              11613
+isHit                 1
+target                2
+pressed               2
+sequence              1
+all_ipi_lsn         766
+Name: 27, dtype: int64
+BlockNumber           1
+SequenceNumber        3
+EventNumber           9
+Time              12963
+isHit                 1
+target                3
+pressed               3
+sequence              1
+all_ipi_lsn         815
+Name: 28, dtype: int64
+BlockNumber           1
+SequenceNumber        3
+EventNumber          10
+Time              13929
+isHit                 1
+target                2
+pressed               2
+sequence              1
+all_ipi_lsn        1066
+Name: 29, dtype: int64
+BlockNumber          1
+SequenceNumber       4
+EventNumber          1
+Time              1017
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        900
+Name: 30, dtype: int64
+BlockNumber          1
+SequenceNumber       4
+EventNumber          2
+Time              2284
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        983
+Name: 31, dtype: int64
+BlockNumber          1
+SequenceNumber       4
+EventNumber          3
+Time              3232
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        882
+Name: 32, dtype: int64
+BlockNumber          1
+SequenceNumber       4
+EventNumber          4
+Time              4546
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn        868
+Name: 33, dtype: int64
+BlockNumber          1
+SequenceNumber       4
+EventNumber          5
+Time              5529
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        917
+Name: 34, dtype: int64
+BlockNumber          1
+SequenceNumber       4
+EventNumber          6
+Time              6531
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        983
+Name: 35, dtype: int64
+BlockNumber          1
+SequenceNumber       4
+EventNumber          7
+Time              7796
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1600
+Name: 36, dtype: int64
+BlockNumber          1
+SequenceNumber       4
+EventNumber          8
+Time              8812
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        799
+Name: 37, dtype: int64
+BlockNumber          1
+SequenceNumber       4
+EventNumber          9
+Time              9778
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1298
+Name: 38, dtype: int64
+BlockNumber           1
+SequenceNumber        4
+EventNumber          10
+Time              10710
+isHit                 1
+target                2
+pressed               2
+sequence              1
+all_ipi_lsn         967
+Name: 39, dtype: int64
+BlockNumber          1
+SequenceNumber       5
+EventNumber          1
+Time              1267
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn        899
+Name: 40, dtype: int64
+BlockNumber          1
+SequenceNumber       5
+EventNumber          2
+Time              2366
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        899
+Name: 41, dtype: int64
+BlockNumber          1
+SequenceNumber       5
+EventNumber          3
+Time              3264
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        949
+Name: 42, dtype: int64
+BlockNumber          1
+SequenceNumber       5
+EventNumber          4
+Time              4098
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        917
+Name: 43, dtype: int64
+BlockNumber          1
+SequenceNumber       5
+EventNumber          5
+Time              5265
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1082
+Name: 44, dtype: int64
+BlockNumber          1
+SequenceNumber       5
+EventNumber          6
+Time              6414
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        901
+Name: 45, dtype: int64
+BlockNumber          1
+SequenceNumber       5
+EventNumber          7
+Time              7513
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1050
+Name: 46, dtype: int64
+BlockNumber          1
+SequenceNumber       5
+EventNumber          8
+Time              8396
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        883
+Name: 47, dtype: int64
+BlockNumber          1
+SequenceNumber       5
+EventNumber          9
+Time              9279
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        934
+Name: 48, dtype: int64
+BlockNumber           1
+SequenceNumber        5
+EventNumber          10
+Time              10228
+isHit                 1
+target                1
+pressed               1
+sequence              1
+all_ipi_lsn        1398
+Name: 49, dtype: int64
+BlockNumber          1
+SequenceNumber       6
+EventNumber          1
+Time              1284
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        950
+Name: 50, dtype: int64
+BlockNumber          1
+SequenceNumber       6
+EventNumber          2
+Time              2266
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1118
+Name: 51, dtype: int64
+BlockNumber          1
+SequenceNumber       6
+EventNumber          3
+Time              3399
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn        899
+Name: 52, dtype: int64
+BlockNumber          1
+SequenceNumber       6
+EventNumber          4
+Time              4315
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        915
+Name: 53, dtype: int64
+BlockNumber          1
+SequenceNumber       6
+EventNumber          5
+Time              5333
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1099
+Name: 54, dtype: int64
+BlockNumber          1
+SequenceNumber       6
+EventNumber          6
+Time              6516
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn        984
+Name: 55, dtype: int64
+BlockNumber          1
+SequenceNumber       6
+EventNumber          7
+Time              7680
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        982
+Name: 56, dtype: int64
+BlockNumber          1
+SequenceNumber       6
+EventNumber          8
+Time              8514
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        933
+Name: 57, dtype: int64
+BlockNumber          1
+SequenceNumber       6
+EventNumber          9
+Time              9464
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1166
+Name: 58, dtype: int64
+BlockNumber           1
+SequenceNumber        6
+EventNumber          10
+Time              10530
+isHit                 0
+target                0
+pressed               3
+sequence              1
+all_ipi_lsn        1018
+Name: 59, dtype: int64
+BlockNumber          1
+SequenceNumber       7
+EventNumber          1
+Time              1133
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        901
+Name: 60, dtype: int64
+BlockNumber          1
+SequenceNumber       7
+EventNumber          2
+Time              1949
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1001
+Name: 61, dtype: int64
+BlockNumber          1
+SequenceNumber       7
+EventNumber          3
+Time              2900
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        700
+Name: 62, dtype: int64
+BlockNumber          1
+SequenceNumber       7
+EventNumber          4
+Time              4515
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        898
+Name: 63, dtype: int64
+BlockNumber          1
+SequenceNumber       7
+EventNumber          5
+Time              5416
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        917
+Name: 64, dtype: int64
+BlockNumber          1
+SequenceNumber       7
+EventNumber          6
+Time              6647
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn        883
+Name: 65, dtype: int64
+BlockNumber          1
+SequenceNumber       7
+EventNumber          7
+Time              7581
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        950
+Name: 66, dtype: int64
+BlockNumber          1
+SequenceNumber       7
+EventNumber          8
+Time              9014
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn        916
+Name: 67, dtype: int64
+BlockNumber          1
+SequenceNumber       7
+EventNumber          9
+Time              9913
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1216
+Name: 68, dtype: int64
+BlockNumber           1
+SequenceNumber        7
+EventNumber          10
+Time              10862
+isHit                 1
+target                2
+pressed               2
+sequence              1
+all_ipi_lsn         917
+Name: 69, dtype: int64
+BlockNumber         2
+SequenceNumber      8
+EventNumber         1
+Time              928
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       896
+Name: 70, dtype: int64
+BlockNumber          2
+SequenceNumber       8
+EventNumber          2
+Time              1893
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        948
+Name: 71, dtype: int64
+BlockNumber          2
+SequenceNumber       8
+EventNumber          3
+Time              2726
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1234
+Name: 72, dtype: int64
+BlockNumber          2
+SequenceNumber       8
+EventNumber          4
+Time              3458
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        932
+Name: 73, dtype: int64
+BlockNumber          2
+SequenceNumber       8
+EventNumber          5
+Time              4458
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1467
+Name: 74, dtype: int64
+BlockNumber          2
+SequenceNumber       8
+EventNumber          6
+Time              5906
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        967
+Name: 75, dtype: int64
+BlockNumber          2
+SequenceNumber       8
+EventNumber          7
+Time              6871
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        948
+Name: 76, dtype: int64
+BlockNumber          2
+SequenceNumber       8
+EventNumber          8
+Time              7705
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        917
+Name: 77, dtype: int64
+BlockNumber          2
+SequenceNumber       8
+EventNumber          9
+Time              8455
+isHit                0
+target               3
+pressed              2
+sequence             0
+all_ipi_lsn       1300
+Name: 78, dtype: int64
+BlockNumber           2
+SequenceNumber        8
+EventNumber          10
+Time              10304
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn         849
+Name: 79, dtype: int64
+BlockNumber          2
+SequenceNumber       9
+EventNumber          1
+Time              1017
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        900
+Name: 80, dtype: int64
+BlockNumber          2
+SequenceNumber       9
+EventNumber          2
+Time              1998
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        915
+Name: 81, dtype: int64
+BlockNumber          2
+SequenceNumber       9
+EventNumber          3
+Time              2797
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        883
+Name: 82, dtype: int64
+BlockNumber          2
+SequenceNumber       9
+EventNumber          4
+Time              3747
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        800
+Name: 83, dtype: int64
+BlockNumber          2
+SequenceNumber       9
+EventNumber          5
+Time              4846
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        981
+Name: 84, dtype: int64
+BlockNumber          2
+SequenceNumber       9
+EventNumber          6
+Time              5780
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1083
+Name: 85, dtype: int64
+BlockNumber          2
+SequenceNumber       9
+EventNumber          7
+Time              6862
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        950
+Name: 86, dtype: int64
+BlockNumber          2
+SequenceNumber       9
+EventNumber          8
+Time              7646
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        901
+Name: 87, dtype: int64
+BlockNumber          2
+SequenceNumber       9
+EventNumber          9
+Time              8828
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1166
+Name: 88, dtype: int64
+BlockNumber          2
+SequenceNumber       9
+EventNumber         10
+Time              9828
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        898
+Name: 89, dtype: int64
+BlockNumber          2
+SequenceNumber      10
+EventNumber          1
+Time              1016
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        951
+Name: 90, dtype: int64
+BlockNumber          2
+SequenceNumber      10
+EventNumber          2
+Time              1915
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1033
+Name: 91, dtype: int64
+BlockNumber          2
+SequenceNumber      10
+EventNumber          3
+Time              2781
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1117
+Name: 92, dtype: int64
+BlockNumber          2
+SequenceNumber      10
+EventNumber          4
+Time              3581
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        849
+Name: 93, dtype: int64
+BlockNumber          2
+SequenceNumber      10
+EventNumber          5
+Time              4380
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1183
+Name: 94, dtype: int64
+BlockNumber          2
+SequenceNumber      10
+EventNumber          6
+Time              5229
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        899
+Name: 95, dtype: int64
+BlockNumber          2
+SequenceNumber      10
+EventNumber          7
+Time              6347
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        916
+Name: 96, dtype: int64
+BlockNumber          2
+SequenceNumber      10
+EventNumber          8
+Time              7113
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        950
+Name: 97, dtype: int64
+BlockNumber          2
+SequenceNumber      10
+EventNumber          9
+Time              7928
+isHit                0
+target               3
+pressed              2
+sequence             0
+all_ipi_lsn       1283
+Name: 98, dtype: int64
+BlockNumber          2
+SequenceNumber      10
+EventNumber         10
+Time              8994
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        900
+Name: 99, dtype: int64
+BlockNumber         2
+SequenceNumber     11
+EventNumber         1
+Time              900
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       966
+Name: 100, dtype: int64
+BlockNumber          2
+SequenceNumber      11
+EventNumber          2
+Time              1883
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1082
+Name: 101, dtype: int64
+BlockNumber          2
+SequenceNumber      11
+EventNumber          3
+Time              2765
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        982
+Name: 102, dtype: int64
+BlockNumber          2
+SequenceNumber      11
+EventNumber          4
+Time              3633
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        833
+Name: 103, dtype: int64
+BlockNumber          2
+SequenceNumber      11
+EventNumber          5
+Time              4550
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        950
+Name: 104, dtype: int64
+BlockNumber          2
+SequenceNumber      11
+EventNumber          6
+Time              5533
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        900
+Name: 105, dtype: int64
+BlockNumber          2
+SequenceNumber      11
+EventNumber          7
+Time              7133
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        850
+Name: 106, dtype: int64
+BlockNumber          2
+SequenceNumber      11
+EventNumber          8
+Time              7932
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        917
+Name: 107, dtype: int64
+BlockNumber          2
+SequenceNumber      11
+EventNumber          9
+Time              9230
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        815
+Name: 108, dtype: int64
+BlockNumber           2
+SequenceNumber       11
+EventNumber          10
+Time              10197
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn        1033
+Name: 109, dtype: int64
+BlockNumber         2
+SequenceNumber     12
+EventNumber         1
+Time              899
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       833
+Name: 110, dtype: int64
+BlockNumber          2
+SequenceNumber      12
+EventNumber          2
+Time              1798
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        917
+Name: 111, dtype: int64
+BlockNumber          2
+SequenceNumber      12
+EventNumber          3
+Time              2747
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1099
+Name: 112, dtype: int64
+BlockNumber          2
+SequenceNumber      12
+EventNumber          4
+Time              3664
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1366
+Name: 113, dtype: int64
+BlockNumber          2
+SequenceNumber      12
+EventNumber          5
+Time              4746
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1249
+Name: 114, dtype: int64
+BlockNumber          2
+SequenceNumber      12
+EventNumber          6
+Time              5647
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1100
+Name: 115, dtype: int64
+BlockNumber          2
+SequenceNumber      12
+EventNumber          7
+Time              6697
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1217
+Name: 116, dtype: int64
+BlockNumber          2
+SequenceNumber      12
+EventNumber          8
+Time              7580
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       2100
+Name: 117, dtype: int64
+BlockNumber          2
+SequenceNumber      12
+EventNumber          9
+Time              8514
+isHit                0
+target               3
+pressed              2
+sequence             0
+all_ipi_lsn       1415
+Name: 118, dtype: int64
+BlockNumber          2
+SequenceNumber      12
+EventNumber         10
+Time              9912
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        933
+Name: 119, dtype: int64
+BlockNumber         2
+SequenceNumber     13
+EventNumber         1
+Time              950
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       900
+Name: 120, dtype: int64
+BlockNumber          2
+SequenceNumber      13
+EventNumber          2
+Time              2068
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        868
+Name: 121, dtype: int64
+BlockNumber          2
+SequenceNumber      13
+EventNumber          3
+Time              2967
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        948
+Name: 122, dtype: int64
+BlockNumber          2
+SequenceNumber      13
+EventNumber          4
+Time              3882
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1067
+Name: 123, dtype: int64
+BlockNumber          2
+SequenceNumber      13
+EventNumber          5
+Time              4981
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1065
+Name: 124, dtype: int64
+BlockNumber          2
+SequenceNumber      13
+EventNumber          6
+Time              5965
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        916
+Name: 125, dtype: int64
+BlockNumber          2
+SequenceNumber      13
+EventNumber          7
+Time              6947
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        884
+Name: 126, dtype: int64
+BlockNumber          2
+SequenceNumber      13
+EventNumber          8
+Time              7880
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        915
+Name: 127, dtype: int64
+BlockNumber          2
+SequenceNumber      13
+EventNumber          9
+Time              9046
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1134
+Name: 128, dtype: int64
+BlockNumber           2
+SequenceNumber       13
+EventNumber          10
+Time              10064
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn         767
+Name: 129, dtype: int64
+BlockNumber         2
+SequenceNumber     14
+EventNumber         1
+Time              901
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       834
+Name: 130, dtype: int64
+BlockNumber          2
+SequenceNumber      14
+EventNumber          2
+Time              1902
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        833
+Name: 131, dtype: int64
+BlockNumber          2
+SequenceNumber      14
+EventNumber          3
+Time              2602
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        849
+Name: 132, dtype: int64
+BlockNumber          2
+SequenceNumber      14
+EventNumber          4
+Time              3500
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        768
+Name: 133, dtype: int64
+BlockNumber          2
+SequenceNumber      14
+EventNumber          5
+Time              4417
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1067
+Name: 134, dtype: int64
+BlockNumber          2
+SequenceNumber      14
+EventNumber          6
+Time              5300
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        817
+Name: 135, dtype: int64
+BlockNumber          2
+SequenceNumber      14
+EventNumber          7
+Time              6250
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        798
+Name: 136, dtype: int64
+BlockNumber          2
+SequenceNumber      14
+EventNumber          8
+Time              7166
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1034
+Name: 137, dtype: int64
+BlockNumber          2
+SequenceNumber      14
+EventNumber          9
+Time              8382
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1316
+Name: 138, dtype: int64
+BlockNumber          2
+SequenceNumber      14
+EventNumber         10
+Time              9299
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1034
+Name: 139, dtype: int64
+BlockNumber         3
+SequenceNumber     15
+EventNumber         1
+Time              896
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       995
+Name: 140, dtype: int64
+BlockNumber          3
+SequenceNumber      15
+EventNumber          2
+Time              1844
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        865
+Name: 141, dtype: int64
+BlockNumber          3
+SequenceNumber      15
+EventNumber          3
+Time              3078
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        834
+Name: 142, dtype: int64
+BlockNumber          3
+SequenceNumber      15
+EventNumber          4
+Time              4010
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1000
+Name: 143, dtype: int64
+BlockNumber          3
+SequenceNumber      15
+EventNumber          5
+Time              5477
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        999
+Name: 144, dtype: int64
+BlockNumber          3
+SequenceNumber      15
+EventNumber          6
+Time              6444
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        918
+Name: 145, dtype: int64
+BlockNumber          3
+SequenceNumber      15
+EventNumber          7
+Time              7392
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        799
+Name: 146, dtype: int64
+BlockNumber          3
+SequenceNumber      15
+EventNumber          8
+Time              8309
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        982
+Name: 147, dtype: int64
+BlockNumber          3
+SequenceNumber      15
+EventNumber          9
+Time              9609
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1167
+Name: 148, dtype: int64
+BlockNumber           3
+SequenceNumber       15
+EventNumber          10
+Time              10458
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn         983
+Name: 149, dtype: int64
+BlockNumber          3
+SequenceNumber      16
+EventNumber          1
+Time               900
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1016
+Name: 150, dtype: int64
+BlockNumber          3
+SequenceNumber      16
+EventNumber          2
+Time              1815
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        849
+Name: 151, dtype: int64
+BlockNumber          3
+SequenceNumber      16
+EventNumber          3
+Time              2698
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        885
+Name: 152, dtype: int64
+BlockNumber          3
+SequenceNumber      16
+EventNumber          4
+Time              3498
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        816
+Name: 153, dtype: int64
+BlockNumber          3
+SequenceNumber      16
+EventNumber          5
+Time              4479
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        934
+Name: 154, dtype: int64
+BlockNumber          3
+SequenceNumber      16
+EventNumber          6
+Time              5562
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        866
+Name: 155, dtype: int64
+BlockNumber          3
+SequenceNumber      16
+EventNumber          7
+Time              6512
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        901
+Name: 156, dtype: int64
+BlockNumber          3
+SequenceNumber      16
+EventNumber          8
+Time              7413
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        998
+Name: 157, dtype: int64
+BlockNumber          3
+SequenceNumber      16
+EventNumber          9
+Time              8579
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1333
+Name: 158, dtype: int64
+BlockNumber          3
+SequenceNumber      16
+EventNumber         10
+Time              9477
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1066
+Name: 159, dtype: int64
+BlockNumber          3
+SequenceNumber      17
+EventNumber          1
+Time               951
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1350
+Name: 160, dtype: int64
+BlockNumber          3
+SequenceNumber      17
+EventNumber          2
+Time              1984
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        982
+Name: 161, dtype: int64
+BlockNumber          3
+SequenceNumber      17
+EventNumber          3
+Time              3101
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        866
+Name: 162, dtype: int64
+BlockNumber          3
+SequenceNumber      17
+EventNumber          4
+Time              3950
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1117
+Name: 163, dtype: int64
+BlockNumber          3
+SequenceNumber      17
+EventNumber          5
+Time              5133
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1165
+Name: 164, dtype: int64
+BlockNumber          3
+SequenceNumber      17
+EventNumber          6
+Time              6032
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1099
+Name: 165, dtype: int64
+BlockNumber          3
+SequenceNumber      17
+EventNumber          7
+Time              6948
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1035
+Name: 166, dtype: int64
+BlockNumber          3
+SequenceNumber      17
+EventNumber          8
+Time              7898
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        881
+Name: 167, dtype: int64
+BlockNumber          3
+SequenceNumber      17
+EventNumber          9
+Time              9181
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1351
+Name: 168, dtype: int64
+BlockNumber           3
+SequenceNumber       17
+EventNumber          10
+Time              10081
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn        1199
+Name: 169, dtype: int64
+BlockNumber          3
+SequenceNumber      18
+EventNumber          1
+Time               966
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1116
+Name: 170, dtype: int64
+BlockNumber          3
+SequenceNumber      18
+EventNumber          2
+Time              2048
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        984
+Name: 171, dtype: int64
+BlockNumber          3
+SequenceNumber      18
+EventNumber          3
+Time              3030
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1049
+Name: 172, dtype: int64
+BlockNumber          3
+SequenceNumber      18
+EventNumber          4
+Time              3863
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        849
+Name: 173, dtype: int64
+BlockNumber          3
+SequenceNumber      18
+EventNumber          5
+Time              4813
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        866
+Name: 174, dtype: int64
+BlockNumber          3
+SequenceNumber      18
+EventNumber          6
+Time              5713
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1100
+Name: 175, dtype: int64
+BlockNumber          3
+SequenceNumber      18
+EventNumber          7
+Time              6563
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        866
+Name: 176, dtype: int64
+BlockNumber          3
+SequenceNumber      18
+EventNumber          8
+Time              7480
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        867
+Name: 177, dtype: int64
+BlockNumber          3
+SequenceNumber      18
+EventNumber          9
+Time              8295
+isHit                0
+target               3
+pressed              2
+sequence             0
+all_ipi_lsn       1315
+Name: 178, dtype: int64
+BlockNumber          3
+SequenceNumber      18
+EventNumber         10
+Time              9328
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        900
+Name: 179, dtype: int64
+BlockNumber         3
+SequenceNumber     19
+EventNumber         1
+Time              833
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       967
+Name: 180, dtype: int64
+BlockNumber          3
+SequenceNumber      19
+EventNumber          2
+Time              1750
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        966
+Name: 181, dtype: int64
+BlockNumber          3
+SequenceNumber      19
+EventNumber          3
+Time              2849
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1067
+Name: 182, dtype: int64
+BlockNumber          3
+SequenceNumber      19
+EventNumber          4
+Time              4215
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        898
+Name: 183, dtype: int64
+BlockNumber          3
+SequenceNumber      19
+EventNumber          5
+Time              5464
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1134
+Name: 184, dtype: int64
+BlockNumber          3
+SequenceNumber      19
+EventNumber          6
+Time              6564
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1015
+Name: 185, dtype: int64
+BlockNumber          3
+SequenceNumber      19
+EventNumber          7
+Time              7781
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        985
+Name: 186, dtype: int64
+BlockNumber          3
+SequenceNumber      19
+EventNumber          8
+Time              9881
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1515
+Name: 187, dtype: int64
+BlockNumber           3
+SequenceNumber       19
+EventNumber           9
+Time              11296
+isHit                 1
+target                3
+pressed               3
+sequence              0
+all_ipi_lsn        2500
+Name: 188, dtype: int64
+BlockNumber           3
+SequenceNumber       19
+EventNumber          10
+Time              12229
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn        1464
+Name: 189, dtype: int64
+BlockNumber          3
+SequenceNumber      20
+EventNumber          1
+Time               900
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1149
+Name: 190, dtype: int64
+BlockNumber          3
+SequenceNumber      20
+EventNumber          2
+Time              1768
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        899
+Name: 191, dtype: int64
+BlockNumber          3
+SequenceNumber      20
+EventNumber          3
+Time              2716
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        883
+Name: 192, dtype: int64
+BlockNumber          3
+SequenceNumber      20
+EventNumber          4
+Time              3783
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        884
+Name: 193, dtype: int64
+BlockNumber          3
+SequenceNumber      20
+EventNumber          5
+Time              4848
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1166
+Name: 194, dtype: int64
+BlockNumber          3
+SequenceNumber      20
+EventNumber          6
+Time              5764
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        849
+Name: 195, dtype: int64
+BlockNumber          3
+SequenceNumber      20
+EventNumber          7
+Time              6648
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        933
+Name: 196, dtype: int64
+BlockNumber          3
+SequenceNumber      20
+EventNumber          8
+Time              7563
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        966
+Name: 197, dtype: int64
+BlockNumber          3
+SequenceNumber      20
+EventNumber          9
+Time              8697
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        983
+Name: 198, dtype: int64
+BlockNumber          3
+SequenceNumber      20
+EventNumber         10
+Time              9464
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        900
+Name: 199, dtype: int64
+BlockNumber         3
+SequenceNumber     21
+EventNumber         1
+Time              834
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       951
+Name: 200, dtype: int64
+BlockNumber          3
+SequenceNumber      21
+EventNumber          2
+Time              1667
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        851
+Name: 201, dtype: int64
+BlockNumber          3
+SequenceNumber      21
+EventNumber          3
+Time              2516
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        966
+Name: 202, dtype: int64
+BlockNumber          3
+SequenceNumber      21
+EventNumber          4
+Time              3284
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        833
+Name: 203, dtype: int64
+BlockNumber          3
+SequenceNumber      21
+EventNumber          5
+Time              4351
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1084
+Name: 204, dtype: int64
+BlockNumber          3
+SequenceNumber      21
+EventNumber          6
+Time              5168
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        899
+Name: 205, dtype: int64
+BlockNumber          3
+SequenceNumber      21
+EventNumber          7
+Time              5966
+isHit                0
+target               2
+pressed              3
+sequence             0
+all_ipi_lsn        999
+Name: 206, dtype: int64
+BlockNumber          3
+SequenceNumber      21
+EventNumber          8
+Time              7000
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        867
+Name: 207, dtype: int64
+BlockNumber          3
+SequenceNumber      21
+EventNumber          9
+Time              8316
+isHit                0
+target               3
+pressed              2
+sequence             0
+all_ipi_lsn       1134
+Name: 208, dtype: int64
+BlockNumber          3
+SequenceNumber      21
+EventNumber         10
+Time              9350
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        982
+Name: 209, dtype: int64
+BlockNumber         4
+SequenceNumber     22
+EventNumber         1
+Time              995
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       897
+Name: 210, dtype: int64
+BlockNumber          4
+SequenceNumber      22
+EventNumber          2
+Time              1860
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        918
+Name: 211, dtype: int64
+BlockNumber          4
+SequenceNumber      22
+EventNumber          3
+Time              2694
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        917
+Name: 212, dtype: int64
+BlockNumber          4
+SequenceNumber      22
+EventNumber          4
+Time              3694
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        849
+Name: 213, dtype: int64
+BlockNumber          4
+SequenceNumber      22
+EventNumber          5
+Time              4693
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1033
+Name: 214, dtype: int64
+BlockNumber          4
+SequenceNumber      22
+EventNumber          6
+Time              5611
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        967
+Name: 215, dtype: int64
+BlockNumber          4
+SequenceNumber      22
+EventNumber          7
+Time              6410
+isHit                0
+target               2
+pressed              3
+sequence             0
+all_ipi_lsn        966
+Name: 216, dtype: int64
+BlockNumber          4
+SequenceNumber      22
+EventNumber          8
+Time              7392
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1016
+Name: 217, dtype: int64
+BlockNumber          4
+SequenceNumber      22
+EventNumber          9
+Time              8559
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1132
+Name: 218, dtype: int64
+BlockNumber          4
+SequenceNumber      22
+EventNumber         10
+Time              9542
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        950
+Name: 219, dtype: int64
+BlockNumber          4
+SequenceNumber      23
+EventNumber          1
+Time              1016
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        951
+Name: 220, dtype: int64
+BlockNumber          4
+SequenceNumber      23
+EventNumber          2
+Time              1865
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1050
+Name: 221, dtype: int64
+BlockNumber          4
+SequenceNumber      23
+EventNumber          3
+Time              2750
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1067
+Name: 222, dtype: int64
+BlockNumber          4
+SequenceNumber      23
+EventNumber          4
+Time              3566
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        832
+Name: 223, dtype: int64
+BlockNumber          4
+SequenceNumber      23
+EventNumber          5
+Time              4500
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1134
+Name: 224, dtype: int64
+BlockNumber          4
+SequenceNumber      23
+EventNumber          6
+Time              5366
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        884
+Name: 225, dtype: int64
+BlockNumber          4
+SequenceNumber      23
+EventNumber          7
+Time              6267
+isHit                0
+target               2
+pressed              3
+sequence             0
+all_ipi_lsn        948
+Name: 226, dtype: int64
+BlockNumber          4
+SequenceNumber      23
+EventNumber          8
+Time              7265
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        982
+Name: 227, dtype: int64
+BlockNumber          4
+SequenceNumber      23
+EventNumber          9
+Time              8598
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1167
+Name: 228, dtype: int64
+BlockNumber          4
+SequenceNumber      23
+EventNumber         10
+Time              9664
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        916
+Name: 229, dtype: int64
+BlockNumber          4
+SequenceNumber      24
+EventNumber          1
+Time              1350
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        933
+Name: 230, dtype: int64
+BlockNumber          4
+SequenceNumber      24
+EventNumber          2
+Time              2332
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        898
+Name: 231, dtype: int64
+BlockNumber          4
+SequenceNumber      24
+EventNumber          3
+Time              3198
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        918
+Name: 232, dtype: int64
+BlockNumber          4
+SequenceNumber      24
+EventNumber          4
+Time              4315
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1116
+Name: 233, dtype: int64
+BlockNumber          4
+SequenceNumber      24
+EventNumber          5
+Time              5480
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        983
+Name: 234, dtype: int64
+BlockNumber          4
+SequenceNumber      24
+EventNumber          6
+Time              6579
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        917
+Name: 235, dtype: int64
+BlockNumber          4
+SequenceNumber      24
+EventNumber          7
+Time              7614
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        899
+Name: 236, dtype: int64
+BlockNumber          4
+SequenceNumber      24
+EventNumber          8
+Time              8495
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        999
+Name: 237, dtype: int64
+BlockNumber          4
+SequenceNumber      24
+EventNumber          9
+Time              9846
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1100
+Name: 238, dtype: int64
+BlockNumber           4
+SequenceNumber       24
+EventNumber          10
+Time              11045
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn         899
+Name: 239, dtype: int64
+BlockNumber          4
+SequenceNumber      25
+EventNumber          1
+Time              1116
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        817
+Name: 240, dtype: int64
+BlockNumber          4
+SequenceNumber      25
+EventNumber          2
+Time              2100
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        867
+Name: 241, dtype: int64
+BlockNumber          4
+SequenceNumber      25
+EventNumber          3
+Time              3149
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        933
+Name: 242, dtype: int64
+BlockNumber          4
+SequenceNumber      25
+EventNumber          4
+Time              3998
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        816
+Name: 243, dtype: int64
+BlockNumber          4
+SequenceNumber      25
+EventNumber          5
+Time              4864
+isHit                0
+target               3
+pressed              1
+sequence             0
+all_ipi_lsn        982
+Name: 244, dtype: int64
+BlockNumber          4
+SequenceNumber      25
+EventNumber          6
+Time              5964
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1066
+Name: 245, dtype: int64
+BlockNumber          4
+SequenceNumber      25
+EventNumber          7
+Time              6830
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        916
+Name: 246, dtype: int64
+BlockNumber          4
+SequenceNumber      25
+EventNumber          8
+Time              7697
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        849
+Name: 247, dtype: int64
+BlockNumber          4
+SequenceNumber      25
+EventNumber          9
+Time              9012
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1167
+Name: 248, dtype: int64
+BlockNumber          4
+SequenceNumber      25
+EventNumber         10
+Time              9912
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        799
+Name: 249, dtype: int64
+BlockNumber         4
+SequenceNumber     26
+EventNumber         1
+Time              967
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       783
+Name: 250, dtype: int64
+BlockNumber          4
+SequenceNumber      26
+EventNumber          2
+Time              1933
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        883
+Name: 251, dtype: int64
+BlockNumber          4
+SequenceNumber      26
+EventNumber          3
+Time              3000
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        933
+Name: 252, dtype: int64
+BlockNumber          4
+SequenceNumber      26
+EventNumber          4
+Time              3898
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        782
+Name: 253, dtype: int64
+BlockNumber          4
+SequenceNumber      26
+EventNumber          5
+Time              5032
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        967
+Name: 254, dtype: int64
+BlockNumber          4
+SequenceNumber      26
+EventNumber          6
+Time              6047
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        933
+Name: 255, dtype: int64
+BlockNumber          4
+SequenceNumber      26
+EventNumber          7
+Time              7032
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        882
+Name: 256, dtype: int64
+BlockNumber          4
+SequenceNumber      26
+EventNumber          8
+Time              8547
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        832
+Name: 257, dtype: int64
+BlockNumber           4
+SequenceNumber       26
+EventNumber           9
+Time              11047
+isHit                 0
+target                3
+pressed              -1
+sequence              0
+all_ipi_lsn         917
+Name: 258, dtype: int64
+BlockNumber           4
+SequenceNumber       26
+EventNumber          10
+Time              12511
+isHit                 0
+target                1
+pressed               0
+sequence              0
+all_ipi_lsn         950
+Name: 259, dtype: int64
+BlockNumber          4
+SequenceNumber      27
+EventNumber          1
+Time              1149
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1000
+Name: 260, dtype: int64
+BlockNumber          4
+SequenceNumber      27
+EventNumber          2
+Time              2048
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        898
+Name: 261, dtype: int64
+BlockNumber          4
+SequenceNumber      27
+EventNumber          3
+Time              2931
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        950
+Name: 262, dtype: int64
+BlockNumber          4
+SequenceNumber      27
+EventNumber          4
+Time              3815
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        834
+Name: 263, dtype: int64
+BlockNumber          4
+SequenceNumber      27
+EventNumber          5
+Time              4981
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1066
+Name: 264, dtype: int64
+BlockNumber          4
+SequenceNumber      27
+EventNumber          6
+Time              5830
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1050
+Name: 265, dtype: int64
+BlockNumber          4
+SequenceNumber      27
+EventNumber          7
+Time              6763
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        950
+Name: 266, dtype: int64
+BlockNumber          4
+SequenceNumber      27
+EventNumber          8
+Time              7729
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        950
+Name: 267, dtype: int64
+BlockNumber          4
+SequenceNumber      27
+EventNumber          9
+Time              8712
+isHit                0
+target               3
+pressed              2
+sequence             0
+all_ipi_lsn       1049
+Name: 268, dtype: int64
+BlockNumber          4
+SequenceNumber      27
+EventNumber         10
+Time              9612
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        817
+Name: 269, dtype: int64
+BlockNumber         4
+SequenceNumber     28
+EventNumber         1
+Time              951
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       899
+Name: 270, dtype: int64
+BlockNumber          4
+SequenceNumber      28
+EventNumber          2
+Time              1802
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        866
+Name: 271, dtype: int64
+BlockNumber          4
+SequenceNumber      28
+EventNumber          3
+Time              2768
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        832
+Name: 272, dtype: int64
+BlockNumber          4
+SequenceNumber      28
+EventNumber          4
+Time              3601
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        784
+Name: 273, dtype: int64
+BlockNumber          4
+SequenceNumber      28
+EventNumber          5
+Time              4685
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1066
+Name: 274, dtype: int64
+BlockNumber          4
+SequenceNumber      28
+EventNumber          6
+Time              5584
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        866
+Name: 275, dtype: int64
+BlockNumber          4
+SequenceNumber      28
+EventNumber          7
+Time              6583
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        949
+Name: 276, dtype: int64
+BlockNumber          4
+SequenceNumber      28
+EventNumber          8
+Time              7450
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        766
+Name: 277, dtype: int64
+BlockNumber          4
+SequenceNumber      28
+EventNumber          9
+Time              8584
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        816
+Name: 278, dtype: int64
+BlockNumber          4
+SequenceNumber      28
+EventNumber         10
+Time              9566
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1018
+Name: 279, dtype: int64
+BlockNumber         5
+SequenceNumber     29
+EventNumber         1
+Time              897
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       831
+Name: 280, dtype: int64
+BlockNumber          5
+SequenceNumber      29
+EventNumber          2
+Time              1815
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        831
+Name: 281, dtype: int64
+BlockNumber          5
+SequenceNumber      29
+EventNumber          3
+Time              2732
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        867
+Name: 282, dtype: int64
+BlockNumber          5
+SequenceNumber      29
+EventNumber          4
+Time              3581
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        766
+Name: 283, dtype: int64
+BlockNumber          5
+SequenceNumber      29
+EventNumber          5
+Time              4614
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1051
+Name: 284, dtype: int64
+BlockNumber          5
+SequenceNumber      29
+EventNumber          6
+Time              5581
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        916
+Name: 285, dtype: int64
+BlockNumber          5
+SequenceNumber      29
+EventNumber          7
+Time              6547
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1265
+Name: 286, dtype: int64
+BlockNumber          5
+SequenceNumber      29
+EventNumber          8
+Time              7563
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        800
+Name: 287, dtype: int64
+BlockNumber          5
+SequenceNumber      29
+EventNumber          9
+Time              8695
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1184
+Name: 288, dtype: int64
+BlockNumber          5
+SequenceNumber      29
+EventNumber         10
+Time              9645
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        915
+Name: 289, dtype: int64
+BlockNumber          5
+SequenceNumber      30
+EventNumber          1
+Time               951
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1265
+Name: 290, dtype: int64
+BlockNumber          5
+SequenceNumber      30
+EventNumber          2
+Time              2001
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1034
+Name: 291, dtype: int64
+BlockNumber          5
+SequenceNumber      30
+EventNumber          3
+Time              3068
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        949
+Name: 292, dtype: int64
+BlockNumber          5
+SequenceNumber      30
+EventNumber          4
+Time              3900
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        833
+Name: 293, dtype: int64
+BlockNumber          5
+SequenceNumber      30
+EventNumber          5
+Time              5034
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1018
+Name: 294, dtype: int64
+BlockNumber          5
+SequenceNumber      30
+EventNumber          6
+Time              5918
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        983
+Name: 295, dtype: int64
+BlockNumber          5
+SequenceNumber      30
+EventNumber          7
+Time              6866
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        949
+Name: 296, dtype: int64
+BlockNumber          5
+SequenceNumber      30
+EventNumber          8
+Time              7848
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1065
+Name: 297, dtype: int64
+BlockNumber          5
+SequenceNumber      30
+EventNumber          9
+Time              9015
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1218
+Name: 298, dtype: int64
+BlockNumber          5
+SequenceNumber      30
+EventNumber         10
+Time              9931
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        982
+Name: 299, dtype: int64
+BlockNumber          5
+SequenceNumber      31
+EventNumber          1
+Time               933
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1084
+Name: 300, dtype: int64
+BlockNumber          5
+SequenceNumber      31
+EventNumber          2
+Time              1831
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        917
+Name: 301, dtype: int64
+BlockNumber          5
+SequenceNumber      31
+EventNumber          3
+Time              2749
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        916
+Name: 302, dtype: int64
+BlockNumber          5
+SequenceNumber      31
+EventNumber          4
+Time              3865
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        900
+Name: 303, dtype: int64
+BlockNumber          5
+SequenceNumber      31
+EventNumber          5
+Time              4848
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1166
+Name: 304, dtype: int64
+BlockNumber          5
+SequenceNumber      31
+EventNumber          6
+Time              5765
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        951
+Name: 305, dtype: int64
+BlockNumber          5
+SequenceNumber      31
+EventNumber          7
+Time              6664
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        849
+Name: 306, dtype: int64
+BlockNumber          5
+SequenceNumber      31
+EventNumber          8
+Time              7663
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        850
+Name: 307, dtype: int64
+BlockNumber          5
+SequenceNumber      31
+EventNumber          9
+Time              8763
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        999
+Name: 308, dtype: int64
+BlockNumber          5
+SequenceNumber      31
+EventNumber         10
+Time              9662
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1083
+Name: 309, dtype: int64
+BlockNumber          5
+SequenceNumber      32
+EventNumber          1
+Time               817
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1166
+Name: 310, dtype: int64
+BlockNumber          5
+SequenceNumber      32
+EventNumber          2
+Time              1684
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        749
+Name: 311, dtype: int64
+BlockNumber          5
+SequenceNumber      32
+EventNumber          3
+Time              2617
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1151
+Name: 312, dtype: int64
+BlockNumber          5
+SequenceNumber      32
+EventNumber          4
+Time              3433
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        917
+Name: 313, dtype: int64
+BlockNumber          5
+SequenceNumber      32
+EventNumber          5
+Time              4415
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1098
+Name: 314, dtype: int64
+BlockNumber          5
+SequenceNumber      32
+EventNumber          6
+Time              5481
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        950
+Name: 315, dtype: int64
+BlockNumber          5
+SequenceNumber      32
+EventNumber          7
+Time              6397
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1117
+Name: 316, dtype: int64
+BlockNumber          5
+SequenceNumber      32
+EventNumber          8
+Time              7246
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        816
+Name: 317, dtype: int64
+BlockNumber          5
+SequenceNumber      32
+EventNumber          9
+Time              8413
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        999
+Name: 318, dtype: int64
+BlockNumber          5
+SequenceNumber      32
+EventNumber         10
+Time              9212
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        967
+Name: 319, dtype: int64
+BlockNumber         5
+SequenceNumber     33
+EventNumber         1
+Time              783
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       966
+Name: 320, dtype: int64
+BlockNumber          5
+SequenceNumber      33
+EventNumber          2
+Time              1666
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1116
+Name: 321, dtype: int64
+BlockNumber          5
+SequenceNumber      33
+EventNumber          3
+Time              2599
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        932
+Name: 322, dtype: int64
+BlockNumber          5
+SequenceNumber      33
+EventNumber          4
+Time              3381
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        983
+Name: 323, dtype: int64
+BlockNumber          5
+SequenceNumber      33
+EventNumber          5
+Time              4348
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1166
+Name: 324, dtype: int64
+BlockNumber          5
+SequenceNumber      33
+EventNumber          6
+Time              5281
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        883
+Name: 325, dtype: int64
+BlockNumber          5
+SequenceNumber      33
+EventNumber          7
+Time              6163
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1116
+Name: 326, dtype: int64
+BlockNumber          5
+SequenceNumber      33
+EventNumber          8
+Time              6995
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        917
+Name: 327, dtype: int64
+BlockNumber          5
+SequenceNumber      33
+EventNumber          9
+Time              7912
+isHit                0
+target               3
+pressed              2
+sequence             0
+all_ipi_lsn       1132
+Name: 328, dtype: int64
+BlockNumber          5
+SequenceNumber      33
+EventNumber         10
+Time              8862
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        951
+Name: 329, dtype: int64
+BlockNumber          5
+SequenceNumber      34
+EventNumber          1
+Time              1000
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        901
+Name: 330, dtype: int64
+BlockNumber          5
+SequenceNumber      34
+EventNumber          2
+Time              1898
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        983
+Name: 331, dtype: int64
+BlockNumber          5
+SequenceNumber      34
+EventNumber          3
+Time              2848
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1016
+Name: 332, dtype: int64
+BlockNumber          5
+SequenceNumber      34
+EventNumber          4
+Time              3682
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        949
+Name: 333, dtype: int64
+BlockNumber          5
+SequenceNumber      34
+EventNumber          5
+Time              4748
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        984
+Name: 334, dtype: int64
+BlockNumber          5
+SequenceNumber      34
+EventNumber          6
+Time              5798
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        916
+Name: 335, dtype: int64
+BlockNumber          5
+SequenceNumber      34
+EventNumber          7
+Time              6748
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        916
+Name: 336, dtype: int64
+BlockNumber          5
+SequenceNumber      34
+EventNumber          8
+Time              7698
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        834
+Name: 337, dtype: int64
+BlockNumber          5
+SequenceNumber      34
+EventNumber          9
+Time              8747
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1150
+Name: 338, dtype: int64
+BlockNumber          5
+SequenceNumber      34
+EventNumber         10
+Time              9564
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        915
+Name: 339, dtype: int64
+BlockNumber         5
+SequenceNumber     35
+EventNumber         1
+Time              899
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       966
+Name: 340, dtype: int64
+BlockNumber          5
+SequenceNumber      35
+EventNumber          2
+Time              1765
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        984
+Name: 341, dtype: int64
+BlockNumber          5
+SequenceNumber      35
+EventNumber          3
+Time              2597
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1148
+Name: 342, dtype: int64
+BlockNumber          5
+SequenceNumber      35
+EventNumber          4
+Time              3381
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        917
+Name: 343, dtype: int64
+BlockNumber          5
+SequenceNumber      35
+EventNumber          5
+Time              4447
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1001
+Name: 344, dtype: int64
+BlockNumber          5
+SequenceNumber      35
+EventNumber          6
+Time              5313
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        883
+Name: 345, dtype: int64
+BlockNumber          5
+SequenceNumber      35
+EventNumber          7
+Time              6262
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        932
+Name: 346, dtype: int64
+BlockNumber          5
+SequenceNumber      35
+EventNumber          8
+Time              7028
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1032
+Name: 347, dtype: int64
+BlockNumber          5
+SequenceNumber      35
+EventNumber          9
+Time              7844
+isHit                0
+target               3
+pressed              2
+sequence             0
+all_ipi_lsn       1001
+Name: 348, dtype: int64
+BlockNumber          5
+SequenceNumber      35
+EventNumber         10
+Time              8862
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1365
+Name: 349, dtype: int64
+BlockNumber         6
+SequenceNumber     36
+EventNumber         1
+Time              831
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       911
+Name: 350, dtype: int64
+BlockNumber          6
+SequenceNumber      36
+EventNumber          2
+Time              1662
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1132
+Name: 351, dtype: int64
+BlockNumber          6
+SequenceNumber      36
+EventNumber          3
+Time              2529
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1017
+Name: 352, dtype: int64
+BlockNumber          6
+SequenceNumber      36
+EventNumber          4
+Time              3295
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1631
+Name: 353, dtype: int64
+BlockNumber          6
+SequenceNumber      36
+EventNumber          5
+Time              4346
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       2133
+Name: 354, dtype: int64
+BlockNumber          6
+SequenceNumber      36
+EventNumber          6
+Time              5262
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1183
+Name: 355, dtype: int64
+BlockNumber          6
+SequenceNumber      36
+EventNumber          7
+Time              6527
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1099
+Name: 356, dtype: int64
+BlockNumber          6
+SequenceNumber      36
+EventNumber          8
+Time              7327
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        967
+Name: 357, dtype: int64
+BlockNumber          6
+SequenceNumber      36
+EventNumber          9
+Time              8511
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1367
+Name: 358, dtype: int64
+BlockNumber          6
+SequenceNumber      36
+EventNumber         10
+Time              9426
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1099
+Name: 359, dtype: int64
+BlockNumber          6
+SequenceNumber      37
+EventNumber          1
+Time              1265
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1117
+Name: 360, dtype: int64
+BlockNumber          6
+SequenceNumber      37
+EventNumber          2
+Time              2299
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1616
+Name: 361, dtype: int64
+BlockNumber          6
+SequenceNumber      37
+EventNumber          3
+Time              3248
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        732
+Name: 362, dtype: int64
+BlockNumber          6
+SequenceNumber      37
+EventNumber          4
+Time              4081
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1766
+Name: 363, dtype: int64
+BlockNumber          6
+SequenceNumber      37
+EventNumber          5
+Time              5099
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1134
+Name: 364, dtype: int64
+BlockNumber          6
+SequenceNumber      37
+EventNumber          6
+Time              6082
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        966
+Name: 365, dtype: int64
+BlockNumber          6
+SequenceNumber      37
+EventNumber          7
+Time              7031
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1549
+Name: 366, dtype: int64
+BlockNumber          6
+SequenceNumber      37
+EventNumber          8
+Time              8096
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1033
+Name: 367, dtype: int64
+BlockNumber          6
+SequenceNumber      37
+EventNumber          9
+Time              9314
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1400
+Name: 368, dtype: int64
+BlockNumber           6
+SequenceNumber       37
+EventNumber          10
+Time              10296
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn        1033
+Name: 369, dtype: int64
+BlockNumber          6
+SequenceNumber      38
+EventNumber          1
+Time              1084
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        749
+Name: 370, dtype: int64
+BlockNumber          6
+SequenceNumber      38
+EventNumber          2
+Time              2001
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        867
+Name: 371, dtype: int64
+BlockNumber          6
+SequenceNumber      38
+EventNumber          3
+Time              2917
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        615
+Name: 372, dtype: int64
+BlockNumber          6
+SequenceNumber      38
+EventNumber          4
+Time              3817
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1065
+Name: 373, dtype: int64
+BlockNumber          6
+SequenceNumber      38
+EventNumber          5
+Time              4983
+isHit                0
+target               3
+pressed              2
+sequence             0
+all_ipi_lsn       1199
+Name: 374, dtype: int64
+BlockNumber          6
+SequenceNumber      38
+EventNumber          6
+Time              5934
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        968
+Name: 375, dtype: int64
+BlockNumber          6
+SequenceNumber      38
+EventNumber          7
+Time              6783
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1199
+Name: 376, dtype: int64
+BlockNumber          6
+SequenceNumber      38
+EventNumber          8
+Time              7633
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1233
+Name: 377, dtype: int64
+BlockNumber          6
+SequenceNumber      38
+EventNumber          9
+Time              8632
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        899
+Name: 378, dtype: int64
+BlockNumber          6
+SequenceNumber      38
+EventNumber         10
+Time              9715
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        949
+Name: 379, dtype: int64
+BlockNumber          6
+SequenceNumber      39
+EventNumber          1
+Time              1166
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1034
+Name: 380, dtype: int64
+BlockNumber          6
+SequenceNumber      39
+EventNumber          2
+Time              1915
+isHit                0
+target               1
+pressed              3
+sequence             0
+all_ipi_lsn        983
+Name: 381, dtype: int64
+BlockNumber          6
+SequenceNumber      39
+EventNumber          3
+Time              3066
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        915
+Name: 382, dtype: int64
+BlockNumber          6
+SequenceNumber      39
+EventNumber          4
+Time              3983
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1132
+Name: 383, dtype: int64
+BlockNumber          6
+SequenceNumber      39
+EventNumber          5
+Time              5081
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1301
+Name: 384, dtype: int64
+BlockNumber          6
+SequenceNumber      39
+EventNumber          6
+Time              6031
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        816
+Name: 385, dtype: int64
+BlockNumber          6
+SequenceNumber      39
+EventNumber          7
+Time              7148
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1632
+Name: 386, dtype: int64
+BlockNumber          6
+SequenceNumber      39
+EventNumber          8
+Time              7964
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        917
+Name: 387, dtype: int64
+BlockNumber          6
+SequenceNumber      39
+EventNumber          9
+Time              8963
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1749
+Name: 388, dtype: int64
+BlockNumber          6
+SequenceNumber      39
+EventNumber         10
+Time              9930
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        849
+Name: 389, dtype: int64
+BlockNumber          6
+SequenceNumber      40
+EventNumber          1
+Time               966
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1215
+Name: 390, dtype: int64
+BlockNumber          6
+SequenceNumber      40
+EventNumber          2
+Time              2082
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1233
+Name: 391, dtype: int64
+BlockNumber          6
+SequenceNumber      40
+EventNumber          3
+Time              3014
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        849
+Name: 392, dtype: int64
+BlockNumber          6
+SequenceNumber      40
+EventNumber          4
+Time              3997
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1000
+Name: 393, dtype: int64
+BlockNumber          6
+SequenceNumber      40
+EventNumber          5
+Time              5163
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1199
+Name: 394, dtype: int64
+BlockNumber          6
+SequenceNumber      40
+EventNumber          6
+Time              6046
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        984
+Name: 395, dtype: int64
+BlockNumber          6
+SequenceNumber      40
+EventNumber          7
+Time              7162
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        899
+Name: 396, dtype: int64
+BlockNumber          6
+SequenceNumber      40
+EventNumber          8
+Time              8079
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        666
+Name: 397, dtype: int64
+BlockNumber          6
+SequenceNumber      40
+EventNumber          9
+Time              9211
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        916
+Name: 398, dtype: int64
+BlockNumber           6
+SequenceNumber       40
+EventNumber          10
+Time              10162
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn         883
+Name: 399, dtype: int64
+BlockNumber         6
+SequenceNumber     41
+EventNumber         1
+Time              901
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       950
+Name: 400, dtype: int64
+BlockNumber          6
+SequenceNumber      41
+EventNumber          2
+Time              1884
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        983
+Name: 401, dtype: int64
+BlockNumber          6
+SequenceNumber      41
+EventNumber          3
+Time              2900
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        833
+Name: 402, dtype: int64
+BlockNumber          6
+SequenceNumber      41
+EventNumber          4
+Time              3849
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        633
+Name: 403, dtype: int64
+BlockNumber          6
+SequenceNumber      41
+EventNumber          5
+Time              4833
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        751
+Name: 404, dtype: int64
+BlockNumber          6
+SequenceNumber      41
+EventNumber          6
+Time              5749
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        783
+Name: 405, dtype: int64
+BlockNumber          6
+SequenceNumber      41
+EventNumber          7
+Time              6665
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1049
+Name: 406, dtype: int64
+BlockNumber          6
+SequenceNumber      41
+EventNumber          8
+Time              7499
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        751
+Name: 407, dtype: int64
+BlockNumber          6
+SequenceNumber      41
+EventNumber          9
+Time              8649
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1999
+Name: 408, dtype: int64
+BlockNumber          6
+SequenceNumber      41
+EventNumber         10
+Time              9564
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        800
+Name: 409, dtype: int64
+BlockNumber          6
+SequenceNumber      42
+EventNumber          1
+Time               966
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1399
+Name: 410, dtype: int64
+BlockNumber          6
+SequenceNumber      42
+EventNumber          2
+Time              1950
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1119
+Name: 411, dtype: int64
+BlockNumber          6
+SequenceNumber      42
+EventNumber          3
+Time              3098
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn         81
+Name: 412, dtype: int64
+BlockNumber          6
+SequenceNumber      42
+EventNumber          4
+Time              4015
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1300
+Name: 413, dtype: int64
+BlockNumber          6
+SequenceNumber      42
+EventNumber          5
+Time              5016
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1483
+Name: 414, dtype: int64
+BlockNumber          6
+SequenceNumber      42
+EventNumber          6
+Time              5899
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1000
+Name: 415, dtype: int64
+BlockNumber          6
+SequenceNumber      42
+EventNumber          7
+Time              6831
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1266
+Name: 416, dtype: int64
+BlockNumber          6
+SequenceNumber      42
+EventNumber          8
+Time              7863
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        784
+Name: 417, dtype: int64
+BlockNumber          6
+SequenceNumber      42
+EventNumber          9
+Time              8864
+isHit                0
+target               3
+pressed              2
+sequence             0
+all_ipi_lsn       1567
+Name: 418, dtype: int64
+BlockNumber           6
+SequenceNumber       42
+EventNumber          10
+Time              10229
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn         966
+Name: 419, dtype: int64
+BlockNumber          7
+SequenceNumber      43
+EventNumber          1
+Time              1312
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn        998
+Name: 420, dtype: int64
+BlockNumber          7
+SequenceNumber      43
+EventNumber          2
+Time              2247
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1267
+Name: 421, dtype: int64
+BlockNumber          7
+SequenceNumber      43
+EventNumber          3
+Time              3595
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1281
+Name: 422, dtype: int64
+BlockNumber          7
+SequenceNumber      43
+EventNumber          4
+Time              4428
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        884
+Name: 423, dtype: int64
+BlockNumber          7
+SequenceNumber      43
+EventNumber          5
+Time              5311
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        749
+Name: 424, dtype: int64
+BlockNumber          7
+SequenceNumber      43
+EventNumber          6
+Time              6178
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        983
+Name: 425, dtype: int64
+BlockNumber          7
+SequenceNumber      43
+EventNumber          7
+Time              7493
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1050
+Name: 426, dtype: int64
+BlockNumber          7
+SequenceNumber      43
+EventNumber          8
+Time              8527
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1449
+Name: 427, dtype: int64
+BlockNumber          7
+SequenceNumber      43
+EventNumber          9
+Time              9493
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1433
+Name: 428, dtype: int64
+BlockNumber           7
+SequenceNumber       43
+EventNumber          10
+Time              10559
+isHit                 1
+target                2
+pressed               2
+sequence              1
+all_ipi_lsn        1067
+Name: 429, dtype: int64
+BlockNumber          7
+SequenceNumber      44
+EventNumber          1
+Time              1182
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1382
+Name: 430, dtype: int64
+BlockNumber          7
+SequenceNumber      44
+EventNumber          2
+Time              2548
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1149
+Name: 431, dtype: int64
+BlockNumber          7
+SequenceNumber      44
+EventNumber          3
+Time              3431
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1133
+Name: 432, dtype: int64
+BlockNumber          7
+SequenceNumber      44
+EventNumber          4
+Time              4613
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1167
+Name: 433, dtype: int64
+BlockNumber          7
+SequenceNumber      44
+EventNumber          5
+Time              5596
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1015
+Name: 434, dtype: int64
+BlockNumber          7
+SequenceNumber      44
+EventNumber          6
+Time              6331
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        884
+Name: 435, dtype: int64
+BlockNumber          7
+SequenceNumber      44
+EventNumber          7
+Time              7215
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1548
+Name: 436, dtype: int64
+BlockNumber          7
+SequenceNumber      44
+EventNumber          8
+Time              8214
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1583
+Name: 437, dtype: int64
+BlockNumber          7
+SequenceNumber      44
+EventNumber          9
+Time              9130
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1049
+Name: 438, dtype: int64
+BlockNumber          7
+SequenceNumber      44
+EventNumber         10
+Time              9881
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        866
+Name: 439, dtype: int64
+BlockNumber          7
+SequenceNumber      45
+EventNumber          1
+Time              1067
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1615
+Name: 440, dtype: int64
+BlockNumber          7
+SequenceNumber      45
+EventNumber          2
+Time              2016
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn       2133
+Name: 441, dtype: int64
+BlockNumber          7
+SequenceNumber      45
+EventNumber          3
+Time              3117
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1583
+Name: 442, dtype: int64
+BlockNumber          7
+SequenceNumber      45
+EventNumber          4
+Time              4648
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn       1233
+Name: 443, dtype: int64
+BlockNumber          7
+SequenceNumber      45
+EventNumber          5
+Time              5497
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1032
+Name: 444, dtype: int64
+BlockNumber          7
+SequenceNumber      45
+EventNumber          6
+Time              6279
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1169
+Name: 445, dtype: int64
+BlockNumber          7
+SequenceNumber      45
+EventNumber          7
+Time              7429
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1616
+Name: 446, dtype: int64
+BlockNumber          7
+SequenceNumber      45
+EventNumber          8
+Time              8728
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1232
+Name: 447, dtype: int64
+BlockNumber          7
+SequenceNumber      45
+EventNumber          9
+Time              9779
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1350
+Name: 448, dtype: int64
+BlockNumber           7
+SequenceNumber       45
+EventNumber          10
+Time              10729
+isHit                 1
+target                2
+pressed               2
+sequence              1
+all_ipi_lsn         966
+Name: 449, dtype: int64
+BlockNumber          7
+SequenceNumber      46
+EventNumber          1
+Time               966
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn       1017
+Name: 450, dtype: int64
+BlockNumber          7
+SequenceNumber      46
+EventNumber          2
+Time              2498
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1267
+Name: 451, dtype: int64
+BlockNumber          7
+SequenceNumber      46
+EventNumber          3
+Time              3547
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        948
+Name: 452, dtype: int64
+BlockNumber          7
+SequenceNumber      46
+EventNumber          4
+Time              5347
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1314
+Name: 453, dtype: int64
+BlockNumber          7
+SequenceNumber      46
+EventNumber          5
+Time              6146
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        983
+Name: 454, dtype: int64
+BlockNumber          7
+SequenceNumber      46
+EventNumber          6
+Time              6846
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn       1002
+Name: 455, dtype: int64
+BlockNumber          7
+SequenceNumber      46
+EventNumber          7
+Time              7744
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1265
+Name: 456, dtype: int64
+BlockNumber          7
+SequenceNumber      46
+EventNumber          8
+Time              8543
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1016
+Name: 457, dtype: int64
+BlockNumber          7
+SequenceNumber      46
+EventNumber          9
+Time              9344
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        966
+Name: 458, dtype: int64
+BlockNumber           7
+SequenceNumber       46
+EventNumber          10
+Time              10493
+isHit                 1
+target                2
+pressed               2
+sequence              1
+all_ipi_lsn         932
+Name: 459, dtype: int64
+BlockNumber          7
+SequenceNumber      47
+EventNumber          1
+Time              2416
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1267
+Name: 460, dtype: int64
+BlockNumber          7
+SequenceNumber      47
+EventNumber          2
+Time              3315
+isHit                0
+target               2
+pressed              1
+sequence             1
+all_ipi_lsn       1099
+Name: 461, dtype: int64
+BlockNumber          7
+SequenceNumber      47
+EventNumber          3
+Time              4182
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        898
+Name: 462, dtype: int64
+BlockNumber          7
+SequenceNumber      47
+EventNumber          4
+Time              4864
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        834
+Name: 463, dtype: int64
+BlockNumber          7
+SequenceNumber      47
+EventNumber          5
+Time              5797
+isHit                0
+target               3
+pressed              2
+sequence             1
+all_ipi_lsn       1167
+Name: 464, dtype: int64
+BlockNumber          7
+SequenceNumber      47
+EventNumber          6
+Time              6796
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn       1149
+Name: 465, dtype: int64
+BlockNumber          7
+SequenceNumber      47
+EventNumber          7
+Time              7745
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1099
+Name: 466, dtype: int64
+BlockNumber          7
+SequenceNumber      47
+EventNumber          8
+Time              8779
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        883
+Name: 467, dtype: int64
+BlockNumber          7
+SequenceNumber      47
+EventNumber          9
+Time              9562
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        883
+Name: 468, dtype: int64
+BlockNumber           7
+SequenceNumber       47
+EventNumber          10
+Time              10479
+isHit                 1
+target                1
+pressed               1
+sequence              1
+all_ipi_lsn         949
+Name: 469, dtype: int64
+BlockNumber          7
+SequenceNumber      48
+EventNumber          1
+Time               885
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn       1284
+Name: 470, dtype: int64
+BlockNumber          7
+SequenceNumber      48
+EventNumber          2
+Time              1734
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        982
+Name: 471, dtype: int64
+BlockNumber          7
+SequenceNumber      48
+EventNumber          3
+Time              2718
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1133
+Name: 472, dtype: int64
+BlockNumber          7
+SequenceNumber      48
+EventNumber          4
+Time              3667
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        916
+Name: 473, dtype: int64
+BlockNumber          7
+SequenceNumber      48
+EventNumber          5
+Time              4717
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1018
+Name: 474, dtype: int64
+BlockNumber          7
+SequenceNumber      48
+EventNumber          6
+Time              6084
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1183
+Name: 475, dtype: int64
+BlockNumber          7
+SequenceNumber      48
+EventNumber          7
+Time              6917
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn       1164
+Name: 476, dtype: int64
+BlockNumber          7
+SequenceNumber      48
+EventNumber          8
+Time              8050
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn        834
+Name: 477, dtype: int64
+BlockNumber          7
+SequenceNumber      48
+EventNumber          9
+Time              9032
+isHit                1
+target               1
+pressed              1
+sequence             1
+all_ipi_lsn        950
+Name: 478, dtype: int64
+BlockNumber           7
+SequenceNumber       48
+EventNumber          10
+Time              10015
+isHit                 1
+target                0
+pressed               0
+sequence              1
+all_ipi_lsn        1066
+Name: 479, dtype: int64
+BlockNumber          7
+SequenceNumber      49
+EventNumber          1
+Time               834
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn       1133
+Name: 480, dtype: int64
+BlockNumber          7
+SequenceNumber      49
+EventNumber          2
+Time              1684
+isHit                0
+target               2
+pressed              3
+sequence             1
+all_ipi_lsn        816
+Name: 481, dtype: int64
+BlockNumber          7
+SequenceNumber      49
+EventNumber          3
+Time              3449
+isHit                0
+target               1
+pressed              0
+sequence             1
+all_ipi_lsn        951
+Name: 482, dtype: int64
+BlockNumber          7
+SequenceNumber      49
+EventNumber          4
+Time              4549
+isHit                1
+target               2
+pressed              2
+sequence             1
+all_ipi_lsn       1615
+Name: 483, dtype: int64
+BlockNumber          7
+SequenceNumber      49
+EventNumber          5
+Time              5397
+isHit                1
+target               0
+pressed              0
+sequence             1
+all_ipi_lsn        901
+Name: 484, dtype: int64
+BlockNumber          7
+SequenceNumber      49
+EventNumber          6
+Time              6297
+isHit                1
+target               3
+pressed              3
+sequence             1
+all_ipi_lsn       1231
+Name: 485, dtype: int64
+BlockNumber          7
+SequenceNumber      49
+EventNumber          7
+Time              7164
+isHit                0
+target               1
+pressed              2
+sequence             1
+all_ipi_lsn        934
+Name: 486, dtype: int64
+BlockNumber          7
+SequenceNumber      49
+EventNumber          8
+Time              9664
+isHit                0
+target               3
+pressed             -1
+sequence             1
+all_ipi_lsn       1433
+Name: 487, dtype: int64
+BlockNumber          7
+SequenceNumber      49
+EventNumber          9
+Time              9815
+isHit                0
+target               1
+pressed              3
+sequence             1
+all_ipi_lsn        899
+Name: 488, dtype: int64
+BlockNumber           7
+SequenceNumber       49
+EventNumber          10
+Time              11014
+isHit                 1
+target                2
+pressed               2
+sequence              1
+all_ipi_lsn         949
+Name: 489, dtype: int64
+BlockNumber          8
+SequenceNumber      50
+EventNumber          1
+Time               911
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1312
+Name: 490, dtype: int64
+BlockNumber          8
+SequenceNumber      50
+EventNumber          2
+Time              2043
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        935
+Name: 491, dtype: int64
+BlockNumber          8
+SequenceNumber      50
+EventNumber          3
+Time              3060
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1348
+Name: 492, dtype: int64
+BlockNumber          8
+SequenceNumber      50
+EventNumber          4
+Time              4691
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        833
+Name: 493, dtype: int64
+BlockNumber          8
+SequenceNumber      50
+EventNumber          5
+Time              6824
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        883
+Name: 494, dtype: int64
+BlockNumber          8
+SequenceNumber      50
+EventNumber          6
+Time              8007
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        867
+Name: 495, dtype: int64
+BlockNumber          8
+SequenceNumber      50
+EventNumber          7
+Time              9106
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1315
+Name: 496, dtype: int64
+BlockNumber           8
+SequenceNumber       50
+EventNumber           8
+Time              10073
+isHit                 1
+target                0
+pressed               0
+sequence              0
+all_ipi_lsn        1034
+Name: 497, dtype: int64
+BlockNumber           8
+SequenceNumber       50
+EventNumber           9
+Time              11440
+isHit                 1
+target                3
+pressed               3
+sequence              0
+all_ipi_lsn         966
+Name: 498, dtype: int64
+BlockNumber           8
+SequenceNumber       50
+EventNumber          10
+Time              12539
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn        1066
+Name: 499, dtype: int64
+BlockNumber          8
+SequenceNumber      51
+EventNumber          1
+Time              1117
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1182
+Name: 500, dtype: int64
+BlockNumber          8
+SequenceNumber      51
+EventNumber          2
+Time              2733
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1366
+Name: 501, dtype: int64
+BlockNumber          8
+SequenceNumber      51
+EventNumber          3
+Time              3465
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        883
+Name: 502, dtype: int64
+BlockNumber          8
+SequenceNumber      51
+EventNumber          4
+Time              5231
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1182
+Name: 503, dtype: int64
+BlockNumber          8
+SequenceNumber      51
+EventNumber          5
+Time              6365
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        983
+Name: 504, dtype: int64
+BlockNumber          8
+SequenceNumber      51
+EventNumber          6
+Time              7331
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        735
+Name: 505, dtype: int64
+BlockNumber          8
+SequenceNumber      51
+EventNumber          7
+Time              8880
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        884
+Name: 506, dtype: int64
+BlockNumber          8
+SequenceNumber      51
+EventNumber          8
+Time              9913
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        999
+Name: 507, dtype: int64
+BlockNumber           8
+SequenceNumber       51
+EventNumber           9
+Time              11313
+isHit                 1
+target                3
+pressed               3
+sequence              0
+all_ipi_lsn         916
+Name: 508, dtype: int64
+BlockNumber           8
+SequenceNumber       51
+EventNumber          10
+Time              12346
+isHit                 0
+target                1
+pressed               2
+sequence              0
+all_ipi_lsn         751
+Name: 509, dtype: int64
+BlockNumber          8
+SequenceNumber      52
+EventNumber          1
+Time               749
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1067
+Name: 510, dtype: int64
+BlockNumber          8
+SequenceNumber      52
+EventNumber          2
+Time              1616
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        949
+Name: 511, dtype: int64
+BlockNumber          8
+SequenceNumber      52
+EventNumber          3
+Time              2231
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1101
+Name: 512, dtype: int64
+BlockNumber          8
+SequenceNumber      52
+EventNumber          4
+Time              3296
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1531
+Name: 513, dtype: int64
+BlockNumber          8
+SequenceNumber      52
+EventNumber          5
+Time              4495
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        849
+Name: 514, dtype: int64
+BlockNumber          8
+SequenceNumber      52
+EventNumber          6
+Time              5463
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        782
+Name: 515, dtype: int64
+BlockNumber          8
+SequenceNumber      52
+EventNumber          7
+Time              6662
+isHit                0
+target               2
+pressed              3
+sequence             0
+all_ipi_lsn       1150
+Name: 516, dtype: int64
+BlockNumber          8
+SequenceNumber      52
+EventNumber          8
+Time              7895
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1299
+Name: 517, dtype: int64
+BlockNumber          8
+SequenceNumber      52
+EventNumber          9
+Time              8794
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1051
+Name: 518, dtype: int64
+BlockNumber          8
+SequenceNumber      52
+EventNumber         10
+Time              9743
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        950
+Name: 519, dtype: int64
+BlockNumber          8
+SequenceNumber      53
+EventNumber          1
+Time              1034
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        966
+Name: 520, dtype: int64
+BlockNumber          8
+SequenceNumber      53
+EventNumber          2
+Time              2017
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1532
+Name: 521, dtype: int64
+BlockNumber          8
+SequenceNumber      53
+EventNumber          3
+Time              2932
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1049
+Name: 522, dtype: int64
+BlockNumber          8
+SequenceNumber      53
+EventNumber          4
+Time              4064
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1800
+Name: 523, dtype: int64
+BlockNumber          8
+SequenceNumber      53
+EventNumber          5
+Time              5365
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        799
+Name: 524, dtype: int64
+BlockNumber          8
+SequenceNumber      53
+EventNumber          6
+Time              6181
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        700
+Name: 525, dtype: int64
+BlockNumber          8
+SequenceNumber      53
+EventNumber          7
+Time              7813
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        898
+Name: 526, dtype: int64
+BlockNumber          8
+SequenceNumber      53
+EventNumber          8
+Time              8730
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        799
+Name: 527, dtype: int64
+BlockNumber           8
+SequenceNumber       53
+EventNumber           9
+Time              10479
+isHit                 1
+target                3
+pressed               3
+sequence              0
+all_ipi_lsn         801
+Name: 528, dtype: int64
+BlockNumber           8
+SequenceNumber       53
+EventNumber          10
+Time              11328
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn        1149
+Name: 529, dtype: int64
+BlockNumber          8
+SequenceNumber      54
+EventNumber          1
+Time              1215
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       2416
+Name: 530, dtype: int64
+BlockNumber          8
+SequenceNumber      54
+EventNumber          2
+Time              2448
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        899
+Name: 531, dtype: int64
+BlockNumber          8
+SequenceNumber      54
+EventNumber          3
+Time              3297
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        867
+Name: 532, dtype: int64
+BlockNumber          8
+SequenceNumber      54
+EventNumber          4
+Time              4297
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        682
+Name: 533, dtype: int64
+BlockNumber          8
+SequenceNumber      54
+EventNumber          5
+Time              5496
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        933
+Name: 534, dtype: int64
+BlockNumber          8
+SequenceNumber      54
+EventNumber          6
+Time              6480
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        999
+Name: 535, dtype: int64
+BlockNumber          8
+SequenceNumber      54
+EventNumber          7
+Time              7379
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        949
+Name: 536, dtype: int64
+BlockNumber          8
+SequenceNumber      54
+EventNumber          8
+Time              8045
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1034
+Name: 537, dtype: int64
+BlockNumber          8
+SequenceNumber      54
+EventNumber          9
+Time              8961
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        783
+Name: 538, dtype: int64
+BlockNumber          8
+SequenceNumber      54
+EventNumber         10
+Time              9844
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        917
+Name: 539, dtype: int64
+BlockNumber         8
+SequenceNumber     55
+EventNumber         1
+Time              950
+isHit               1
+target              2
+pressed             2
+sequence            0
+all_ipi_lsn       885
+Name: 540, dtype: int64
+BlockNumber          8
+SequenceNumber      55
+EventNumber          2
+Time              1933
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        849
+Name: 541, dtype: int64
+BlockNumber          8
+SequenceNumber      55
+EventNumber          3
+Time              2766
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn        984
+Name: 542, dtype: int64
+BlockNumber          8
+SequenceNumber      55
+EventNumber          4
+Time              3399
+isHit                0
+target               2
+pressed              3
+sequence             0
+all_ipi_lsn        949
+Name: 543, dtype: int64
+BlockNumber          8
+SequenceNumber      55
+EventNumber          5
+Time              4150
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn       1050
+Name: 544, dtype: int64
+BlockNumber          8
+SequenceNumber      55
+EventNumber          6
+Time              4933
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn       1367
+Name: 545, dtype: int64
+BlockNumber          8
+SequenceNumber      55
+EventNumber          7
+Time              5982
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        833
+Name: 546, dtype: int64
+BlockNumber          8
+SequenceNumber      55
+EventNumber          8
+Time              6733
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       1133
+Name: 547, dtype: int64
+BlockNumber          8
+SequenceNumber      55
+EventNumber          9
+Time              8732
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        982
+Name: 548, dtype: int64
+BlockNumber          8
+SequenceNumber      55
+EventNumber         10
+Time              9532
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        983
+Name: 549, dtype: int64
+BlockNumber          8
+SequenceNumber      56
+EventNumber          1
+Time              1399
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        834
+Name: 550, dtype: int64
+BlockNumber          8
+SequenceNumber      56
+EventNumber          2
+Time              2518
+isHit                0
+target               1
+pressed              0
+sequence             0
+all_ipi_lsn        850
+Name: 551, dtype: int64
+BlockNumber          8
+SequenceNumber      56
+EventNumber          3
+Time              2599
+isHit                0
+target               0
+pressed              1
+sequence             0
+all_ipi_lsn       1765
+Name: 552, dtype: int64
+BlockNumber          8
+SequenceNumber      56
+EventNumber          4
+Time              3899
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn       1100
+Name: 553, dtype: int64
+BlockNumber          8
+SequenceNumber      56
+EventNumber          5
+Time              5382
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        848
+Name: 554, dtype: int64
+BlockNumber          8
+SequenceNumber      56
+EventNumber          6
+Time              6382
+isHit                1
+target               1
+pressed              1
+sequence             0
+all_ipi_lsn        900
+Name: 555, dtype: int64
+BlockNumber          8
+SequenceNumber      56
+EventNumber          7
+Time              7648
+isHit                1
+target               2
+pressed              2
+sequence             0
+all_ipi_lsn        867
+Name: 556, dtype: int64
+BlockNumber          8
+SequenceNumber      56
+EventNumber          8
+Time              8432
+isHit                1
+target               0
+pressed              0
+sequence             0
+all_ipi_lsn       2500
+Name: 557, dtype: int64
+BlockNumber          8
+SequenceNumber      56
+EventNumber          9
+Time              9999
+isHit                1
+target               3
+pressed              3
+sequence             0
+all_ipi_lsn        151
+Name: 558, dtype: int64
+BlockNumber           8
+SequenceNumber       56
+EventNumber          10
+Time              10965
+isHit                 1
+target                1
+pressed               1
+sequence              0
+all_ipi_lsn        1199
+Name: 559, dtype: int64
