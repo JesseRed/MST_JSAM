@@ -1,5 +1,21 @@
 import numpy as np
 import pandas as pd
+import logging
+
+##################################
+### logging 
+log_level = logging.INFO
+data_base_log_level = logging.INFO
+
+logging.basicConfig(level=log_level, filename='logfile.log', 
+    format ='', #format='%(asctime)s :: %(levelname)s :: %(name)s :: %(message)s',
+    filemode='w')
+logger = logging.getLogger(__name__)
+#db_logger = logging.getLogger('sqlalchemy')
+#db_logger.addHandler(logger)
+#db_logger.setLevel(data_base_log_level)
+##################################
+
 class Experiment:
     """alles sind listen 
     # wenn nicht explizit erwaehnt dann immer am ende als Liste der Sequenz
@@ -49,6 +65,57 @@ class Experiment:
         3. optionaler parameter der eine zusatzberechnung kennzeichnet z.B. slope
         z.B. cor_ipi_lplsln         ... correcte inter-press-intervalle als liste ueber die paradigmen liste ueber die sequenzen liste der numbers
         z.B. err_ipi_seqsum_lpln      ... fehlerhafte ipis als summe ueber Sequencen als liste von gesamtzeiten jeder Sequenz fuer jedes Paradigma
+        
+        #?____________________________________________________________________________________________________________________________________
+        #? INPUT DAtaframe
+        #! alle Nummerierungen beginnen mit ausser die sequence die mit 0 als wichtigste beginnt
+        BlockNumber ....Kodierung der Bloecke ... beim MST durch Pausen unterbrochen, beim Seq keine Pausen
+                            daher nachtraegliche Aufteilung in 10 Bloecke mit gleich Verteilung der unterschiedlichen Paradigmen 
+                            (unterschiedlichen Sequenzen die gelernt werden sollen) daher #!BlockNumbers nicht zuwingend aufsteigend
+        SequenceNumber. Aufsteigende Kodierung der Sequenzen, jedes Element der Sequenz hat die gleiche Nummer
+                            Sobald eine neue Sequenz beginnt erheoht sich die Zahl um eins
+                            #! unvollstaendige Sequenzen muessen vorher entfernt werden, die Sequenznummerierung muss dennoch aufsteigend
+                            #! kontinuierlich sein und der Index muss resetet sein (siehe mst.py file)
+        EventNumber ... Numerierung der Elemente in einer Sequenz, bei einer neuen Sequenz beginnt die EventNummer wieder bei 1
+        Time        ...     die Zeit gibt den Abstand vom Start der Sequenz an. Eine neue Sequenz reseted die Time
+                            der erste Wert ist daher nur im Kontext des spezifischen Experimentes zu interpretieren
+                            im Sequenzexperiment sollte nicht der Abstand vom vergangenen bei der Berechnung des ersten verwendet werden
+                            da noch 2000 ms der Hinweis ueber das nun folgende Paradigma eingeblendet wird, diese sollten abgezogen werden
+                            so dass dem Wesen nach die erste Zeitangabe moeglichst die Zeit vom Start der aktuellen Sequenz wiedergibt
+        isHit       ... Ob der Button korrket gedrueckt wurde (redundant und sollte sich aus pressed und target ergeben)
+        target      ... Der Zielknopf der gedrueckt werden sollte
+        pressed     ... Der Button der tatsaechlich gedrueckt wurde
+        sequence    ... Die Sequence die gerad durchgefuehrt wird. Wenn mehrere Sequenzen in dem Experiment vorhanden sind dann 
+                            sollten diese der Wichtigkeit nach geordnet sein. z.B. im SRTT sollte das fixed mit einer 1 kodiert sein
+                            das random mit 2. Im Seq die haeufigste Hauptsequenz als 1 und die selteneren Vergleichssequenzen mit 2 und 3
+
+        BlockNumber	SequenceNumber	EventNumber	    Time      isHit	    target	pressed	 sequence
+            1	        1	            1	        1831	    1	       4	    4	    0
+            1	        1	            2	        2552	    1	       1	    1	    0
+            1	        1	            3	        4483	    1	       3	    3	    0
+            1	        1	            4	        5219	    1	       2	    2	    0
+            1	        1	            5	        6081	    1	       4	    4	    0
+            1	        2	            1	        2219	    1	       4	    4	    0
+            1	        2	            2	        2785	    1	       1	    1	    0
+            1	        2	            3	        3545	    1	       3	    3	    0
+            1	        2	            4	        4118	    1	       2	    2	    0
+            1	        2	            5	        4727	    1	       4	    4	    0
+            1	        3	            1	        756	        1	       4	    4       0
+            1	        3	            2	        1535	    1	       1	    1	    0
+            1	        3	            3	        2354	    1	       3	    3	    0
+            1	        3	            4	        2936	    1	       2	    2	    0
+            1	        3	            5	        4535	    1	       4	    4	    0
+            2	        4	            1	        902	        1	       4	    4	    0
+            2	        4	            2	        1556	    1	       1	    1	    0
+            2	        4	            3	        2748	    1	       3	    3	    0
+            2	        4	            4	        3330	    1	       2	    2	    0
+            2	        4	            5	        4485	    1	       4	    4	    0
+            2	        5	            1	        800	        1	       4	    4	    1
+            2	        5	            2	        1351	    1	       1	    1	    1
+            2	        5	            3	        2150	    1	       3	    3	    1
+            2	        5	            4	        2898	    1	       2	    2	    1
+            2	        5	            5	        4153	    1	       4	    4	    1
+            
         """
 
 
@@ -125,9 +192,12 @@ class Experiment:
 
         self.df.to_csv('.\\tmp.csv', index = False, sep = '\t')
 
+        
         print('before initialize')
         self.initialize()
         
+        self.df_debug = df.copy() # only for debug reasons
+        self.add_parameter_to_df_debug(self.all_ipi_lsln, "all_ipi_lsn")
         #print(self.all_seqnum_per_block_slope_lpn)
 
     def initialize(self):
@@ -141,6 +211,17 @@ class Experiment:
         self.err_seqsum_lpn, self.err_seqsum_lplbn, self.err_seqtimesum_lplsn, self.err_seqtimesum_lplblsn = self.estimate_seqsum(self.err_ipi_lplblsln)
         self.estimate_slopes()
 
+
+    def add_parameter_to_df_debug(self, all_ipi_lsln, string):
+        self.df_debug = self.add_lsln(self.df_debug, all_ipi_lsln, string)
+
+    def add_lsln(self, df, lsln, col_name):
+        flat_list = [item for sublist in lsln for item in sublist]
+        print(len(flat_list))
+        print(self.df_debug.shape)
+        df[col_name] = flat_list
+
+        return df
 
     def estimate_slopes(self):
         self.all_seqtimesum_slope_lpn, all_seqtimesum_to_max_slope_lpn = self.estimate_seqtimesum_slope_lpn(self.all_seqtimesum_lplsn)
@@ -308,8 +389,9 @@ class Experiment:
         err_ipi_lblsln = []
 
         for current_paradigma in range(df['sequence'].min(), df['sequence'].max()+1):
+            df_paradigma = df[df['sequence']==current_paradigma]
             for current_block in range(df['BlockNumber'].min() ,df['BlockNumber'].max()+1):
-                df_block = df[df['BlockNumber']==current_block]
+                df_block = df_paradigma[df_paradigma['BlockNumber']==current_block]
                 
                 ipi_lsln_one_block = []
                 cor_ipi_lsln_one_block = []
@@ -317,8 +399,9 @@ class Experiment:
                 hits_lsln_one_block = []
                 
                 # ueber alle Sequenzen in einem Block
+                print(df_block)
                 for current_seq in range(df_block['SequenceNumber'].min(), df_block['SequenceNumber'].max()+1):
-                    df_sequence = df[df['SequenceNumber']==current_seq]
+                    df_sequence = df_block[df_block['SequenceNumber']==current_seq]
                     seq_tmp_time = 0
                     ipi_ln = []
                     hits_ln = []
@@ -519,7 +602,13 @@ class Experiment:
         string = "Experiment Name: " + self.experiment_name 
         string = string + "; VPN = " + str(self.vpn)
         string = string + "; Day = " + str(self.day)
-        print(self.df.head())
+        pd.set_option('display.max_rows', 2000)
+        pd.set_option('display.max_columns', 2000)
+        self.df_debug.to_csv("log_df_debug.log",sep='\t')
+        for idx, row in self.df_debug.iterrows():
+            logger.info(row)
+        #logger.info(self.df_debug)
+        print(self.all_ipi_lsln)
         return string
 
     __repr__ = __str__

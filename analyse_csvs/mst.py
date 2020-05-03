@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class MST():
-    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 4, path_output = ".\\Data_python", _id = "nox_id"):
+    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 5, path_output = ".\\Data_python", _id = "nox_id"):
         self.fullfilename = fullfilename
         base=os.path.basename(self.fullfilename)
         self.filename = os.path.splitext(base)[0]
@@ -27,7 +27,7 @@ class MST():
         self._id = _id
         self.filehandler = FileHandler(path_output=self.path_output, filename = self.filename, time_identifier = _id)
         self.input_df = pd.read_csv(self.fullfilename, sep = ';', engine = "python")
-        
+        self.sequence_length = 5
         self.df = self.generate_standard_log_file_from_input_df(self.input_df)
         #!________________________
         #! 02.05.2020 ich habe die Namensgebung in unity veraendert ... hier ggf. Anpassung ... auch wenn man mehr als 
@@ -52,7 +52,7 @@ class MST():
 
         df = helper_functions.create_standard_df()
         df['BlockNumber'] = input_df['BlockNumber']
-        df['EventNumber'] = input_df['EventNumber']
+        df['EventNumber'] = input_df['EventNumber'] 
 #        df['Time Since Block start'] = input_df['Time Since Block start']
         df['Time Since Block start'] = pd.to_numeric(input_df['Time Since Block start'].str.replace(',','.'))*1000
         df['Time Since Block start'] = df['Time Since Block start'].astype(int) #round()
@@ -64,7 +64,7 @@ class MST():
 
         # ersetzte die Sequenznamen durch Zahlen nach mit der wichtigsten beginnend 
         #! das replacen muss von Hand erfolgen 
-        #! wenn das naechste mal ein Experiment designed wird und die Zahlen nach Wichtigkeit von 0
+        #! wenn das naechste mal ein Experiment designed wird und die Zahlen nach Wichtigkeit von 1
         #! beginnend eingetragen werden dann muss man gar nichts mehr per hand anpassen
         try:
             df = df.replace('clear', 0)
@@ -72,18 +72,146 @@ class MST():
             print('color code did not work')
         # passe nun die BlockNumbers an 
         df = self.generate_sequence_number(df)
+        #df = self.generate_sequence_number_and_delete_incomplete_sequences(df)
+        df = self.change_EventNumbers_to_inSequenceEventNumbers(df)
         df.rename({'Time Since Block start':'Time'}, axis = 'columns', inplace = True)
+        df = self.adapt_Time_from_within_Block_to_within_Sequence(df)
+        df.to_csv("tmp2.csv", sep = "\t")
+        df = self.delete_incomplet_sequences(df)
+        df = df.reset_index(drop=True)
         return df
+
+    def delete_incomplet_sequences(self, df):
+        # loesche alle unvollstaendigen Sequenzen und passe die Sequenznummer an
+        s = df['SequenceNumber'].value_counts()<5
+        sequences_to_delete = s[s==True].index.tolist()
+        sequences_to_delete = sorted(sequences_to_delete)
+        print(sequences_to_delete)
+        for num in sequences_to_delete:
+            df = df[df['SequenceNumber']!= num]
+        additional_subtractor = 0
+        for num in sequences_to_delete:
+            target = num - additional_subtractor
+            df['SequenceNumber'] = df['SequenceNumber'].apply(lambda x: x if x<target else x-1)
+            additional_subtractor += 1
+        return df
+
+    def adapt_Time_from_within_Block_to_within_Sequence(self, df):
+        current_block = df.loc[1,'BlockNumber']
+        sequence_start_time = 0
+        for idx in range(df.shape[0]):
+            if not df.loc[idx,'BlockNumber'] == current_block:
+                current_block = df.loc[idx,'BlockNumber']
+                sequence_start_time = 0
+            current_time = df.loc[idx,'Time']
+            df.loc[idx,'Time'] = current_time - sequence_start_time
+            if df.loc[idx,'EventNumber']==self.sequence_length:
+                sequence_start_time = current_time
+                
+        return df
+
+    def change_EventNumbers_to_inSequenceEventNumbers(self, df):
+        seq_length = self.sequence_length
+        current_sequence = 1
+        current_block = 1
+        eventNum = 0
+        for idx in range(df.shape[0]):
+            if df.loc[idx,'SequenceNumber']!=current_sequence:
+                # neue Sequence
+                eventNum = 0
+                current_sequence = df.loc[idx,'SequenceNumber']
+            if df.loc[idx,'BlockNumber']!=current_block:
+                # neue Sequence
+                eventNum = 0
+                current_block = df.loc[idx,'BlockNumber']
+            if eventNum>seq_length:
+                eventNum = 0
+            eventNum += 1
+
+            df.loc[idx,'EventNumber'] = eventNum
+        df['EventNumber'] = df['EventNumber'].astype(int)
+        return df
+
+
+    def generate_sequence_number_and_delete_incomplete_sequences(self, df):
+        # im MST File sind keine Sequence Numbers enthalten
+        # da bei Fehlern die Sequenz nicht unterbrochen wird kann einfach hochgezaehlt werden
+        #seq_length = df['SequenceNumber'].value_counts().unique()[0] 
+        # wenn eine Sequence unvollstaendig ist dann wird sie verworfen
+        print(df.head(50))
+
+        current_block = df.loc[0,'BlockNumber']
+        new_block = True
+        eventNumber = 0
+        sequence_number = 1
+        is_new_block_in_sequence = False
+        new_df_idx
+        for idx in range(df.shape[0]):
+            eventNumber += 1
+            if not df.loc[idx,'BlockNumber'] == current_block:
+                new_block = True
+                current_block = df.loc[idx,'BlockNumber']
+                eventNumber = 1
+                sequence_number +=1
+            else:
+                new_block = False
+
+
+
+            m = eventNumber % self.sequence_length
+            if m == 0:
+                m = seq_length
+
+            # wenn eine neue Sequenz begonnen wird dann teste ob in den naechten "seq_lenght" eintraegen ein neuer Block beginnt
+            if eventNumber==1:
+                for sub_idx in range(0,self.sequence_length):
+                    is_new_block_in_sequence = False
+                    if df.loc[sub_idx,'BlockNumber'] != current_block:
+                        is_new_block_in_sequence = True
+                        drop_max = sub_idx
+                # nun loesche diese
+                if is_new_block_in_sequence:
+                    df.drop(df.index[idx:idx+drop_max+1])
+
+            if eventNumber==1 and not is_new_block_in_sequence:
+                sequence_number +=1
+
+                df.loc[idx,'EventNumber'] = m
+                df.loc[idx,'SequenceNumber'] = sequence_number
+            
+        df['EventNumber'] = df['EventNumber'].astype(int)
+        df['SequenceNumber'] = df['SequenceNumber'].astype(int)
+        print(df.head(50))
+        return df
+
+
+
 
     def generate_sequence_number(self, df):
         # im MST File sind keine Sequence Numbers enthalten
         # da bei Fehlern die Sequenz nicht unterbrochen wird kann einfach hochgezaehlt werden
-            
+        #seq_length = df['SequenceNumber'].value_counts().unique()[0] 
+        
         sequence_number = 1
+        current_block = df.loc[0,'BlockNumber']
+        current_sequence_element = 0
         for idx in range(df.shape[0]):
-            df.loc[idx,'SequenceNumber'] = sequence_number
-            if (idx+1)%4 == 0:
+            if not df.loc[idx,'BlockNumber'] == current_block:
+                new_block = True
+                current_block = df.loc[idx,'BlockNumber']
                 sequence_number +=1
+                current_sequence_element = 0
+            else:
+                new_block = False
+
+            current_sequence_element+=1
+
+            if current_sequence_element > self.sequence_length:
+                current_sequence_element = 1
+                sequence_number += 1
+
+            df.loc[idx,'SequenceNumber'] = sequence_number
+
         df['SequenceNumber'] = df['SequenceNumber'].astype(int)
         return df
 
@@ -334,7 +462,7 @@ if __name__ == '__main__':
     #filename = ".\\Data_MST_Simulation\\3Tag1_.csv"
     #mst = MST(filename)
     mstfile = "G:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
-    mst = MST(fullfilename = mstfile, sequence_length = 4, path_output = ".\\Data_python", _id = "no_id")
+    mst = MST(fullfilename = mstfile, sequence_length = 5, path_output = ".\\Data_python", _id = "no_id")
     #mst.save()
 #    ipi_cor = mst.ipi_cor
 #    ipi_norm = mst.ipi_norm

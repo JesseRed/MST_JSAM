@@ -92,8 +92,24 @@ class SRTT():
         if df.loc[0,'Time']==0:
             df.loc[0,'Time'] = df.loc[1,'Time'] - 700
             
-
+        df = self.make_SequenceNumber_increasing_across_block_borders(df)
+        df['SequenceNumber'] = df['SequenceNumber'].astype(int) 
+#        print(df.head())
+        #df['sequn'] = df['SequenceNumber'].astype(int) 
+        
         return df
+
+    def make_SequenceNumber_increasing_across_block_borders(self, df):
+        seq_len = self.sequence_length
+        current_sequence = 1
+        sequence_to_write = 1
+        for idx in range(df.shape[0]):
+            if df.loc[idx,'SequenceNumber']!=current_sequence:
+                current_sequence = df.loc[idx,'SequenceNumber']
+                sequence_to_write += 1
+            df.loc[idx,'SequenceNumber']= sequence_to_write
+
+        return df   
 
     def generate_isHit(self, df, input_df):
         for idx in range(df.shape[0]):
@@ -104,12 +120,11 @@ class SRTT():
         return df
 
     def get_time_since_block_start(self, df, input_df):
-        sequence_number = -99 #input_df.loc[0,'trial']
+        # we take only the response time, this is not the real time but it is what we 
+        # are interested in for the comparision to MST and SEQ8
+        time_sum = 0
         for idx in range(df.shape[0]):
-            if not input_df.loc[idx,'trial']==sequence_number:
-                # neue Sequence 
-                time_sum = 0 
-            time_sum += input_df.loc[idx,'time']
+            time_sum += input_df.loc[idx,'RT_1']
             df.loc[idx,'Time Since Block start'] = time_sum
         return df
         

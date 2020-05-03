@@ -98,7 +98,7 @@ class SEQ():
         self.filehandler = FileHandler(path_output=self.path_output, filename=self.filename, time_identifier=_id)
         self.input_df = pd.read_csv(self.fullfilename, sep=';', engine='python')
         
-        
+        self.sequence_length = 8
         self.df = self.generate_standard_log_file_from_input_df(self.input_df)
 
         #!________________________
@@ -153,12 +153,33 @@ class SEQ():
         except:
             print('color code did not work')
         # passe nun die BlockNumbers an 
+        print(df)
         df = self.generate_block_number(df)
+        print(df)
         df['BlockNumber'] = df['BlockNumber'].astype(int)
+        df = self.change_EventNumbers_to_inSequenceEventNumbers(df)
         df.rename({'Time Since Block start':'Time'}, axis = 'columns', inplace = True)
-
+    
+        df = self.subtract_200ms_initial_color_showing_time(df)
         return df
 
+    def subtract_200ms_initial_color_showing_time(self, df):
+        # es wird anfangs ein Farbbild gezeigt, das die kommende Sequence codiert
+        # dieses wird fuer 2000 ms gezeigt, diese Zahl subtrahiere ich hier
+        for idx in range(df.shape[0]):
+            if df.loc[idx,'EventNumber']==1:
+                df.loc[idx,'Time'] = df.loc[idx,'Time'] - 2000
+        return df
+
+    def change_EventNumbers_to_inSequenceEventNumbers(self, df):
+        #seq_length = df['SequenceNumber'].value_counts().unique()[0]
+        for idx in range(df.shape[0]):
+            m = df.loc[idx,'EventNumber'] % self.sequence_length 
+            if m==0:
+                m=self.sequence_length
+            df.loc[idx,'EventNumber'] = m
+        df['EventNumber'] = df['EventNumber'].astype(int)
+        return df
 
     def generate_block_number(self, df):
         block_series = df['BlockNumber'] # nur als Platzhalter
