@@ -54,15 +54,13 @@ public class GameSession : MonoBehaviour
         //GameObject tmp = FindObjectOfType<VornameText>;
         //GameObject tmp = GameObject.Find("VornameText");
         //TextMeshProUGUI tmp2 = tmp.GetComponent<TextMeshProUGUI>();
-        string vorname = GameObject.Find("VornameText").GetComponent<TextMeshProUGUI>().text;
-        string nachname = GameObject.Find("NachnameText").GetComponent<TextMeshProUGUI>().text;
-        string gebDat = GameObject.Find("GebDatText").GetComponent<TextMeshProUGUI>().text;
-        string trainingsDaystring = GameObject.Find("TrainingsDayText").GetComponent<TextMeshProUGUI>().text;
-        trainingsDaystring = trainingsDaystring.Substring(0,trainingsDaystring.Length-1);
+        string vorname = GameObject.Find("VornameInputField").GetComponent<TMP_InputField>().text;
+        string nachname = GameObject.Find("NachnameInputField").GetComponent<TMP_InputField>().text;
+        string gebDat = GameObject.Find("GebDatumInputField").GetComponent<TMP_InputField>().text;
+        string trainingsDaystring = GameObject.Find("TrainingsTagInputField").GetComponent<TMP_InputField>().text;
         int trainingsDay = int.Parse(trainingsDaystring);
         
-        string vpNummerstring = GameObject.Find("VPNummerText").GetComponent<TextMeshProUGUI>().text;
-        vpNummerstring = vpNummerstring.Substring(0,vpNummerstring.Length-1);
+        string vpNummerstring = GameObject.Find("VP_Nummer").GetComponent<TMP_InputField>().text;
         int vpNummer = int.Parse(vpNummerstring);
 
         
@@ -107,7 +105,8 @@ public class GameSession : MonoBehaviour
         public void SaveDataAsCSV()
         {
             string path = relativeFilePath; // Application.persistentDataPath;
-            string filename = path + '/' + vpNummer + vorname + nachname + gebDatum + trainingsDay.ToString() + ".csv";
+            string filename = path + '/' + vpNummer + '_' + vorname + '_' + nachname + '_' +  gebDatum  + '_' +  "SRTT" + '_' + trainingsDay.ToString() + ".csv";
+            // string filename = path + '/' + vpNummer + '_' + vorname + '_' + nachname + '_' + studyname +  '_' + trainingsDay.ToString() +  '_' + status + ".csv";
             print("filename = " + filename);
             using (StreamWriter sw = new StreamWriter(filename))
             {

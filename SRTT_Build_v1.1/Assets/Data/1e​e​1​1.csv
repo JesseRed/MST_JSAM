@@ -1,0 +1,5 @@
+type	block	sequ.	trial	time	Pos.	Color	Button	NumRsp	Resp_1	RT_1	R_Code	Resp_2	RT_2	Trigg.	n_hit	n_inc	n_miss	score_%
+random	0	0	0	13207	2	3	-1	1	0	2500	14	0	1000	0
+random	0	0	1	15713	5	1	-1	1	0	2500	14	0	550	0
+random	0	1	0	18528	2	3	-1	1	0	2500	14	0	900	0
+random	0	1	1	21032	3	0	-1	1	0	2500	14	0	750	0
