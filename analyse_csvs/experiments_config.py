@@ -58,7 +58,7 @@ def estimate_Rogens():
         "experiment_name"           :   "SEQ",
         "path_inputfiles"           :   ".\\Data_Rogens\\SEQ8",
         "filepattern"               :   ["FRA1", "FRA2"],
-        "_ids"                      :   ["SEQ8_G1_", "SEQ8_G2"],
+        "_ids"                      :   ["SEQ8_G1", "SEQ8_G2"],
         "sequence_length"           :   8,
         "path_outputfiles"          :   ".\\Data_Rogens\\Results",
         "is_multiprocessing"        :   False,
@@ -83,7 +83,7 @@ def estimate_Rogens():
         "experiment_name"           :   "SRTT",
         "path_inputfiles"           :   ".\\Data_Rogens\\SRTT",
         "filepattern"               :   ["SRTT1", "SRTT2"],
-        "_ids"                      :   ["SRTT_G1_", "SRTT_G2"],
+        "_ids"                      :   ["SRTT_G1", "SRTT_G2"],
         "sequence_length"           :   12,
         "path_outputfiles"          :   ".\\Data_Rogens\\Results",
         "is_multiprocessing"        :   False,
@@ -93,9 +93,9 @@ def estimate_Rogens():
     }
 
     #print(dicMST)
-    #perform(dicMST)
-    #perform(dicSEQ8)
-    #perform(dicSRTT)
+    perform(dicMST)
+    perform(dicSEQ8)
+    perform(dicSRTT)
     table = LearnTable(".\\Data_Rogens\\Lernspiel_Auswertung_2020b.csv")
     table.add_experimental_columns_to_table(dicMST)
     table.add_to_table(dicMST)

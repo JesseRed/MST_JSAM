@@ -13,26 +13,155 @@ from sklearn.cluster import AgglomerativeClustering
 import scipy.cluster.hierarchy as sch
 from filehandler import FileHandler
 from network import Network
-from helper_functions import tolist_ck
+from helper_functions import tolist_ck, create_standard_df
+from experiment import Experiment
 
 class SRTT():
-    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", path_output = ".\\Data_python", _id = "no_id", sequence_length = 12):
+    def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", path_output = ".\\Data_python", _id = "no_id", sequence_length = 10):
         self.fullfilename = fullfilename
         base=os.path.basename(self.fullfilename)
         self.filename = os.path.splitext(base)[0]
+        
         self.path_output = path_output
         self._id = _id
         self.filehandler = FileHandler(path_output=self.path_output, filename = self.filename, time_identifier = _id)
         self.sequence_length = sequence_length
-        self.df = pd.read_csv(self.fullfilename, sep = '\t' )
-        self.rts_nr, self.ipi_nr, self.but_nr, self.rts_err_nr, self.ipi_err_nr, self.but_err_nr, self.corr_seq_per_block_nr, self.err_seq_per_block_nr = self.get_data_from_sequences(self.df,is_random=False)
-        self.rts_ra, self.ipi_ra, self.but_ra, self.rts_err_ra, self.ipi_err_ra, self.but_err_ra, self.corr_seq_per_block_ra, self.err_seq_per_block_ra  = self.get_data_from_sequences(self.df, is_random=True)
-        #print(type(self.rts_nr))
-        self.rts_cv_seq = self.get_rt_change_variable_sequence(self.rts_nr,self.rts_ra)# response time change variable
-        self.rts_cv_but = self.get_rt_change_variable_button(self.rts_nr,self.rts_ra, self.but_nr, self.but_ra)# response time change variable
-        #print(self.corr_seq_per_block_nr)
-        self.corrsq_slope = self.estimate_improvement(self.corr_seq_per_block_nr)
+        self.input_df = pd.read_csv(self.fullfilename, sep = '\t' )
 
+        self.df = self.generate_standard_log_file_from_input_df(self.input_df)
+
+
+        # um ein Experiment eindeutig zuzuordnen benoetigen wir ...
+        # Experimentname, VPN und den Trainingstag
+        #!________________________
+        #! 02.05.2020 ich habe die Namensgebung in unity veraendert ... hier ggf. Anpassung ... auch wenn man mehr als 
+        #! einen einstelligen Traingingstage hat ... am besten mit string.split('_') dann arbeiten 
+        day = int(self.filename[-1])
+        #!________________________
+        vpn = int(self.filename.split('_')[0])
+        #!_________________________
+        
+        self.df.to_csv("df_output_of_srtt.log",sep='\t')
+        experiment = Experiment('SRTT', vpn, day, self.df)
+        print(experiment)
+
+        # self.rts_nr, self.ipi_nr, self.but_nr, self.rts_err_nr, self.ipi_err_nr, self.but_err_nr, self.corr_seq_per_block_nr, self.err_seq_per_block_nr = self.get_data_from_sequences(self.df,is_random=False)
+        # self.rts_ra, self.ipi_ra, self.but_ra, self.rts_err_ra, self.ipi_err_ra, self.but_err_ra, self.corr_seq_per_block_ra, self.err_seq_per_block_ra  = self.get_data_from_sequences(self.df, is_random=True)
+        # self.rts_cv_seq = self.get_rt_change_variable_sequence(self.rts_nr,self.rts_ra)# response time change variable
+        # self.rts_cv_but = self.get_rt_change_variable_button(self.rts_nr,self.rts_ra, self.but_nr, self.but_ra)# response time change variable
+        # self.corrsq_slope = self.estimate_improvement(self.corr_seq_per_block_nr)
+
+
+    def generate_standard_log_file_from_input_df(self, input_df):
+        """ erstellt ein neues Dataframe welches dem allgemeinen Standard entspricht, damit es
+            mittels der abstraktionsklasse "Experiment" verarbeitet werden kann
+        """
+
+        df = pd.DataFrame(columns=['BlockNumber',  'SequenceNumber', 'EventNumber', 'Time Since Block start', 'isHit',
+            'target', 'pressed', 'sequence'])
+        df['BlockNumber'] = input_df['block']
+        df['SequenceNumber'] = input_df['sequ.']
+        df['EventNumber'] = input_df['trial']
+        df['target'] = input_df['Color']
+        df['pressed'] = input_df['Button']
+        df['sequence'] = input_df['type']
+
+        df = self.get_time_since_sequence_start(df, input_df)
+        df = self.generate_isHit(df, input_df)
+        
+        # ersetzte die Sequenznamen durch Zahlen nach mit der wichtigsten beginnend 
+        #! das replacen muss von Hand erfolgen 
+        #! wenn das naechste mal ein Experiment designed wird und die Zahlen nach Wichtigkeit von 0
+        #! beginnend eingetragen werden dann muss man gar nichts mehr per hand anpassen
+        try:
+            df = df.replace('random', 1)
+            df = df.replace('fixed', 0)
+        except:
+            print('color code did not work')
+        df.rename({'Time Since Block start':'Time'}, axis = 'columns', inplace = True)
+        # gleiche nun des STartindex an ... es soll bei 1 beginnen 
+        if df.loc[0,'BlockNumber']==0:
+            df['BlockNumber'] = df['BlockNumber'] + 1
+
+        if df.loc[0,'SequenceNumber']==0:
+            df['SequenceNumber'] = df['SequenceNumber'] + 1
+
+        if df.loc[0,'EventNumber']==0:
+            df['EventNumber'] = df['EventNumber'] + 1
+        # es scheint ein paar zu geben, wo die Anfangszeit aus unklarem Grund 0 ist
+        # das wird durch die folgende Zeile aufgefangen
+        if df.loc[0,'Time']==0:
+            df.loc[0,'Time'] = df.loc[1,'Time'] - 700
+            
+        df = self.make_SequenceNumber_increasing_across_block_borders(df)
+
+        df['SequenceNumber'] = df['SequenceNumber'].astype(int) 
+        #df = self.adapt_Time_from_continious_to_within_Sequences(df)
+#        print(df.head())
+        #df['sequn'] = df['SequenceNumber'].astype(int) 
+        
+        return df
+
+
+    # def adapt_Time_from_continious_to_within_Sequences(self, df):
+    #     current_block = df.loc[1,'BlockNumber']
+    #     sequence_start_time = 0
+    #     for idx in range(df.shape[0]):
+    #         if not df.loc[idx,'BlockNumber'] == current_block:
+    #             current_block = df.loc[idx,'BlockNumber']
+    #             sequence_start_time = 0
+    #         current_time = df.loc[idx,'Time']
+    #         df.loc[idx,'Time'] = current_time - sequence_start_time
+    #         if df.loc[idx,'EventNumber']==self.sequence_length:
+    #             sequence_start_time = current_time
+                
+    #     return df
+
+    def make_SequenceNumber_increasing_across_block_borders(self, df):
+        seq_len = self.sequence_length
+        current_sequence = 1
+        sequence_to_write = 1
+        for idx in range(df.shape[0]):
+            if df.loc[idx,'SequenceNumber']!=current_sequence:
+                current_sequence = df.loc[idx,'SequenceNumber']
+                sequence_to_write += 1
+            df.loc[idx,'SequenceNumber']= sequence_to_write
+
+        return df   
+
+    def generate_isHit(self, df, input_df):
+        for idx in range(df.shape[0]):
+            if input_df.loc[idx,'Color']==input_df.loc[idx,'Button']:
+                df.loc[idx,'isHit'] = 1
+            else:
+                df.loc[idx,'isHit'] = 0
+        return df
+
+    def get_time_since_sequence_start(self, df, input_df):
+        # we take only the response time, this is not the real time but it is what we 
+        # are interested in for the comparision to MST and SEQ8
+        time_sum = 0
+        counter = 1
+        for idx in range(df.shape[0]):
+            time_sum += input_df.loc[idx,'RT_1']
+            df.loc[idx,'Time Since Block start'] = time_sum
+            if counter == self.sequence_length:
+                counter = 1
+                time_sum = 0
+            else:
+                counter += 1
+
+        return df
+
+    def get_time_since_block_start(self, df, input_df):
+        # we take only the response time, this is not the real time but it is what we 
+        # are interested in for the comparision to MST and SEQ8
+        time_sum = 0
+        for idx in range(df.shape[0]):
+            time_sum += input_df.loc[idx,'RT_1']
+            df.loc[idx,'Time Since Block start'] = time_sum
+        return df
+        
     def clustering(self,rts_cv):
         c = abs(np.corrcoef(rts_cv.T))
         # print(c.shape)
@@ -248,10 +377,11 @@ if __name__ == '__main__':
     filename = "H:\\Unity\MST_JSAM\\analyse_csvs\\Data_SRTT\\03_3_SRTT_2020-02-05_09-06-38.txt"
     filename = ".\\Data_SRTT\\03_3_SRTT_2020-02-05_09-06-38.txt"
     filename = ".\\Data_SRTT\\04_2_SRTT_2020-02-06_12-17-15.txt"
-    df = pd.read_csv(filename, sep = '\t' )
+    filename = "G:\\Unity\MST_JSAM\\analyse_csvs\\Data_Rogens\\SRTT\\33_StevenHerrmann198806181_SRTT1.csv"
+    #df = pd.read_csv(filename, sep = '\t' )
     srtt = SRTT(filename)
-    srtt.clustering(srtt.rts_cv_seq)
-    srtt.clustering(srtt.rts_cv_but)
+    #srtt.clustering(srtt.rts_cv_seq)
+    #srtt.clustering(srtt.rts_cv_but)
         
     
     '''
