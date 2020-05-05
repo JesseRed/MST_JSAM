@@ -164,13 +164,11 @@ class Experiment:
         #!____________________________________________________________
 
 
-        print("estimate lblsln")
         a,b,c,d = self.estimate_ipi_hits_lblsln(self.df_ipi)
         self.all_ipi_lblsln = a        #estimate_all_ipi_hits_lglsln_lsln()
         self.cor_ipi_lblsln = b       #estimate_all_ipi_hits_lglsln_lsln()
         self.err_ipi_lblsln = c       #estimate_all_ipi_hits_lglsln_lsln()
         self.all_hits_lblsln = d       #estimate_all_ipi_hits_lglsln_lsln()
-        print("finished lblsln")
         
 
         a, b, c, d = self.estimate_ipi_hits_lplsln(self.df_ipi)
@@ -257,16 +255,12 @@ class Experiment:
             else:
                 seqtimesum_slope_lpn.append(self.estimate_slope(lsn))
                 min_pos = lsn.index(min(lsn))
-                print(f"min_pos = {min_pos}")
                 if min_pos>10:
-                    print('append1')
                     seqtimesum_to_max_slope_lpn.append(self.estimate_slope(lsn[:min_pos]))
                     
                 else:
-                    print('append2')
                     seqtimesum_to_max_slope_lpn.append(self.estimate_slope(lsn))
 
-        print(seqtimesum_to_max_slope_lpn)
         return (seqtimesum_slope_lpn, seqtimesum_to_max_slope_lpn)
 
 

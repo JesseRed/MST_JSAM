@@ -64,7 +64,7 @@ class Debug:
         self.write_debug_file(self.exp.cor_seqnum_per_block_slope_lpn, 'cor_seqnum_per_block_slope_lpn', 'lpn')
         self.write_debug_file(self.exp.err_seqnum_per_block_slope_lpn, 'err_seqnum_per_block_slope_lpn', 'lpn')
         
-        
+
         self.write_dfs()
 
     def write_dfs(self):
@@ -133,8 +133,8 @@ class Debug:
 
     def add_lsln(self, df, lsln, col_name):
         flat_list = [item for sublist in lsln for item in sublist]
-        print(len(flat_list))
-        print(self.df_debug.shape)
+        #print(len(flat_list))
+        #print(self.df_debug.shape)
         df[col_name] = flat_list
 
         return df
