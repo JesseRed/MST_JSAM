@@ -153,14 +153,16 @@ class SEQ():
         except:
             print('color code did not work')
         # passe nun die BlockNumbers an 
-        print(df)
-        df = self.generate_block_number(df)
-        print(df)
-        df['BlockNumber'] = df['BlockNumber'].astype(int)
+
         df = self.change_EventNumbers_to_inSequenceEventNumbers(df)
         df.rename({'Time Since Block start':'Time'}, axis = 'columns', inplace = True)
     
         df = self.subtract_200ms_initial_color_showing_time(df)
+        print(df)
+        df = self.generate_block_number2(df)
+        print(df)
+        df['BlockNumber'] = df['BlockNumber'].astype(int)
+
         return df
 
     def subtract_200ms_initial_color_showing_time(self, df):
@@ -181,7 +183,8 @@ class SEQ():
         df['EventNumber'] = df['EventNumber'].astype(int)
         return df
 
-    def generate_block_number(self, df):
+
+    def generate_block_number2(self, df):
         block_series = df['BlockNumber'] # nur als Platzhalter
         # es sollen 10 bloecke sein und in jedem Block soll
         # eine gleiche Anzahl an Sequenzen aller Paradigmata sein
@@ -189,26 +192,54 @@ class SEQ():
         # diese Methode muss NICHT manuell angepasst werden wenn wir ein neues Experiment haben solange oben die Colorcodes gesetzt sind
         
         num_seq = df['sequence'].nunique()
-        num_per_block = []
-        counters = []
-        current_block = []
+        num_seq_occ = []
         for i in range(num_seq):
-            mask=df['sequence']==i
-            num_per_block.append(int(round(df[mask].shape[0]/10)))
-            counters.append(0)
-            current_block.append(1)
+            # anzahl des Vorkommens einer jeden zeile
+            num_seq_occ.append(int(round((df.sequence== i).sum())))
+        # anzahl der Sequenzen die in einen Block sollen
+        num_seq_in_block =[]
+        num_seq_in_blocks =[]
+        for i in range(num_seq):
+            absolute = num_seq_occ[i]/self.sequence_length
+            num_in_block, rest = divmod(absolute,10)
+            num_seq_in_block = [int(num_in_block)] *10
+            #print(f'rest = {rest}')
+            rest = int(rest)
+            for i in range(rest):
+                print(f"in for loop")
+                num_seq_in_block[i] += 1
+            num_seq_in_blocks.append(num_seq_in_block)
+        # num_seq_in_block hat nun die folgende Struktur
+        # [
+        #   [8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0],
+        #   [5.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0],
+        #   [4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0],
+        # ]
+        # nun laufen wir die Sequenzen ab und ordnen die Bloecke zu den Sequenzen 
+        # dies muessen entsprechend nicht aufsteigend sein
+        #print(df)
+        print(num_seq_in_blocks)
+        remaining_sequences_in_blocks = num_seq_in_blocks # dieser soll runter zaehlen
+        block_number_list = [int(0),int(0),int(0)] # der angibt in welchem Block wir uns befinden
+        for idx in range(0,df.shape[0],self.sequence_length):
+            
+            seq = df.loc[idx,'sequence']
+            block_number = block_number_list[seq]
+            print(type(block_number))
+            remaining = remaining_sequences_in_blocks[seq][block_number]
 
-        for idx,row in df.iterrows():
-            for sequence_num in range(num_seq):
-                if row.sequence == sequence_num:
-                    counters[sequence_num] += 1
-                    df.loc[idx,'BlockNumber'] = current_block[sequence_num]
-                    if counters[sequence_num]==num_per_block[sequence_num]:
-                        counters[sequence_num] = 0
-                        current_block[sequence_num] +=1
+            for i in range(self.sequence_length):
+                df.loc[idx+i,'BlockNumber'] = block_number +1
 
-        return df
-
+            remaining_sequences_in_blocks[seq][block_number] -= 1
+            if remaining_sequences_in_blocks[seq][block_number] == 0:
+                # dann ruecke eins weiter
+                block_number_list[seq] +=1
+            
+            # das die blockliste erschoepft ist muessen wir nicht abfragen
+            # da diese nach unserer oberern berechnung genau aufgehen sollt
+        return df  
+ 
 
 
     def my_plot(self):

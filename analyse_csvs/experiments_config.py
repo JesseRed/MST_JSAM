@@ -34,7 +34,7 @@ def estimate_Rogens():
         "experiment_name"           :   "MST",
         "path_inputfiles"           :   ".\\Data_Rogens\\MST",
         "filepattern"               :   ["REST1", "REST2"],
-        "_ids"                      :   ["MST_G1_", "MST_G2"],
+        "_ids"                      :   ["MST_G1", "MST_G2"],
         "sequence_length"           :   10,
         "path_outputfiles"          :   ".\\Data_Rogens\\Results",
         "is_multiprocessing"        :   False,

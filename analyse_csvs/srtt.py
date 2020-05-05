@@ -15,6 +15,7 @@ from filehandler import FileHandler
 from network import Network
 from helper_functions import tolist_ck, create_standard_df
 from experiment import Experiment
+import socket
 
 class SRTT():
     def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", path_output = ".\\Data_python", _id = "no_id", sequence_length = 10):
@@ -378,6 +379,12 @@ if __name__ == '__main__':
     filename = ".\\Data_SRTT\\03_3_SRTT_2020-02-05_09-06-38.txt"
     filename = ".\\Data_SRTT\\04_2_SRTT_2020-02-06_12-17-15.txt"
     filename = "G:\\Unity\MST_JSAM\\analyse_csvs\\Data_Rogens\\SRTT\\33_StevenHerrmann198806181_SRTT1.csv"
+    computername = socket.gethostname()
+    if computername == "BigBang":
+        filename = "G:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
+    if computername == "XenonBang":
+        filename = "H:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SRTT\\17_TimQueißert199506091_SRTT1.csv"
+
     #df = pd.read_csv(filename, sep = '\t' )
     srtt = SRTT(filename)
     #srtt.clustering(srtt.rts_cv_seq)

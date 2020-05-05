@@ -28,3 +28,14 @@ def create_standard_df():
     df = pd.DataFrame(columns=['BlockNumber',  'SequenceNumber', 'EventNumber', 'Time Since Block start', 'isHit',
         'target', 'pressed', 'sequence'])
     return df
+
+# def write_to_df_log(logfile, exp, ipi):
+#     current_element = 0
+#     with open(logfile, 'w') as fp:
+#         idx  = 0
+#         for l1 in exp:
+#             for l2 in l1:
+#                 idx += 1
+#                 s +=1
+#                 if s>
+#                 fp.write(f"{l2} - {ipi[z,s]}")

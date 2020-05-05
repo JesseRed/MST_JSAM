@@ -14,6 +14,8 @@ from network import Network
 import logging
 import helper_functions
 from experiment import Experiment
+from uuid import getnode as get_mac
+import socket
 logger = logging.getLogger(__name__)
 
 
@@ -38,7 +40,14 @@ class MST():
         #!_________________________
         experiment = Experiment('MST', vpn, day, self.df)
         print(experiment)
-        # self.ipi, self.hits = self.get_inter_key_intervals()
+
+        # testing
+        #self.df = self.input_df
+        #self.ipi, self.hits = self.get_inter_key_intervals(self.input_df)
+        #print(type(self.ipi))
+        # print(type(self.ipi[0]))
+        #print(self.ipi)
+        #helper_functions.write_to_df_log(experiment.all_ipi_lsln, self.ipi)
         # self.sequence_length = sequence_length
         # self.ipi_cor, self.errors_per_block = self.get_inter_key_intervals_only_cor2(self.sequence_length) # nur Korrekte Sequencen
         # self.corrsq = self.estimate_correct_seqences()
@@ -133,56 +142,56 @@ class MST():
         return df
 
 
-    def generate_sequence_number_and_delete_incomplete_sequences(self, df):
-        # im MST File sind keine Sequence Numbers enthalten
-        # da bei Fehlern die Sequenz nicht unterbrochen wird kann einfach hochgezaehlt werden
-        #seq_length = df['SequenceNumber'].value_counts().unique()[0] 
-        # wenn eine Sequence unvollstaendig ist dann wird sie verworfen
-        print(df.head(50))
+    # def generate_sequence_number_and_delete_incomplete_sequences(self, df):
+    #     # im MST File sind keine Sequence Numbers enthalten
+    #     # da bei Fehlern die Sequenz nicht unterbrochen wird kann einfach hochgezaehlt werden
+    #     #seq_length = df['SequenceNumber'].value_counts().unique()[0] 
+    #     # wenn eine Sequence unvollstaendig ist dann wird sie verworfen
+    #     print(df.head(50))
 
-        current_block = df.loc[0,'BlockNumber']
-        new_block = True
-        eventNumber = 0
-        sequence_number = 1
-        is_new_block_in_sequence = False
-        new_df_idx
-        for idx in range(df.shape[0]):
-            eventNumber += 1
-            if not df.loc[idx,'BlockNumber'] == current_block:
-                new_block = True
-                current_block = df.loc[idx,'BlockNumber']
-                eventNumber = 1
-                sequence_number +=1
-            else:
-                new_block = False
+    #     current_block = df.loc[0,'BlockNumber']
+    #     new_block = True
+    #     eventNumber = 0
+    #     sequence_number = 1
+    #     is_new_block_in_sequence = False
+    #     new_df_idx
+    #     for idx in range(df.shape[0]):
+    #         eventNumber += 1
+    #         if not df.loc[idx,'BlockNumber'] == current_block:
+    #             new_block = True
+    #             current_block = df.loc[idx,'BlockNumber']
+    #             eventNumber = 1
+    #             sequence_number +=1
+    #         else:
+    #             new_block = False
 
 
 
-            m = eventNumber % self.sequence_length
-            if m == 0:
-                m = seq_length
+    #         m = eventNumber % self.sequence_length
+    #         if m == 0:
+    #             m = seq_length
 
-            # wenn eine neue Sequenz begonnen wird dann teste ob in den naechten "seq_lenght" eintraegen ein neuer Block beginnt
-            if eventNumber==1:
-                for sub_idx in range(0,self.sequence_length):
-                    is_new_block_in_sequence = False
-                    if df.loc[sub_idx,'BlockNumber'] != current_block:
-                        is_new_block_in_sequence = True
-                        drop_max = sub_idx
-                # nun loesche diese
-                if is_new_block_in_sequence:
-                    df.drop(df.index[idx:idx+drop_max+1])
+    #         # wenn eine neue Sequenz begonnen wird dann teste ob in den naechten "seq_lenght" eintraegen ein neuer Block beginnt
+    #         if eventNumber==1:
+    #             for sub_idx in range(0,self.sequence_length):
+    #                 is_new_block_in_sequence = False
+    #                 if df.loc[sub_idx,'BlockNumber'] != current_block:
+    #                     is_new_block_in_sequence = True
+    #                     drop_max = sub_idx
+    #             # nun loesche diese
+    #             if is_new_block_in_sequence:
+    #                 df.drop(df.index[idx:idx+drop_max+1])
 
-            if eventNumber==1 and not is_new_block_in_sequence:
-                sequence_number +=1
+    #         if eventNumber==1 and not is_new_block_in_sequence:
+    #             sequence_number +=1
 
-                df.loc[idx,'EventNumber'] = m
-                df.loc[idx,'SequenceNumber'] = sequence_number
+    #             df.loc[idx,'EventNumber'] = m
+    #             df.loc[idx,'SequenceNumber'] = sequence_number
             
-        df['EventNumber'] = df['EventNumber'].astype(int)
-        df['SequenceNumber'] = df['SequenceNumber'].astype(int)
-        print(df.head(50))
-        return df
+    #     df['EventNumber'] = df['EventNumber'].astype(int)
+    #     df['SequenceNumber'] = df['SequenceNumber'].astype(int)
+    #     print(df.head(50))
+    #     return df
 
 
 
@@ -214,6 +223,12 @@ class MST():
 
         df['SequenceNumber'] = df['SequenceNumber'].astype(int)
         return df
+
+
+
+##########################################
+# from here the old code starts initially as implementation of MST allone
+# now only used to test the validity of our experiment class
 
 
     def save(self):
@@ -373,20 +388,21 @@ class MST():
         
         return (ipi_cor, error_per_block)
 
-    def get_inter_key_intervals(self):
+    def get_inter_key_intervals(self, df):
         """ in einem numpy Array werden die inter Key intervalls gespeichert
             die Zeit zum ersten key press entfaellt 
             Liste von Arrays
         """ 
+        
         blcktmp = 0
         ipi = []
         hits = []
         key_press_time = 0
-        for index, row in self.df.iterrows():
+        for index, row in df.iterrows():
             if row["BlockNumber"]!=blcktmp:
                 if blcktmp > 0:
-                    ipi.append(np.asarray(ipi_block_list_tmp, dtype = np.float32))
-                    hits.append(np.asarray(block_hits, dtype = np.int8))
+                    ipi.append(ipi_block_list_tmp)
+                    hits.append(block_hits)
                     key_press_time = 0
                  
                 # ein neuer Block
@@ -395,14 +411,14 @@ class MST():
                 block_hits = []
                 #block_h..its.append(row['isHit'])
                 #continue # der erste in jedem Block wird nicht gespeichert
-            cur_time = float(str(row["Time Since Block start"]).replace(',','.'))
+            cur_time = row["Time"]
             new_time = cur_time-key_press_time
             #logger.info(f"append index={index} {new_time}  current time = {cur_time}... old time = {key_press_time}")
             ipi_block_list_tmp.append(new_time)
             key_press_time = cur_time
             block_hits.append(row['isHit'])
-        ipi.append(np.asarray(ipi_block_list_tmp, dtype = np.float32))
-        hits.append(np.asarray(block_hits, dtype = np.int8))
+        ipi.append(ipi_block_list_tmp)
+        hits.append(block_hits)
         return (ipi, hits)
             
     def estimate_correct_seqences(self):
@@ -461,8 +477,14 @@ if __name__ == '__main__':
     #filename = ".\\Data MST\\3Tag1_.csv"
     #filename = ".\\Data_MST_Simulation\\3Tag1_.csv"
     #mst = MST(filename)
-    mstfile = "G:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
+    mac = get_mac()
+    computername = socket.gethostname()
+    if computername == "BigBang":
+        mstfile = "G:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
+    if computername == "XenonBang":
+        mstfile = "H:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
     mst = MST(fullfilename = mstfile, sequence_length = 5, path_output = ".\\Data_python", _id = "no_id")
+
     #mst.save()
 #    ipi_cor = mst.ipi_cor
 #    ipi_norm = mst.ipi_norm
