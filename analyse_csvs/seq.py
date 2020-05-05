@@ -153,7 +153,6 @@ class SEQ():
         except:
             print('color code did not work')
         # passe nun die BlockNumbers an 
-
         df = self.change_EventNumbers_to_inSequenceEventNumbers(df)
         df.rename({'Time Since Block start':'Time'}, axis = 'columns', inplace = True)
     
