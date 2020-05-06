@@ -11,6 +11,7 @@ from asteroid import ASTEROID
 from scipy import stats 
 import datetime
 import multiprocessing
+from experiment import Experiment
 
 logger = logging.getLogger(__name__)
 mp_output = multiprocessing.Queue()
@@ -35,13 +36,13 @@ def get_and_save_data_for_one_subj(self, filename):
 
 
 class Group():
-    def __init__(self, experiment = 'MST', path_inputfiles="./Data MST", filepattern="Tag1", 
+    def __init__(self, experiment_name = 'MST', path_inputfiles="./Data MST", filepattern="Tag1", 
         path_outputfiles = ".\\Data_python", _id = None, sequence_length=10, 
         is_estimate_network = False, is_clustering = False, is_estimate_Q = True,
         num_random_Q = 10, coupling_parameter = 0.3, resolution_parameter = 0.9,
         is_multiprocessing = False, show_images = False, target_color = 8):
 
-        self.experiment = experiment
+        self.experiment_name = experiment_name
         self.path_inputfiles = path_inputfiles
         self.sequence_length = sequence_length # only relevant for MST
         self.filepattern = filepattern
@@ -56,7 +57,7 @@ class Group():
         self.target_color = target_color
         self.show_images = show_images
         self.files = self.get_group_files()
-        self.subj_class_list = []
+        self.subj_exp_list = []
                                                                                                     
         # create file identifier for all datafiles which will be created for this analysis
         if not _id:
@@ -85,22 +86,25 @@ class Group():
         # self.corrsq = []
         logger.info(f"entering get_data_singleprocessing")
         for filename in self.files:
-            if self.experiment == 'MST':
-                print("Experiment = MST")
+            if self.experiment_name == 'MST':
                 subj_class = MST(fullfilename = filename, sequence_length = self.sequence_length, path_output = self.path_outputfiles, _id = self._id)
-            if self.experiment == 'SEQ':
+            if self.experiment_name == 'SEQ':
                 subj_class = SEQ(fullfilename = filename, sequence_length = self.sequence_length, path_output = self.path_outputfiles, _id = self._id, show_images = self.show_images, target_color = self.target_color)
-            if self.experiment == 'SRTT':
+            if self.experiment_name == 'SRTT':
                 subj_class = SRTT(fullfilename = filename, path_output = self.path_outputfiles, _id = self._id, sequence_length = self.sequence_length)
             #    subj_class = SRTT(filename)
-            if self.experiment == 'ASTEROID':
+            if self.experiment_name == 'ASTEROID':
                 subj_class = ASTEROID(fullfilename = filename, path_output = self.path_outputfiles, _id = self._id)
-            if self.is_estimate_network:
-                subj_class.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= self.is_clustering, is_estimate_Q= self.is_estimate_Q, num_random_Q=self.num_random_Q)
             
-            subj_class.save()
+            # alle individuellen Klassen haben die gleichen Attribute die an die Experimentklasse uebergeben werden
+            subj_exp = Experiment(subj_class.experiment_name, subj_class.vpn, subj_class.day, subj_class.sequence_length, subj_class.df)
 
-            self.subj_class_list.append(subj_class)
+            if self.is_estimate_network:
+                subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= self.is_clustering, is_estimate_Q= self.is_estimate_Q, num_random_Q=self.num_random_Q)
+            
+            subj_exp.save()
+
+            self.subj_exp_list.append(subj_exp)
         #     self.corrsq.append(mst.corrsq)
         #     self.improvement.append(mst.improvement)
 
@@ -143,10 +147,10 @@ class Group():
                 p.join()
 
             # Get process results from the output queue
-            self.subj_class_list = [mp_output.get() for p in processes]
+            self.subj_exp_list = [mp_output.get() for p in processes]
             print("results after multiprocessor")
-            print(type(self.subj_class_list))
-            print(type(self.subj_class_list[0]))
+            print(type(self.subj_exp_list))
+            print(type(self.subj_exp_list[0]))
 
         # for filename in self.files:
         #     multiprocessing.Process(target=get_and_save_data_for_one_subj, args=(self,filename)).start()       
@@ -155,11 +159,11 @@ class Group():
 
     
     def perform_network_analysis(self):
-        for subj in self.subj_class_list:
+        for subj in self.subj_exp_list:
             subj.add_network_class()
 
     def save_data(self):
-        for subj in self.subj_class_list:
+        for subj in self.subj_exp_list:
             subj.save()
 
         # print(f"cor = {self.improvement}")

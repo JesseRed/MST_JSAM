@@ -27,6 +27,7 @@ class Network():
     def __init__(self, ipi, coupling_parameter = 0.03,  resolution_parameter = 0.9, is_estimate_clustering= True, is_estimate_Q= False, num_random_Q=0 ):
         # whether in the adaptation process it will be tried to set the
         # node in the next trial to the same node of the previous
+        print('starting Network init')
         self.is_adapt_communities_across_trials = False 
         self.is_estimate_clustering = is_estimate_clustering
         self.is_estimate_Q = is_estimate_Q
@@ -60,7 +61,7 @@ class Network():
             self.phi_real = self.estimate_chunk_magnitudes(g_real)
             if self.num_random_Q>0:
                 self.test_chunking_against_random(rand_iterations=self.num_random_Q)
-                results_json = self.get_results_as_json()
+                #results_json = self.get_results_as_json()
             self.print_results(print_shuffled_results = (self.num_random_Q>0))
 
     def get_normalized_2D_array(self, ipi):
@@ -599,14 +600,14 @@ class Network():
             g_fake_list.append(g)
             q_fake_list.append(q)
             phi_fake_list.append(phi)
-        with open(".\\Data_python\\g_fake_list.txt", "wb") as fp:   #Pickling
-            pickle.dump(g_fake_list, fp)
-        with open(".\\Data_python\\q_fake_list.txt", "wb") as fp:   #Pickling
-            pickle.dump(q_fake_list, fp)
-        with open(".\\Data_python\\phi_fake_list.txt", "wb") as fp:   #Pickling
-            pickle.dump(phi_fake_list, fp)
-        with open(".\\Data_python\\phi_real.txt", "wb") as fp:   #Pickling
-            pickle.dump(self.phi_real, fp)
+        # with open(".\\Data_python\\g_fake_list.txt", "wb") as fp:   #Pickling
+        #     pickle.dump(g_fake_list, fp)
+        # with open(".\\Data_python\\q_fake_list.txt", "wb") as fp:   #Pickling
+        #     pickle.dump(q_fake_list, fp)
+        # with open(".\\Data_python\\phi_fake_list.txt", "wb") as fp:   #Pickling
+        #     pickle.dump(phi_fake_list, fp)
+        # with open(".\\Data_python\\phi_real.txt", "wb") as fp:   #Pickling
+        #     pickle.dump(self.phi_real, fp)
         self.q_fake_list = q_fake_list
         self.g_fake_list = g_fake_list
         self.phi_fake_list = phi_fake_list
@@ -636,40 +637,42 @@ class Network():
         #plt.plot(x, b + slope * x, '-')
         #plt.show()
 
-    def get_results_as_json(self):
-        ''' speicherung der relevanten Informationen in einm json file
-        '''
-        results = {
-            'ipi':                  self.ipi.tolist(),
-            'date_of_analysis':     datetime.today().strftime('%Y-%m-%d')
-        }
-        if hasattr(self, 'filename'):
-            results.update({'input_file': self.filename})
+    #* es wird nun alles in der Experiment Klasse abgespeichert 
+    #* diese Funktion sollte nun nicht mehr gebraucht werden
+    # def get_results_as_json(self):
+    #     ''' speicherung der relevanten Informationen in einm json file
+    #     '''
+    #     results = {
+    #         'ipi':                  self.ipi.tolist(),
+    #         'date_of_analysis':     datetime.today().strftime('%Y-%m-%d')
+    #     }
+    #     if hasattr(self, 'filename'):
+    #         results.update({'input_file': self.filename})
 
-        if self.is_estimate_clustering:
-            results.update({'is_clustering_performed': 'True'})
+    #     if self.is_estimate_clustering:
+    #         results.update({'is_clustering_performed': 'True'})
         
-        if self.is_estimate_Q: #= True, is_estimate_Q= False, num_random_Q=0 
-            x = np.arange(len(self.phi_real)-1)
-            y = self.phi_real[1:]
-            phi_real_slope,b = np.polyfit(x, y, 1)
-            results.update({
-                'phi_real':             self.phi_real,
-                'phi_real_slope':       phi_real_slope,
-                'q_real':               self.q_real,
-                'g_real':               tolist_ck(self.g_real),
-                'A':                    self.A.tolist()
-            })
+    #     if self.is_estimate_Q: #= True, is_estimate_Q= False, num_random_Q=0 
+    #         x = np.arange(len(self.phi_real)-1)
+    #         y = self.phi_real[1:]
+    #         phi_real_slope,b = np.polyfit(x, y, 1)
+    #         results.update({
+    #             'phi_real':             self.phi_real,
+    #             'phi_real_slope':       phi_real_slope,
+    #             'q_real':               self.q_real,
+    #             'g_real':               tolist_ck(self.g_real),
+    #             'A':                    self.A.tolist()
+    #         })
 
-        if self.num_random_Q>0: #= True, is_estimate_Q= False, num_random_Q=0 
-            self.q_real_t, self.q_real_p = scipy.stats.ttest_1samp(self.q_fake_list,self.q_real)
-            results.update({
-                'q_real_t':             self.q_real_t,
-                'q_real_p':             self.q_real_p,
-                'q_fake_list':          self.q_fake_list,
-                'q_fake_list_mean':     sum(self.q_fake_list)/len(self.q_fake_list),
-                'g_fake_list':          tolist_ck(self.g_fake_list) # arrays verschachtelt in einer Liste
-            })
+    #     if self.num_random_Q>0: #= True, is_estimate_Q= False, num_random_Q=0 
+    #         self.q_real_t, self.q_real_p = scipy.stats.ttest_1samp(self.q_fake_list,self.q_real)
+    #         results.update({
+    #             'q_real_t':             self.q_real_t,
+    #             'q_real_p':             self.q_real_p,
+    #             'q_fake_list':          self.q_fake_list,
+    #             'q_fake_list_mean':     sum(self.q_fake_list)/len(self.q_fake_list),
+    #             'g_fake_list':          tolist_ck(self.g_fake_list) # arrays verschachtelt in einer Liste
+    #         })
 
         # phi_fake_list_arr = np.asarray(self.phi_fake_list)
         # phi_fake_list_mean = np.nanmean(phi_fake_list_arr,axis=0)
@@ -751,87 +754,3 @@ if __name__ == '__main__':
     if gofor=='MST':
         #net.clustering()
         pass
-#    srtt.clustering(srtt.rts_cv_but)
-        
-    # net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
-    # g_real,q_real = net.estimate_chunks(is_random = False)
-    # phi_real = net.estimate_chunk_magnitudes(g_real)
-    # g_fake_list = []
-    # q_fake_list = []
-    # phi_fake_list = []
-    # for i in range(10):
-    #     g, q = net.estimate_chunks(is_random = True)
-    #     phi = net.estimate_chunk_magnitudes(g)
-    #     g_fake_list.append(g)
-    #     q_fake_list.append(q)
-    #     phi_fake_list.append(phi)
-    # ipi = net.ipi_norm_arr
-
-
-
-
-
-
-#    filename = ".\\Data MST\\3Tag1_.csv"
-#     mst = MST(filename)
-
-#     net = Network(mst.ipi_cor, coupling_parameter = 0.03,  resolution_parameter = 0.9)
-#     #g = net.g
-#     g_real,q_real = net.estimate_chunks(is_random = False)
-#     phi_real = net.estimate_chunk_magnitudes(g_real)
-#     g_fake_list = []
-#     q_fake_list = []
-#     phi_fake_list = []
-#     for i in range(10):
-#         g, q = net.estimate_chunks(is_random = True)
-#         phi = net.estimate_chunk_magnitudes(g)
-#         g_fake_list.append(g)
-#         q_fake_list.append(q)
-#         phi_fake_list.append(phi)
-# #    g = np.load("g_arr.npy")
-    
-#     #Qms_list = net.Qms_list
-#     ipi = net.ipi_norm_arr
-
-
-
-
-    #the partition optimized by Qmulti_trial
-    #g = self.estimate_chunks()
-        
-    
-    #w_norm = mst.w_norm
-    #logger.info(type(mst.ipi_cor))
-    #logger.info(len(mst.ipi_cor))
-
-#model.fit(ta.reshape(-1,1),phia)
-#Out[36]: LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
-#
-#model.intercept_
-#Out[37]: 0.85201842328977
-#
-#model.coef_
-#Out[38]: array([-0.04204932])
-#
-#from numpy.polynomial.polynomial import polyfit
-#
-#b, m = polyfit(ta, phia, 1)
-#
-#
-#x = ta
-#
-#y = phi
-#
-#plt.plot(x, y, '.')
-#plt.plot(x, b + m * x, '-')
-#plt.show()
-#t = list(range(63))
-#
-#ta = np.asarray(t, dtype=int)
-#
-#phia = np.asarray(phi, dtype=np.float32)
-#with open("results_unten.txt","wb") as fp:
-#    pickle.dump(q_real,fp)
-#    pickle.dump(q_fake_list, fp)
-#    pickle.dump(g_real,fp)
-#    pickle.dump(g_fake_list,fp)

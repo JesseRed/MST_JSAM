@@ -13,7 +13,7 @@ from helper_functions import tolist_ck, create_standard_df
 from network import Network
 import logging
 import helper_functions
-from experiment import Experiment
+#from experiment import Experiment
 from uuid import getnode as get_mac
 import socket
 logger = logging.getLogger(__name__)
@@ -34,12 +34,14 @@ class MST():
         #!________________________
         #! 02.05.2020 ich habe die Namensgebung in unity veraendert ... hier ggf. Anpassung ... auch wenn man mehr als 
         #! einen einstelligen Traingingstage hat ... am besten mit string.split('_') dann arbeiten 
-        day = int(self.filename.split('fertig')[0][-1])
+        self.day = int(self.filename.split('fertig')[0][-1])
         #!________________________
-        vpn = int(self.filename.split('_')[0])
+        self.vpn = int(self.filename.split('_')[0])
         #!_________________________
-        experiment = Experiment('MST', vpn, day, self.df)
-        print(experiment)
+        self.experiment_name = "MST"
+        #self.experiment = Experiment(self.experiment_name, self.vpn, self.day, self.sequence_length, self.df)
+
+        #print(experiment)
 
         # testing
         #self.df = self.input_df
@@ -95,7 +97,7 @@ class MST():
         s = df['SequenceNumber'].value_counts()<5
         sequences_to_delete = s[s==True].index.tolist()
         sequences_to_delete = sorted(sequences_to_delete)
-        print(sequences_to_delete)
+        #print(sequences_to_delete)
         for num in sequences_to_delete:
             df = df[df['SequenceNumber']!= num]
         additional_subtractor = 0
@@ -141,61 +143,6 @@ class MST():
         df['EventNumber'] = df['EventNumber'].astype(int)
         return df
 
-
-    # def generate_sequence_number_and_delete_incomplete_sequences(self, df):
-    #     # im MST File sind keine Sequence Numbers enthalten
-    #     # da bei Fehlern die Sequenz nicht unterbrochen wird kann einfach hochgezaehlt werden
-    #     #seq_length = df['SequenceNumber'].value_counts().unique()[0] 
-    #     # wenn eine Sequence unvollstaendig ist dann wird sie verworfen
-    #     print(df.head(50))
-
-    #     current_block = df.loc[0,'BlockNumber']
-    #     new_block = True
-    #     eventNumber = 0
-    #     sequence_number = 1
-    #     is_new_block_in_sequence = False
-    #     new_df_idx
-    #     for idx in range(df.shape[0]):
-    #         eventNumber += 1
-    #         if not df.loc[idx,'BlockNumber'] == current_block:
-    #             new_block = True
-    #             current_block = df.loc[idx,'BlockNumber']
-    #             eventNumber = 1
-    #             sequence_number +=1
-    #         else:
-    #             new_block = False
-
-
-
-    #         m = eventNumber % self.sequence_length
-    #         if m == 0:
-    #             m = seq_length
-
-    #         # wenn eine neue Sequenz begonnen wird dann teste ob in den naechten "seq_lenght" eintraegen ein neuer Block beginnt
-    #         if eventNumber==1:
-    #             for sub_idx in range(0,self.sequence_length):
-    #                 is_new_block_in_sequence = False
-    #                 if df.loc[sub_idx,'BlockNumber'] != current_block:
-    #                     is_new_block_in_sequence = True
-    #                     drop_max = sub_idx
-    #             # nun loesche diese
-    #             if is_new_block_in_sequence:
-    #                 df.drop(df.index[idx:idx+drop_max+1])
-
-    #         if eventNumber==1 and not is_new_block_in_sequence:
-    #             sequence_number +=1
-
-    #             df.loc[idx,'EventNumber'] = m
-    #             df.loc[idx,'SequenceNumber'] = sequence_number
-            
-    #     df['EventNumber'] = df['EventNumber'].astype(int)
-    #     df['SequenceNumber'] = df['SequenceNumber'].astype(int)
-    #     print(df.head(50))
-    #     return df
-
-
-
-
     def generate_sequence_number(self, df):
         # im MST File sind keine Sequence Numbers enthalten
         # da bei Fehlern die Sequenz nicht unterbrochen wird kann einfach hochgezaehlt werden
@@ -223,6 +170,8 @@ class MST():
 
         df['SequenceNumber'] = df['SequenceNumber'].astype(int)
         return df
+
+
 
 
 

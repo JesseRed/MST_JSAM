@@ -11,7 +11,7 @@ from filehandler import FileHandler
 from helper_functions import tolist_ck, create_standard_df
 import helper_functions
 from network import Network
-from experiment import Experiment
+#from experiment import Experiment
 logger = logging.getLogger(__name__)
 
 class SEQ():
@@ -100,18 +100,16 @@ class SEQ():
         
         self.sequence_length = 8
         self.df = self.generate_standard_log_file_from_input_df(self.input_df)
-
         #!________________________
         #! 02.05.2020 ich habe die Namensgebung in unity veraendert ... hier ggf. Anpassung ... auch wenn man mehr als 
         #! einen einstelligen Traingingstage hat ... am besten mit string.split('_') dann arbeiten 
-        day = int(self.filename.split('fertig')[0][-1])
+        self.day = int(self.filename.split('fertig')[0][-1])
         #!________________________
-        vpn = int(self.filename.split('_')[0])
+        self.vpn = int(self.filename.split('_')[0])
         #!_________________________
-        print(self.df.head())
-        experiment = Experiment('SEQ', vpn, day, self.df)
-        print(experiment)
-
+        self.experiment_name = "SEQ"
+        #print(self.df.head())
+        
         # self.ipi, self.hits, self.color = self.get_inter_key_intervals()
         # self.sequence_length = sequence_length
         # self.ipi_cor, self.color_cor = self.get_inter_key_intervals_only_cor2(self.sequence_length) # nur Korrekte Sequencen
@@ -157,9 +155,7 @@ class SEQ():
         df.rename({'Time Since Block start':'Time'}, axis = 'columns', inplace = True)
     
         df = self.subtract_200ms_initial_color_showing_time(df)
-        print(df)
         df = self.generate_block_number2(df)
-        print(df)
         df['BlockNumber'] = df['BlockNumber'].astype(int)
 
         return df
@@ -205,7 +201,6 @@ class SEQ():
             #print(f'rest = {rest}')
             rest = int(rest)
             for i in range(rest):
-                print(f"in for loop")
                 num_seq_in_block[i] += 1
             num_seq_in_blocks.append(num_seq_in_block)
         # num_seq_in_block hat nun die folgende Struktur
@@ -217,14 +212,13 @@ class SEQ():
         # nun laufen wir die Sequenzen ab und ordnen die Bloecke zu den Sequenzen 
         # dies muessen entsprechend nicht aufsteigend sein
         #print(df)
-        print(num_seq_in_blocks)
+        #print(num_seq_in_blocks)
         remaining_sequences_in_blocks = num_seq_in_blocks # dieser soll runter zaehlen
         block_number_list = [int(0),int(0),int(0)] # der angibt in welchem Block wir uns befinden
         for idx in range(0,df.shape[0],self.sequence_length):
             
             seq = df.loc[idx,'sequence']
             block_number = block_number_list[seq]
-            print(type(block_number))
             remaining = remaining_sequences_in_blocks[seq][block_number]
 
             for i in range(self.sequence_length):
@@ -530,7 +524,7 @@ if __name__ == '__main__':
     #mst = MST(filename)
 
     filename= ".\\Data_Seq_8\\_Carsten_​FRA1fertig.csv"
-    filename= ".\\Data_Rogens\\SEQ8\\33_StevenHerrmannFRA2fertig.csv"
+    filename= ".\\Data_Rogens\\SEQ\\33_StevenHerrmannFRA2fertig.csv"
 
     seq = SEQ(fullfilename=filename, sequence_length=8, path_output=".\\Data_python", _id="nox_id")
     

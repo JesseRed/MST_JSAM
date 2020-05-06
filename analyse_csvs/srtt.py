@@ -14,7 +14,7 @@ import scipy.cluster.hierarchy as sch
 from filehandler import FileHandler
 from network import Network
 from helper_functions import tolist_ck, create_standard_df
-from experiment import Experiment
+#from experiment import Experiment
 import socket
 
 class SRTT():
@@ -25,26 +25,26 @@ class SRTT():
         
         self.path_output = path_output
         self._id = _id
-        self.filehandler = FileHandler(path_output=self.path_output, filename = self.filename, time_identifier = _id)
         self.sequence_length = sequence_length
+        self.filehandler = FileHandler(path_output=self.path_output, filename = self.filename, time_identifier = _id)
+        
         self.input_df = pd.read_csv(self.fullfilename, sep = '\t' )
 
         self.df = self.generate_standard_log_file_from_input_df(self.input_df)
-
-
+             
         # um ein Experiment eindeutig zuzuordnen benoetigen wir ...
         # Experimentname, VPN und den Trainingstag
         #!________________________
         #! 02.05.2020 ich habe die Namensgebung in unity veraendert ... hier ggf. Anpassung ... auch wenn man mehr als 
         #! einen einstelligen Traingingstage hat ... am besten mit string.split('_') dann arbeiten 
-        day = int(self.filename[-1])
+        self.day = int(self.filename[-1])
         #!________________________
-        vpn = int(self.filename.split('_')[0])
+        self.vpn = int(self.filename.split('_')[0])
         #!_________________________
+        self.experiment_name = "SRTT"
         
-        self.df.to_csv("df_output_of_srtt.log",sep='\t')
-        experiment = Experiment('SRTT', vpn, day, self.df)
-        print(experiment)
+        #self.df.to_csv("df_output_of_srtt.log",sep='\t')
+        
 
         # self.rts_nr, self.ipi_nr, self.but_nr, self.rts_err_nr, self.ipi_err_nr, self.but_err_nr, self.corr_seq_per_block_nr, self.err_seq_per_block_nr = self.get_data_from_sequences(self.df,is_random=False)
         # self.rts_ra, self.ipi_ra, self.but_ra, self.rts_err_ra, self.ipi_err_ra, self.but_err_ra, self.corr_seq_per_block_ra, self.err_seq_per_block_ra  = self.get_data_from_sequences(self.df, is_random=True)
