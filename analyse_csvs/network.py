@@ -700,7 +700,7 @@ class Network():
         #             json.dump(results, fp)
         # logger.info(f"q_real = {self.q_real}")
         # logger.info(f"q_fake_list_mean = {sum(self.q_fake_list)/len(self.q_fake_list)}")
-        return results
+        
 
 
             

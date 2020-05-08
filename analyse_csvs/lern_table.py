@@ -15,6 +15,7 @@ from statistic_ck import Statistic
 import experiments_config #import estimate_Rogens
 import logging, json
 from experiment import Experiment
+import statistics
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +30,9 @@ class LearnTable():
     def __init__(self, table_file_name):
 
         self.table_file_name = table_file_name
-        self.outcome_parameters = ['slope', 'slope_to_max', 'best_time','best_seq_pos','sum_cor_seq']
+        self.outcome_parameters = ['slope', 'slope_to_max', 'best_time','best_seq_pos','sum_cor_seq',
+            'q_real','q_fake_list', 'q_fake_list_mean', 'q_fake_list_std','phi_real', 'phi_real_slope', 'q_real_t', 'q_real_p']
+
         self.experiment_name_list = ["MST","SEQ","SRTT"]
         self.sequence_length_list = [5,8,10]
         self.df = pd.read_csv(self.table_file_name, sep = '|', engine= "python" )
@@ -39,25 +42,51 @@ class LearnTable():
 
     def fill_table(self):
         for idx in range(self.df.shape[0]):
-        #for idx in range(16,19):# self.df.shape[0]):
             vpn = int(self.df.loc[idx,'VPN'])
+            print(f"engaging table row number: {idx} with VPN = {vpn}")
+        #for idx in range(16,19):# self.df.shape[0]):
             for exp_name in self.experiment_name_list:
-                vpn_file_list = self.get_vpn_filenames(exp_name, vpn)
+                try:
+                    vpn_file_list = self.get_vpn_filenames(exp_name, vpn)
+                except:
+                    print(f"error in get_vpn_filenames {self.df.loc[idx,'Klarname']} in row {idx} ")
                 for file_idx, file in enumerate(vpn_file_list):
+                    print(f"estimating {exp_name} for subject {self.df.loc[idx,'Klarname']}")
                     if exp_name == "MST":
-                        subj_class = MST(fullfilename = file, sequence_length = 5)                    
+                        try:
+                            subj_class = MST(fullfilename = file, sequence_length = 5)                    
+                        except:
+                            print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
                     if exp_name == 'SEQ':
-                        subj_class = SEQ(fullfilename = file, sequence_length = 8)
+                        try:
+                            subj_class = SEQ(fullfilename = file, sequence_length = 8)
+                        except:
+                            print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
                     if exp_name == 'SRTT':
-                        subj_class = SRTT(fullfilename = file, sequence_length = 10)
-   
-                        
-                    subj_exp = Experiment(subj_class.experiment_name, vpn, subj_class.day, subj_class.sequence_length, is_load=False, df = subj_class.df)
-                    subj_exp.save()
-                    print(f"in ifll_table")
-                    self.add_experiment_to_table(subj_exp, idx)
-        
-        self.df.to_csv('.\\learn_table_output.csv', index = False, sep = '\t')
+                        try:
+                            subj_class = SRTT(fullfilename = file, sequence_length = 10)
+                        except:
+                            print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
+                    
+                    try:                        
+                        subj_exp = Experiment(subj_class.experiment_name, vpn, subj_class.day, subj_class.sequence_length, is_load=False, df = subj_class.df)
+                    except:
+                        print(f"error in experiment estimation {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name}")
+#                    try:
+                    subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=10)
+#                    except Exception as error:    
+#                        print(f"error in network estimation {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name} filename = {file}")
+#                        print(f"error = {repr(error)}")
+                    try:
+                        subj_exp.save()
+                    except:
+                        print(f"error in experiment saving {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name}")
+                    try:
+                        self.add_experiment_to_table(subj_exp, idx)
+                    except:
+                        print(f"subject {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name} could not be written correctly ")
+
+                self.df.to_csv('.\\learn_table_output.csv', index = False, sep = '\t')
 
 
     def add_experiment_to_table(self, subj_exp, row_index): 
@@ -78,31 +107,128 @@ class LearnTable():
     def get_parameter_from_experiment(self, exp, parameter):
         #['slope', 'slope_to_max', 'best_time','best_seq_pos','sum_cor_seq']
         if parameter == 'slope':
-            cor_seqtimesum_slope_lpn = exp.cor_seqtimesum_slope_lpn
-            #print(cor_seqtimesum_slope_lpn)
-            slope = cor_seqtimesum_slope_lpn[0][0]
+            try:
+                cor_seqtimesum_slope_lpn = exp.cor_seqtimesum_slope_lpn
+                #print(cor_seqtimesum_slope_lpn)
+                slope = cor_seqtimesum_slope_lpn[0][0]
+            except:
+                print(f"error in get_parameter_from_experiment with cor_seqtime_sum_slope_lpn = {exp.cor_seqtimesum_slope_lpn}")
+                #raise ValueError("bad value of cor_seqtimesum_slope_lpn")
+                raise ValueError("slope value error")
             return slope
             
         if parameter == 'slope_to_max':
-            slope = exp.cor_seqtimesum_to_max_slope_lpn[0][0]
+            try:
+                slope = exp.cor_seqtimesum_to_max_slope_lpn[0][0]
+            except:
+                print(f"error in get_parameter_from_experiment with exp.cor_seqtimesum_to_max_slope_lpn = {exp.cor_seqtimesum_to_max_slope_lpn}")
+                #raise ValueError("bad value of cor_seqtimesum_slope_lpn")
+                raise ValueError("slope_to_max value error")
             return slope
 
         if parameter == 'best_time':
-            return min(min(exp.cor_seqtimesum_lplblsn[0]))
+            try:
+                best_time = min(min(exp.cor_seqtimesum_lplblsn[0]))
+            except:
+                print(f"error in get_parameter_from_experiment with exp.cor_seqtimesum_lplblsn = {exp.cor_seqtimesum_lplblsn}")
+                raise ValueError("best_time value error")
+            return best_time
         
 
         if parameter == 'best_seq_pos':
-            minimum = 999999999999999
-            list2d = exp.cor_seqtimesum_lplblsn[0]
-            for i, list1d in enumerate(list2d):
-                for j, num in enumerate(list1d):
-                    if num and num<minimum:
-                        block_min, within_block_min, minimum = i, j, num
+            try:
+                minimum = 999999999999999
+                list2d = exp.cor_seqtimesum_lplblsn[0]
+                for i, list1d in enumerate(list2d):
+                    for j, num in enumerate(list1d):
+                        if num and num<minimum:
+                            block_min, within_block_min, minimum = i, j, num
+            except:
+                print(f"error in get_parameter_from_experiment with best_seq_pos and exp.cor_seqtimesum_lplblsn = {exp.cor_seqtimesum_lplblsn}")
+                raise ValueError("best_seq_pos value error")
+
             return block_min
             
         if parameter == 'sum_cor_seq':
-            return exp.cor_seqsum_lpn[0]
+            try:
+                sum_cor_seq = exp.cor_seqsum_lpn[0]
+            except:
+                print(f"error in get_parameter_from_experiment with sum_cor_seq and exp.cor_seqsum_lpn = {exp.cor_seqsum_lpn}")
+                raise ValueError("sum_cor_seq value error")
+            return sum_cor_seq
             
+
+        if parameter == 'q_real':
+            try:
+                q_real = exp.net.q_real
+            except:
+                print(f"error in get_parameter_from_experiment with q_real ")
+                raise ValueError("q_real value error")
+            return q_real
+                
+        if parameter == 'phi_real':
+            phi_real = str(exp.net.phi_real)
+            return phi_real
+        
+        if parameter == 'q_fake_list':
+            return str(exp.net.q_fake_list)
+        
+
+        if parameter == 'q_fake_list_mean':
+            return  sum(exp.net.q_fake_list)/len(exp.net.q_fake_list)
+        
+        if parameter == 'q_fake_list_std':
+            return  statistics.stdev(exp.net.q_fake_list)
+        
+        if parameter == 'phi_real_slope':
+            x = np.arange(len(exp.net.phi_real)-1)
+            y = exp.net.phi_real[1:]
+            phi_real_slope,b = np.polyfit(x, y, 1)
+            return phi_real_slope
+        
+        if parameter == 'q_real_t':
+            return exp.net.q_real_t
+
+        if parameter == 'q_real_p':
+            return exp.net.q_real_p
+
+        
+        
+        
+          #'phi_real':             self.phi_real,
+    #             'phi_real_slope':       phi_real_slope,
+    #             'q_real':               self.q_real,
+    #             'g_real':               tolist_ck(self.g_real),
+    #         self.q_real_t, 
+    # self.q_real_p 
+    # self.q_fake_list
+    # self.q_real)
+    #      'q_fake_list_mean': 
+    #     sum(self.q_fake_list)/len(self.q_fake_list),
+    # 
+        # phi_fake_list_arr = np.asarray(self.phi_fake_list)
+        # phi_fake_list_mean = np.nanmean(phi_fake_list_arr,axis=0)
+        # phi_fake_list_std = np.nanstd(phi_fake_list_arr,axis=0)
+        # x = np.arange(len(self.phi_real)-1)
+        # y = self.phi_real[1:]
+        # phi_real_slope,b = np.polyfit(x, y, 1)
+        # filename = 'net_results_x2.json'# + self.filename
+        # results = {
+        #     'input_file':           '04_2_SRTT_2020-02-06_12-17-15.txt',
+        #     'ipi':                  self.ipi.tolist(),
+        #     'date_of_analysis':     datetime.today().strftime('%Y-%m-%d'),
+        #     '':             self.phi_real,
+        #     'phi_real_slope':       phi_real_slope,
+        #     'q_real':               self.q_real,
+        #     'q_real_t':             self.q_real_t,
+        #     'q_real_p':             self.q_real_p,
+        #     'q_fake_list':          self.q_fake_list,
+        #     'q_fake_list_mean':     sum(self.q_fake_list)/len(self.q_fake_list),
+        #     'g_real':               self.tolist_ck(self.g_real),
+        #     'g_fake_list':          self.tolist_ck(self.g_fake_list), # arrays verschachtelt in einer Liste
+        #     'A':                    self.A.tolist()
+        # }
+
 
         # der speichername im Experiment setzt ich wie folgt zusammen
         # VPN_experiment_name_day_sequence_length
@@ -114,7 +240,7 @@ class LearnTable():
     def get_vpn_filenames(self, subdirectory, vpn):
         basepath = os.path.join(".\\Data_Rogens", subdirectory)
         filelist = os.listdir(basepath)
-        files = [os.path.join(basepath,file) for file in filelist if file.startswith(str(vpn))]
+        files = [os.path.join(basepath,file) for file in filelist if file.split('_')[0]==str(vpn)]
         return files 
 
     def create_all_columns(self):

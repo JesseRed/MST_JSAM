@@ -249,7 +249,7 @@ class Experiment:
     def add_network_class(self, coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= True, is_estimate_Q= False, num_random_Q=0):
         ipi_cor = exp_est.make2dlist_to_2darray(self.cor_ipi_lsln)
         self.net = Network(ipi_cor, coupling_parameter = coupling_parameter,  resolution_parameter = resolution_parameter,is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q=num_random_Q)
-        self.net.filename = self.fullfilename
+        self.net.filename = self.filename
 
     def save(self):
         """ how to save the experiment class?
@@ -291,12 +291,12 @@ if __name__ == "__main__":
         mstfile = "G:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
     if computername == "XenonBang":
         mstfile = "H:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
-    subj_class = MST(fullfilename = mstfile, sequence_length = 5, path_output = ".\\Data_python", _id = "no_id")
+    subj_class = MST(fullfilename = mstfile, sequence_length = 5) #, path_output = ".\\Data_python", _id = "no_id")
 
     print("MST ready")
     subj_exp = Experiment(subj_class.experiment_name, subj_class.vpn, subj_class.day, subj_class.sequence_length, is_load=False, df = subj_class.df)
     print(f"in main now subj_exp.add_network_class")
-    subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9, is_estimate_clustering= True, is_estimate_Q= True, num_random_Q=3)
+    subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9, is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=3)
     # with open('testpickle','rb') as fp:
     #     subj_exp = pickle.load(fp)
     print('now save')

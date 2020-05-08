@@ -103,9 +103,18 @@ class SEQ():
         #!________________________
         #! 02.05.2020 ich habe die Namensgebung in unity veraendert ... hier ggf. Anpassung ... auch wenn man mehr als 
         #! einen einstelligen Traingingstage hat ... am besten mit string.split('_') dann arbeiten 
-        self.day = int(self.filename.split('fertig')[0][-1])
+        #print(self.filename)
+        try:
+            self.day = int(self.filename.split('fertig')[0][-1])
+        except:
+            print(f"invalid file name for extracting the day with: {self.filename} ... error in SEQ.init")
+            raise ValueError("invalid Filename")
         #!________________________
-        self.vpn = int(self.filename.split('_')[0])
+        try:
+            self.vpn = int(self.filename.split('_')[0])
+        except:
+            print(f"invalid file name for extracting the VPN with: {self.filename} ... error in SEQ.init")
+            raise ValueError("invalid Filename")
         #!_________________________
         self.experiment_name = "SEQ"
         #print(self.df.head())
