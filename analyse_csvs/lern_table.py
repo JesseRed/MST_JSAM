@@ -16,6 +16,8 @@ import experiments_config #import estimate_Rogens
 import logging, json
 from experiment import Experiment
 import statistics
+import parallel_functions 
+import multiprocessing as mp
 
 logger = logging.getLogger(__name__)
 
@@ -37,56 +39,70 @@ class LearnTable():
         self.sequence_length_list = [5,8,10]
         self.df = pd.read_csv(self.table_file_name, sep = '|', engine= "python" )
         self.create_all_columns()
+        self.df.to_csv('.\\learn_table_output.csv', index = False, sep = '\t')
         self.fill_table()
-        print(self.df.head())
+        #print(self.df.head())
 
     def fill_table(self):
+        results = []
+        arg_list = []
         for idx in range(self.df.shape[0]):
             vpn = int(self.df.loc[idx,'VPN'])
             print(f"engaging table row number: {idx} with VPN = {vpn}")
-        #for idx in range(16,19):# self.df.shape[0]):
-            for exp_name in self.experiment_name_list:
-                try:
-                    vpn_file_list = self.get_vpn_filenames(exp_name, vpn)
-                except:
-                    print(f"error in get_vpn_filenames {self.df.loc[idx,'Klarname']} in row {idx} ")
-                for file_idx, file in enumerate(vpn_file_list):
-                    print(f"estimating {exp_name} for subject {self.df.loc[idx,'Klarname']}")
-                    if exp_name == "MST":
-                        try:
-                            subj_class = MST(fullfilename = file, sequence_length = 5)                    
-                        except:
-                            print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
-                    if exp_name == 'SEQ':
-                        try:
-                            subj_class = SEQ(fullfilename = file, sequence_length = 8)
-                        except:
-                            print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
-                    if exp_name == 'SRTT':
-                        try:
-                            subj_class = SRTT(fullfilename = file, sequence_length = 10)
-                        except:
-                            print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
-                    
-                    try:                        
-                        subj_exp = Experiment(subj_class.experiment_name, vpn, subj_class.day, subj_class.sequence_length, is_load=False, df = subj_class.df)
-                    except:
-                        print(f"error in experiment estimation {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name}")
-#                    try:
-                    subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=10)
-#                    except Exception as error:    
-#                        print(f"error in network estimation {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name} filename = {file}")
-#                        print(f"error = {repr(error)}")
-                    try:
-                        subj_exp.save()
-                    except:
-                        print(f"error in experiment saving {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name}")
-                    try:
-                        self.add_experiment_to_table(subj_exp, idx)
-                    except:
-                        print(f"subject {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name} could not be written correctly ")
+            
+            mydict = {'idx': idx, 'df': self.df, 'experiment_name_list': self.experiment_name_list, 'vpn': vpn}
+            arg_list.append(mydict)
 
-                self.df.to_csv('.\\learn_table_output.csv', index = False, sep = '\t')
+        pool = mp.Pool(8) #mp.cpu_count())
+
+        results = pool.map(parallel_functions.estimate_and_fill_one_row_in_learn_table, [args for args in arg_list])
+                
+        
+#         #for idx in range(16,19):# self.df.shape[0]):
+#             for exp_name in self.experiment_name_list:
+#                 try:
+#                     vpn_file_list = self.get_vpn_filenames(exp_name, vpn)
+#                 except:
+#                     print(f"error in get_vpn_filenames {self.df.loc[idx,'Klarname']} in row {idx} ")
+#                 for file_idx, file in enumerate(vpn_file_list):
+#                     print(f"estimating {exp_name} for subject {self.df.loc[idx,'Klarname']}")
+#                     if exp_name == "MST":
+#                         try:
+#                             subj_class = MST(fullfilename = file, sequence_length = 5)                    
+#                         except:
+#                             print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
+#                     if exp_name == 'SEQ':
+#                         try:
+#                             subj_class = SEQ(fullfilename = file, sequence_length = 8)
+#                         except:
+#                             print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
+#                     if exp_name == 'SRTT':
+#                         try:
+#                             subj_class = SRTT(fullfilename = file, sequence_length = 10)
+#                         except:
+#                             print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
+                    
+#                     try:                        
+#                         subj_exp = Experiment(subj_class.experiment_name, vpn, subj_class.day, subj_class.sequence_length, is_load=False, df = subj_class.df)
+#                     except:
+#                         print(f"error in experiment estimation {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name}")
+# #                    try:
+#                     subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=10)
+# #                    except Exception as error:    
+# #                        print(f"error in network estimation {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name} filename = {file}")
+# #                        print(f"error = {repr(error)}")
+#                     try:
+#                         subj_exp.save()
+#                     except:
+#                         print(f"error in experiment saving {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name}")
+#                     try:
+#                         self.add_experiment_to_table(subj_exp, idx)
+#                     except:
+#                         print(f"subject {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name} could not be written correctly ")
+
+
+        #self.df.to_csv('.\\learn_table_output_final.csv', index = False, sep = '\t')
+        print(results)
 
 
     def add_experiment_to_table(self, subj_exp, row_index): 
