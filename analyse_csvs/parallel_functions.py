@@ -53,8 +53,7 @@ def estimate_and_fill_one_row_in_learn_table(args_dict):
                 status_string = (f"error in experiment estimation {df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name}")
                 print(status_string)
 #                    try:
-            subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=10)
-#                    except Exception as error:    
+            subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=10)#                    except Exception as error:    
 #                        print(f"error in network estimation {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name} filename = {file}")
 #                        print(f"error = {repr(error)}")
             try:
@@ -67,9 +66,10 @@ def estimate_and_fill_one_row_in_learn_table(args_dict):
             save_counter = 0
             while is_not_saved:
                 try:
-                    cur_df = pd.read_csv('.\\learn_table_output.csv', sep = '\t', engine= "python" )
+                    cur_df = pd.read_csv('.\\learn_table_output.csv', sep = '\t', encoding='latin1' )
+                    print(cur_df.loc[15,'Klarname'])
                     cur_df = add_experiment_to_table(subj_exp, idx, cur_df)
-                    cur_df.to_csv('.\\learn_table_output.csv', index = False, sep = '\t')
+                    cur_df.to_csv('.\\learn_table_output.csv', index = False, sep = '\t', encoding='latin1')
                     is_not_saved = False
                 except Exception as error:
                     print('problem with saving ... try again')
@@ -108,7 +108,7 @@ def add_experiment_to_table(subj_exp, row_index, df):
     base_name = experiment_name + '_' + str(day) + '_' + str(sequence_length)
     for parameter in outcome_parameters:
         col_name = base_name + '_' + parameter
-        print(f"add to table {row_index}, {col_name}")
+        #print(f"add to table {row_index}, {col_name}")
         df.loc[row_index,col_name] = get_parameter_from_experiment(subj_exp, parameter)
     return df
 

@@ -37,9 +37,10 @@ class LearnTable():
 
         self.experiment_name_list = ["MST","SEQ","SRTT"]
         self.sequence_length_list = [5,8,10]
-        self.df = pd.read_csv(self.table_file_name, sep = '|', engine= "python" )
+
+        self.df = pd.read_csv(self.table_file_name, sep = '|', encoding='latin1' )
         self.create_all_columns()
-        self.df.to_csv('.\\learn_table_output.csv', index = False, sep = '\t')
+        self.df.to_csv('.\\learn_table_output.csv', index = False, sep = '\t',encoding='latin1')
         self.fill_table()
         #print(self.df.head())
 
@@ -53,7 +54,7 @@ class LearnTable():
             mydict = {'idx': idx, 'df': self.df, 'experiment_name_list': self.experiment_name_list, 'vpn': vpn}
             arg_list.append(mydict)
 
-        pool = mp.Pool(8) #mp.cpu_count())
+        pool = mp.Pool(10) #mp.cpu_count())
 
         results = pool.map(parallel_functions.estimate_and_fill_one_row_in_learn_table, [args for args in arg_list])
                 
