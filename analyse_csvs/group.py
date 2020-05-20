@@ -38,7 +38,7 @@ def get_and_save_data_for_one_subj(self, filename):
 class Group():
     def __init__(self, experiment_name = 'MST', path_inputfiles="./Data MST", filepattern="Tag1", 
         path_outputfiles = ".\\Data_python", _id = None, sequence_length=10, 
-        is_estimate_network = False, is_clustering = False, is_estimate_Q = True,
+        is_estimate_network = False, is_clustering = False, is_estimate_Q = False,
         num_random_Q = 10, coupling_parameter = 0.3, resolution_parameter = 0.9,
         is_multiprocessing = False, show_images = False, target_color = 8):
 
@@ -73,6 +73,7 @@ class Group():
                 file_list.append(os.path.join(self.path_inputfiles, file))
         return file_list
 
+       
     def get_data(self):
         """ get data from every mst.csv file
         """           

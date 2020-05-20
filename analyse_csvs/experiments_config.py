@@ -13,6 +13,43 @@ logging.basicConfig(level=log_level, filename='logfile.log',
     filemode='w')
 logger = logging.getLogger(__name__)
 
+
+def analyse_preestimated_Rogens():
+
+    path_outputfiles = ".\\Data_Rogens\\Results"
+    analysis = Group_analysis(path_outputfiles)
+
+    dicSEQ1 = {
+        "experiment_name"           :   "SEQ",
+        "path_inputfiles"           :   ".\\Experiment_data",
+        "filepattern"               :   "SEQ_1",
+        "vpns"                      :   [15, 16, 17, 18, 19, 20, 21, 22],
+        "day"                       :   1,
+        "path_outputfiles"          :   path_outputfiles,
+        "sequence_length"           :   8,
+        "paradigma"                 :   0,
+    }
+
+    
+    
+    dicSEQ2 = {
+        "experiment_name"           :   "SEQ",
+        "path_inputfiles"           :   ".\\Experiment_data",
+        "filepattern"               :   "SEQ_2",
+        "vpns"                      :   [15, 16, 17, 18, 19, 20, 21, 22],
+        "day"                       :   2,
+        "path_outputfiles"          :   path_outputfiles,
+        "sequence_length"           :   8,
+        "paradigma"                 :   0,
+    }
+
+    analysis.add_pre_estimated_group(dicSEQ1)
+    analysis.add_pre_estimated_group(dicSEQ2)
+    
+    analysis.make_statistic(paradigma = 0)
+
+     
+
 def estimate_Rogens():
     logger.info("Start...")
     
@@ -120,6 +157,13 @@ def perform(dic):
             is_clustering = dic["is_clustering"], is_multiprocessing = dic["is_multiprocessing"],
             show_images = dic["show_images"], target_color = dic["target_color"])
     
+def perform_with_preexisting_data(analysis, dic):    
+    """ es wird ein dictionary mit parametern uebergeben"""
+    
+    analysis.add_pre_estimated_group(experiment = dic["experiment_name"], 
+        path_inputfiles = dic["path_inputfiles"], filepattern=dic["filepattern"][1], 
+        path_outputfiles = dic["path_outputfiles"], sequence_length = dic["sequence_length"], 
+        target_color = dic["target_color"], vpns = dic["vpns"])
     # my_stat = Statistic(experiment=dic["experiment_name"], group_list=analysis.groups, data_path=dic["path_outputfiles", _ids=dic["_ids"])
     # keys = ["corrsq_slope", "abs_corr_seq", "pos_of_first_best_block", "pos_of_last_best_block"]
     # for key in keys:

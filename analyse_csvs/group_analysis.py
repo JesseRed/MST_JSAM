@@ -9,10 +9,13 @@ from group import Group
 from scipy import stats 
 from myplots import my_violinplot, set_axis_style
 from my_statistics import cohend
+from statistic_exp_ck import Statistic_Exp
 from statistic_ck import Statistic
 import experiments_config #import estimate_Rogens
 import logging 
+from  group_pooling import Group_pooling
 from lern_table import LearnTable
+
 logger = logging.getLogger(__name__)
 
 class Group_analysis():
@@ -38,6 +41,22 @@ class Group_analysis():
         self.groups.append(group)
 
 
+    def add_pre_estimated_group(self, dic):
+        
+        logger.info(f"adding additional groups for the analysis with preexisting data")
+        group = Group_pooling(experiment_name = dic["experiment_name"], path_inputfiles = dic["path_inputfiles"], filepattern= dic["filepattern"], 
+            path_outputfiles = dic["path_outputfiles"], sequence_length = dic["sequence_length"], paradigma = dic["paradigma"],
+            vpns = dic["vpns"], day = dic["day"] )
+
+        group.load_data()
+
+        #group.save_data()
+        self.groups.append(group)
+
+    def make_statistic(self, dic):
+        my_stat = Statistic_Exp(experiment_name = dic["experiment_name"], groups = self.groups, 
+        paradigma = dic["paradigma"], key = "Cor_seqsum_lpn", level = 1, is_independet = False)
+        
 
     def plot(self):
         # https://matplotlib.org/gallery/statistics/violinplot.html#sphx-glr-gallery-statistics-violinplot-py
@@ -53,7 +72,10 @@ class Group_analysis():
 
         
 if __name__ == '__main__':
-    experiments_config.estimate_Rogens()
+    #experiments_config.estimate_Rogens()
+    experiments_config.analyse_preestimated_Rogens()
+    
+
 #     is_perform_analysis = True
 #     is_estimate_network = False
 #     is_perform_statistic = False
@@ -162,6 +184,8 @@ if __name__ == '__main__':
         Gesamtzahl korrekter Sequenzen
         Veraenderung der Outcomeparameter von Tag_1 zu Tag_2
         Fehlerhafte Sequenzen pro Block
+        Korrekte Sequenzen pro Block
+        
 
     Ziele:
         - Wie gut kann ich Lernerfolg mit unterschiedlichen Lernspielen testen

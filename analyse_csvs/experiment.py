@@ -30,15 +30,15 @@ class Experiment:
     # 2. Listenebene Sequenz []
     # 3. Ebene dann die eigentliche Zahl
 
-    #! number:  z.B. sequence length
+    #! number: n z.B. sequence length
         8  # python integer
         
-    #! list of numbers:  z.B. cor_seq_abs
+    #! list of numbers: ln  z.B. cor_seq_abs
         [20, 12, 8] # list python integers (mostly list across paradigms)        
 
-    #! list of lists of numbers:  z.B. cor_seq_per_block
-        [                                # list of ...  (mostly paradigms)
-            [6 17 18 19 20 22 22 24 25] # Paradigma 1 | list number of correct sequences per block 
+    #! list of lists of numbers: lln  z.B. cor_seq_per_block
+        [                               # list of ...  (mostly paradigms)
+            [6 17 18 19 20 22 22 24 25],# Paradigma 1 | list number of correct sequences per block 
             [9 10 12 13 20 20 22 24 27] # Paradigma 2 | list number of correct sequences per block 
         ]
 
@@ -61,7 +61,7 @@ class Experiment:
         n = number
         p = paradigma
         s = sequenz
-        p = block
+        b = block
         Bsp.: lplsln  ... liste der paradimgen mit listen der seqenzen mit listen von numbers
         Bsp.: lplblsln waere eine liste ueber paradigmen liste ueber bloecke liste uever sequenzen liste von numbers 
         Bsp.: lplbn ... liste von paradigmen von liste von bloecken mit einer nummer pro block (liste von listen von nummern)
@@ -140,7 +140,7 @@ class Experiment:
         self.filename = str(self.vpn) + '_' + self.experiment_name + '_' +  str(self.day) + '_' + str(self.sequence_length)
         # das Dataframe mit den standardisierten DAten eines Experimentes
         if is_load:
-            self.load()
+            pass 
         else:
             if isinstance(df, str):
                 if df=='leer':
@@ -212,6 +212,7 @@ class Experiment:
         self.all_seqtimesum_lplblsn = d #? check
         
         a, b, c, d = exp_est.estimate_seqsum(self.cor_ipi_lplblsln)
+             
         self.cor_seqsum_lpn = a
         self.cor_seqsum_lplbn = b
         self.cor_seqtimesum_lplsn = c
@@ -258,11 +259,11 @@ class Experiment:
         dirname = os.path.join(os.path.dirname(__file__),'Experimet_data')
         with open(os.path.join(dirname,self.filename),'wb') as fp:
             pickle.dump(self, fp)
-    
+
     def load(self):
         dirname = os.path.join(os.path.dirname(__file__),'Experimet_data')
         with open(os.path.join(dirname,self.filename),'rb') as fp:
-            self = pickle.load(fp)
+            return pickle.load(fp)
 
 
 
@@ -271,6 +272,7 @@ class Experiment:
         string = "Experiment Name: " + self.experiment_name 
         string = string + "; VPN = " + str(self.vpn)
         string = string + "; Day = " + str(self.day)
+        string = string + str(self.cor_seqsum_lpn)
         pd.set_option('display.max_rows', 2000)
         pd.set_option('display.max_columns', 2000)
         #self.df_debug.to_csv("log_df_debug.log",sep='\t')
