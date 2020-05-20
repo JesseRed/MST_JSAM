@@ -46,7 +46,23 @@ def analyse_preestimated_Rogens():
     analysis.add_pre_estimated_group(dicSEQ1)
     analysis.add_pre_estimated_group(dicSEQ2)
     
-    analysis.make_statistic(paradigma = 0)
+    dicStat1 = {
+        "experiment_name"           : "SEQ",
+        "paradigma"                 : 0,
+        "key"                       : "cor_seqsum_lpn",
+        "level"                     : "pn",
+        "is_independent"            : False,
+    }
+    dicStat2 = {
+        "experiment_name"           : "SEQ",
+        "paradigma"                 : 0,
+        "key"                       : "cor_seqtimesum_lplsn",
+        "level"                     : "psn",
+        "is_independent"            : False,
+    }
+
+    analysis.make_statistic(dicStat1)
+    analysis.make_statistic(dicStat2)
 
      
 

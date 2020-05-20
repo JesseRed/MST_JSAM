@@ -54,8 +54,8 @@ class Group_analysis():
         self.groups.append(group)
 
     def make_statistic(self, dic):
-        my_stat = Statistic_Exp(experiment_name = dic["experiment_name"], groups = self.groups, 
-        paradigma = dic["paradigma"], key = "Cor_seqsum_lpn", level = 1, is_independet = False)
+        my_stat = Statistic_Exp(groups = self.groups, experiment_name = dic["experiment_name"],  
+        paradigma = dic["paradigma"], key = dic["key"], level = dic["level"], is_independent = dic["is_independent"])
         
 
     def plot(self):

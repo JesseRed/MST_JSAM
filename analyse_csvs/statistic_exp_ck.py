@@ -12,20 +12,51 @@ import statistics
 import matplotlib.pyplot as plt
 
 class Statistic_Exp():
-    def __init__(self, experiment_name = 'MST', groups = [], key = "cor_seqsum_lpn", level = 1, paradigma = 0, is_independent = False):
+    def __init__(self, experiment_name = 'MST', groups = [], key = "cor_seqsum_lpn", level = "pn", paradigma = 0, is_independent = False):
         self.groups = groups
         self.experiment_name = experiment_name
         self.key = key
-        self.is_independet = is_independent
+        self.is_independent = is_independent
         self.paradigma = paradigma
         self.level = level
-        self.test_group_differences_ttest(self, key, is_independent = False)
+        self.test_group_differences_ttest(key, self.is_independent, self.paradigma, self.level)
 
-    def test_group_differences_ttest(self, key, is_independent=True):
-        d = self.get_target_values_by_key(key)
-        if len(d)==2:
-            self.test_group_differences_two_groups(key, d, is_independent=is_independent)
+    def test_group_differences_ttest(self, key, is_independent, paradigma, level):
+        # ich laufe ueber die Buchstaben der levelbeschreibung und ziehe die richtigen Daten heraus
+        values = self.get_target_values_by_key(key)
+        for i in range(len(level)):
+            if level[i]== 'p':
+                values = self.filter_target_values_by_paradigma(values, paradigma)
+            if level[i]=='n':
+                self.test_group_differences_two_groups(key, values, is_independent=is_independent)
+
+#        d = self.get_target_values_by_key_and_level(key, paradigma, level)
+ #       if len(d)==2:
+            
     
+
+    def get_target_values_by_key(self, key):
+        """ get the target attributes out of the experiment objects 
+            and put these into a list for each group 
+        """
+        target_val = []
+        for group in self.groups:
+            subject_list = []
+            for subj_exp in group.subj_exp_list:
+                exp_value = getattr(subj_exp, key)
+                subject_list.append(exp_value)
+            target_val.append(subject_list)
+        return target_val
+
+    def filter_target_values_by_paradigma(self,values, paradigma):
+        new_val = []
+        for attribute_list in values:
+            new_attribute_list = []
+            for attribute in attribute_list:
+                new_attribute_list.append(attribute[paradigma])
+            new_val.append(new_attribute_list)
+        return new_val
+
     def test_group_differences_two_groups(self, key, data, is_independent=True):
         if is_independent:
             t, p = stats.ttest_ind(data[0], data[1])
@@ -39,7 +70,8 @@ class Statistic_Exp():
         std.append(statistics.stdev(data[1]))
         self.print_pt_2g(key=key, t=t,p=p, mean = mean, std = std)
 
-    def get_target_values_by_key(self, key):
+
+    def get_target_values_by_key_level_1(self, key, paradigma):
         # extracts from the dictionaries of all groups the value
         # with key = key
         # returns a list with groups, the group list consists of a list with the key elements
@@ -47,7 +79,9 @@ class Statistic_Exp():
         for group in self.groups:
             subject_list = []
             for subj_exp in group.subj_exp_list:
-                subject_list.append(getattr(subj_exp, key))
+                exp_value = getattr(subj_exp, key)[paradigma]
+                print(exp_value)
+                subject_list.append(exp_value)
             target_val.append(subject_list)
         return target_val
 
