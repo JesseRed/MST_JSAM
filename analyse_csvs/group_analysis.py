@@ -64,7 +64,7 @@ class Group_analysis():
         #print(self.mst_g1.corrsq) # list of lists of Probanden [correcte SEqenzen pro block] N x Bloecke
         #print(self.mst_g2.corrsq)
         my_violinplot(self.mst_g1.corrsq, self.mst_g2.corrsq)
-        my_forestplot(self.mst_g1.corrsq, self.mst_g2.corrsq)
+        #my_forestplot(self.mst_g1.corrsq, self.mst_g2.corrsq)
         
 
 
