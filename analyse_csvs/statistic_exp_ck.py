@@ -57,18 +57,27 @@ class Statistic_Exp():
             new_val.append(new_attribute_list)
         return new_val
 
+
+    def list_of_list_to_list(self, input_list):
+        # if input_list is a list of list then it will be transformed to a list
+        # by averaging the second dimension
+        if any(isinstance(el, list) for el in input_list):
+            input_list = [statistics.mean(f) for f in input_list]
+        return input_list
+
     def test_group_differences_two_groups(self, key, data, is_independent=True):
+        # reduce a list of lists to a list by averaging
+        G1 = self.list_of_list_to_list(data[0])
+        G2 = self.list_of_list_to_list(data[1])
+            
         if is_independent:
-            t, p = stats.ttest_ind(data[0], data[1])
+            t, p = stats.ttest_ind(G1, G2)
         else:
-            t, p = stats.ttest_rel(data[0], data[1])
-        mean = []
-        mean.append(sum(data[0])/len(data[0]))
-        mean.append(sum(data[1])/len(data[1]))
-        std = []
-        std.append(statistics.stdev(data[0]))
-        std.append(statistics.stdev(data[1]))
-        self.print_pt_2g(key=key, t=t,p=p, mean = mean, std = std)
+            t, p = stats.ttest_rel(G1, G2)
+        m = [statistics.mean(G1), statistics.mean(G2)]
+        std = [statistics.stdev(G1), statistics.stdev(G2)]
+
+        self.print_pt_2g(key=key, t=t,p=p, mymean = m, std=std)
 
 
     def get_target_values_by_key_level_1(self, key, paradigma):
@@ -86,8 +95,10 @@ class Statistic_Exp():
         return target_val
 
 
-    def print_pt_2g(self, key, t, p, mean = 0, std = 0):
-        print(f"{key} p = {p:.7}  with t = {t:.3}  (mean = {mean[0]:.3} +- {std[0]:.4}  vs. {mean[1]:.3} +- {std[1]:.4}")
+    def print_pt_2g(self, key, t, p, mymean=0, std=0):
+        mymean = [float(m) for m in mymean]
+        std = [float(s) for s in std]
+        print(f"{key} p = {p:.7}  with t = {t:.3}  (mean = {mymean[0]:.3} +- {std[0]:.4}  vs. {mymean[1]:.3} +- {std[1]:.4}")
 
     def show_group_differences(self, key):
         data = self.get_target_values_by_key(key)

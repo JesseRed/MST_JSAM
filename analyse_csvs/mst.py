@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 
 class MST():
     def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 5, path_output = ".\\Data_python", _id = "nox_id"):
+        print(f"init of MST with: fillfilename = {fullfilename}, sequence_length = {sequence_length}, path_output = {path_output}, _id = {_id}")
         self.fullfilename = fullfilename
         base=os.path.basename(self.fullfilename)
         self.filename = os.path.splitext(base)[0]

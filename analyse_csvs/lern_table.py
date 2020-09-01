@@ -12,7 +12,7 @@ from scipy import stats
 from myplots import my_violinplot, set_axis_style
 from my_statistics import cohend
 from statistic_ck import Statistic
-import experiments_config #import estimate_Rogens
+#import experiments_config #import estimate_Rogens
 import logging, json
 from experiment import Experiment
 import statistics
@@ -20,6 +20,7 @@ import parallel_functions
 import multiprocessing as mp
 
 logger = logging.getLogger(__name__)
+
 
 class LearnTable():
     ''' Verwaltung der Table fuer die Doktoranden 
@@ -33,10 +34,10 @@ class LearnTable():
 
         self.table_file_name = table_file_name
         self.outcome_parameters = ['slope', 'slope_to_max', 'best_time','best_seq_pos','sum_cor_seq',
-            'q_real','q_fake_list', 'q_fake_list_mean', 'q_fake_list_std','phi_real', 'phi_real_slope', 'q_real_t', 'q_real_p']
+                                   'q_real','q_fake_list', 'q_fake_list_mean', 'q_fake_list_std','phi_real', 'phi_real_slope', 'q_real_t', 'q_real_p']
 
-        self.experiment_name_list = ["MST","SEQ","SRTT"]
-        self.sequence_length_list = [5,8,10]
+        self.experiment_name_list = ["MST", "SEQ", "SRTT"]
+        self.sequence_length_list = [5, 8, 10]
 
         self.df = pd.read_csv(self.table_file_name, sep = '|', encoding='latin1' )
         self.create_all_columns()

@@ -126,7 +126,7 @@ class Experiment:
         """
 
 
-    def __init__(self, experiment_name, vpn, day, sequence_length, is_load = False, df = "leer", sep = '\t'):
+    def __init__(self, experiment_name, vpn, day, sequence_length, root_dir, is_load=False, df="leer", sep='\t'):
         """ idee an der init ist, dass nur ein Experimentname, ein vpn, ein Tag und sequenzlaenge uebergeben werden muesse
             wenn es hier bereits ein abgespeichertes experiment gibt dann wird das geladen
             es kann aber auch neu berechnet werden
@@ -135,9 +135,18 @@ class Experiment:
         """
         self.experiment_name = experiment_name  # Name des Experiments (MST, SEQ, SRTT)
         self.vpn = vpn  # die Versuchspersonennummer
-        self.day = day # DER Trainingstag
+        self.day = day  # DER Trainingstag
         self.sequence_length = sequence_length
         self.filename = str(self.vpn) + '_' + self.experiment_name + '_' +  str(self.day) + '_' + str(self.sequence_length)
+
+        # the root dir is the dir where the estimations are rooted, 
+        # in this dir there will an Experiment_data dir created
+        # in this Experiment_data dir all the experiment files will be saved and loaded
+        self.root_dir = root_dir
+        self.data_dir =  os.path.join(self.root_dir,'Experiment_data')       
+        if not os.path.exists(self.data_dir):
+            os.makedirs(self.data_dir)
+            
         # das Dataframe mit den standardisierten DAten eines Experimentes
         if is_load:
             pass 
@@ -250,23 +259,20 @@ class Experiment:
     def add_network_class(self, coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= True, is_estimate_Q= False, num_random_Q=0):
         ipi_cor = exp_est.make2dlist_to_2darray(self.cor_ipi_lsln)
         self.net = Network(ipi_cor, coupling_parameter = coupling_parameter,  resolution_parameter = resolution_parameter,is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q=num_random_Q)
-        self.net.filename = self.filename
+        #self.net.filename = self.filename
 
     def save(self):
         """ how to save the experiment class?
         """
-        #path = 
-        dirname = os.path.join(os.path.dirname(__file__),'Experimet_data')
-        with open(os.path.join(dirname,self.filename),'wb') as fp:
+        #dirname = os.path.join(os.path.dirname(__file__),'Experiment_data')
+        #dirname = os.path.join(self.root_dir,'Experiment_data')
+        with open(os.path.join(self.data_dir, self.filename),'wb') as fp:
             pickle.dump(self, fp)
 
     def load(self):
-        dirname = os.path.join(os.path.dirname(__file__),'Experimet_data')
-        with open(os.path.join(dirname,self.filename),'rb') as fp:
+        #dirname = os.path.join(os.path.dirname(__file__),'Experiment_data')
+        with open(os.path.join(self.data_dir, self.filename),'rb') as fp:
             return pickle.load(fp)
-
-
-
 
     def __str__(self):
         string = "Experiment Name: " + self.experiment_name 
