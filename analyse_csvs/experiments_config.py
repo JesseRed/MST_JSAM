@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 def analyse_preestimated_Rogens():
 
-    path_outputfiles = ".\\Data_Rogens\\Results"
+    path_outputfiles = ".\\Data_Rogens\\Results2"
     analysis = Group_analysis(path_outputfiles)
 
     dicSEQ1 = {
@@ -89,7 +89,7 @@ def estimate_Rogens():
         "filepattern"               :   ["REST1", "REST2"],
         "_ids"                      :   ["MST_G1", "MST_G2"],
         "sequence_length"           :   10,
-        "path_outputfiles"          :   ".\\Data_Rogens\\Results",
+        "path_outputfiles"          :   ".\\Data_Rogens\\Results2",
         "is_multiprocessing"        :   False,
         "show_images"               :   False,
         "target_color"              :   0,
@@ -113,7 +113,7 @@ def estimate_Rogens():
         "filepattern"               :   ["FRA1", "FRA2"],
         "_ids"                      :   ["SEQ8_G1", "SEQ8_G2"],
         "sequence_length"           :   8,
-        "path_outputfiles"          :   ".\\Data_Rogens\\Results",
+        "path_outputfiles"          :   ".\\Data_Rogens\\Results2",
         "is_multiprocessing"        :   False,
         "show_images"               :   False,
         "target_color"              :   8,
@@ -138,7 +138,7 @@ def estimate_Rogens():
         "filepattern"               :   ["SRTT1", "SRTT2"],
         "_ids"                      :   ["SRTT_G1", "SRTT_G2"],
         "sequence_length"           :   12,
-        "path_outputfiles"          :   ".\\Data_Rogens\\Results",
+        "path_outputfiles"          :   ".\\Data_Rogens\\Results2",
         "is_multiprocessing"        :   False,
         "show_images"               :   False,
         "target_color"              :   0,

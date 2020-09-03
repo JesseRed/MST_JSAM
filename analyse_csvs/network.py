@@ -57,7 +57,7 @@ class Network():
             self.clustering()
         
         if self.is_estimate_Q:
-            g_real,q_real = self.estimate_chunks(is_random = False)
+            g_real, q_real = self.estimate_chunks(is_random = False)
             self.phi_real = self.estimate_chunk_magnitudes(g_real)
             if self.num_random_Q>0:
                 self.test_chunking_against_random(rand_iterations=self.num_random_Q)
@@ -71,7 +71,7 @@ class Network():
             then normalizing as suggested by Wymbs 2013 (deleting trails with std>3)
         '''
         # umwandlung in np.ndarray fals als liste uebergeben
-        ipi_arr = (ipi if isinstance(ipi,np.ndarray) else self.convert_to_array2D(ipi))
+        ipi_arr = (ipi if isinstance(ipi, np.ndarray) else self.convert_to_array2D(ipi))
         
         # logger.info(self.ipi_arr.shape)
         m, std = self.get_ipi_mean_arr(ipi_arr)

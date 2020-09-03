@@ -18,6 +18,7 @@ from experiment import Experiment
 import statistics
 import parallel_functions 
 import multiprocessing as mp
+import pickle
 
 logger = logging.getLogger(__name__)
 
@@ -30,93 +31,104 @@ class LearnTable():
 
     ''' 
     
-    def __init__(self, table_file_name):
-
+    def __init__(self, table_file_name, sep = '|'):
+ 
         self.table_file_name = table_file_name
-        self.outcome_parameters = ['slope', 'slope_to_max', 'best_time','best_seq_pos','sum_cor_seq',
-                                   'q_real','q_fake_list', 'q_fake_list_mean', 'q_fake_list_std','phi_real', 'phi_real_slope', 'q_real_t', 'q_real_p']
-
-        self.experiment_name_list = ["MST", "SEQ", "SRTT"]
-        self.sequence_length_list = [5, 8, 10]
-
-        self.df = pd.read_csv(self.table_file_name, sep = '|', encoding='latin1' )
-        self.create_all_columns()
-        self.df.to_csv('.\\learn_table_output.csv', index = False, sep = '\t',encoding='latin1')
-        self.fill_table()
-        #print(self.df.head())
-
-    def fill_table(self):
-        results = []
-        arg_list = []
-        for idx in range(self.df.shape[0]):
-            vpn = int(self.df.loc[idx,'VPN'])
-            print(f"engaging table row number: {idx} with VPN = {vpn}")
-            
-            mydict = {'idx': idx, 'df': self.df, 'experiment_name_list': self.experiment_name_list, 'vpn': vpn}
-            arg_list.append(mydict)
-
-        pool = mp.Pool(10) #mp.cpu_count())
-
-        results = pool.map(parallel_functions.estimate_and_fill_one_row_in_learn_table, [args for args in arg_list])
-                
+        # self.outcome_parameters = ['slope', 'slope_to_max', 'best_time','best_seq_pos','sum_cor_seq',
+        #                             'q_real','q_fake_list', 'q_fake_list_mean', 'q_fake_list_std','phi_real', 'phi_real_slope', 'q_real_t', 'q_real_p']
+        # wenn an dem Parameter das Wort "PROBLOCK" steht dann sollen die Werte fuer jeden Block getrennt ausgegeben werden 
+        self.outcome_parameters = ['slope', 'slope_to_max', 'best_time','best_seq_pos','sum_cor_seq']
+        self.outcome_parameters_PROBLOCK = ['all_seqsum_lplbn', 'cor_seqsum_lplbn', 'err_seqsum_lplbn'] #, 'all_ipi_lblsln', 'cor_ipi_lblsln', 'err_ipi_lblsln']
+        # self.experiment_name_list = experiment_name_list  # ["MST", "SEQ", "SRTT"]
         
-#         #for idx in range(16,19):# self.df.shape[0]):
-#             for exp_name in self.experiment_name_list:
-#                 try:
-#                     vpn_file_list = self.get_vpn_filenames(exp_name, vpn)
-#                 except:
-#                     print(f"error in get_vpn_filenames {self.df.loc[idx,'Klarname']} in row {idx} ")
-#                 for file_idx, file in enumerate(vpn_file_list):
-#                     print(f"estimating {exp_name} for subject {self.df.loc[idx,'Klarname']}")
-#                     if exp_name == "MST":
-#                         try:
-#                             subj_class = MST(fullfilename = file, sequence_length = 5)                    
-#                         except:
-#                             print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
-#                     if exp_name == 'SEQ':
-#                         try:
-#                             subj_class = SEQ(fullfilename = file, sequence_length = 8)
-#                         except:
-#                             print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
-#                     if exp_name == 'SRTT':
-#                         try:
-#                             subj_class = SRTT(fullfilename = file, sequence_length = 10)
-#                         except:
-#                             print(f"error in MST preparation of Subject {self.df.loc[idx,'Klarname']} in row {idx} ")
-                    
-#                     try:                        
-#                         subj_exp = Experiment(subj_class.experiment_name, vpn, subj_class.day, subj_class.sequence_length, is_load=False, df = subj_class.df)
-#                     except:
-#                         print(f"error in experiment estimation {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name}")
-# #                    try:
-#                     subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=10)
-# #                    except Exception as error:    
-# #                        print(f"error in network estimation {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name} filename = {file}")
-# #                        print(f"error = {repr(error)}")
-#                     try:
-#                         subj_exp.save()
-#                     except:
-#                         print(f"error in experiment saving {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name}")
-#                     try:
-#                         self.add_experiment_to_table(subj_exp, idx)
-#                     except:
-#                         print(f"subject {self.df.loc[idx,'Klarname']} in row {idx} and experiment {exp_name} could not be written correctly ")
+        self.sep = sep
+        self.table_file_name_output = os.path.splitext(self.table_file_name)[0] + "_output.csv"
+        self.df = pd.read_csv(self.table_file_name, sep = self.sep, encoding='latin1' )
+        
+    def add_estimated_results_to_learn_table(self,
+                                             results_directory = ".//Results3//Estimated_results",
+                                             experiment_name_list = ["MST_1", "MST_2", "SEQ_1", "SEQ_2", "SRTT_1", "SRTT_2"]
+                                            ):
+        print(f"starting add_estimated_results_to_learn_table with parameter: ")
+        print(f"results_directory = {results_directory}")
+        print(f"experiment_name_list = {experiment_name_list}")
+        self.results_directory = results_directory
+        self.experiment_name_list = experiment_name_list
+
+        self.create_all_columns()
+        # get the filelist
+        filelist =  [file for file in os.listdir(results_directory) if (any(list_elem in file for list_elem in self.experiment_name_list ))]
+        # itereate through the table        
+        for row_index in range(self.df.shape[0]):
+            vpn = int(self.df.loc[row_index,'VPN'])
+            print(f"engaging table row number: {row_index} with VPN = {vpn}")
+
+            subj_file_list = [f for f in filelist if (f.partition("_")[0]==(str(vpn)))]
+            print(f"vpn = {str(vpn)} ... files: {subj_file_list}")
+            for subj_file in subj_file_list:
+                # lade das experiment
+                with open(os.path.join(self.results_directory, subj_file),'rb') as fp:
+                    subj_exp = pickle.load(fp)
+                # das column prefix ergibt sich aus der experiment_name_list die aufschluesselt
+                # ob z.B. bestimmte unterschiedliche Paradigmen dennoch in einer Spalte zusammengefasst werden sollen
+                column_prefixes = [prefix for prefix in self.experiment_name_list if (prefix in subj_file)]
+                if not(len(column_prefixes)==1):
+                    print(f"problem with naming convention ... experiment_name_list not unambiguous {self.experiment_name_list} vs. {subj_file} ({column_prefixes})")
+                else:
+                    column_prefix = column_prefixes[0]
+                self.add_experiment_to_table(subj_exp, row_index, column_prefix)
+        self.df.to_csv(self.table_file_name_output, index = False, sep = self.sep, encoding='latin1')
+        
+        #self.fill_table_from_result_files()
 
 
-        #self.df.to_csv('.\\learn_table_output_final.csv', index = False, sep = '\t')
-        print(results)
+    def create_all_columns(self):
+        pass
+        # for seq_length, exp in zip(self.sequence_length_list, self.experiment_name_list):
+        #     for day in ['1','2']:
+        #         base_name = exp + '_' + str(day) + '_' + str(seq_length)
+        #         for parameter in self.outcome_parameters:
+        #             col_name = base_name + '_' + parameter
+        #             if not col_name in self.df:
+        #                 self.df[col_name] = ''
 
 
-    def add_experiment_to_table(self, subj_exp, row_index): 
-        experiment_name = subj_exp.experiment_name
-        vpn = subj_exp.vpn
-        day = subj_exp.day
-        sequence_length = subj_exp.sequence_length
-        #self.test_that_columns_exist(experiment_name,vpn,day,sequence_length)
-        base_name = experiment_name + '_' + str(day) + '_' + str(sequence_length)
+    def add_experiment_to_table(self, subj_exp, row_index, column_prefix): 
+        # experiment_name = subj_exp.experiment_name
+        # vpn = subj_exp.vpn
+        # day = subj_exp.day
+        # sequence_length = subj_exp.sequence_length
+        # #self.test_that_columns_exist(experiment_name,vpn,day,sequence_length)
+        # base_name = experiment_name + '_' + str(day) + '_' + str(sequence_length)
+        base_name = column_prefix
         for parameter in self.outcome_parameters:
             col_name = base_name + '_' + parameter
             self.df.loc[row_index,col_name] = self.get_parameter_from_experiment(subj_exp, parameter)
+
+        for parameter in self.outcome_parameters_PROBLOCK:
+            # parameter muessen echte Parameter des experiment files sein
+            #self.outcome_parameters_PROBLOCK = ['all_seqsum_lplbn', 'cor_seqsum_lplbn', 'err_seqsum_lplbn', ]
+            att = getattr(subj_exp, parameter)
+            if '_lplbn' in parameter:
+                num_paradigmen = len(att)
+                for paradigm_idx in range(num_paradigmen):
+                    number_of_blocks = len(att[paradigm_idx])
+                    for block_idx in range(number_of_blocks):
+                        col_name = base_name + '_' + parameter + '_Paradigma' + str(paradigm_idx+1) + '_Block' + str(block_idx+1)
+                        self.df.loc[row_index, col_name] = att[paradigm_idx][block_idx]
+            if 'ipi_lblsln' in parameter:
+                print('in')
+                number_of_blocks = len(att)
+                for block_idx in range(number_of_blocks):
+                    col_name = base_name + '_' + parameter[0:3] + "Tastendruecke" + '_Block' + str(block_idx+1)
+                    druecker_pro_block = 0
+                    for num_seq in range(len(att[block_idx])):
+                        druecker_pro_block += len(att[block_idx][num_seq])
+#                        for num_n in range(len(att[block_idx][num_seq])):
+#                            druecker_pro_block += 1
+                    self.df.loc[row_index, col_name] = druecker_pro_block
+                    print(f"druecker pro block = {druecker_pro_block}")
+
 
                 
 
@@ -124,6 +136,7 @@ class LearnTable():
 
     def get_parameter_from_experiment(self, exp, parameter):
         #['slope', 'slope_to_max', 'best_time','best_seq_pos','sum_cor_seq']
+
         if parameter == 'slope':
             try:
                 cor_seqtimesum_slope_lpn = exp.cor_seqtimesum_slope_lpn
@@ -261,16 +274,6 @@ class LearnTable():
         files = [os.path.join(basepath,file) for file in filelist if file.split('_')[0]==str(vpn)]
         return files 
 
-    def create_all_columns(self):
-        
-        for seq_length, exp in zip(self.sequence_length_list, self.experiment_name_list):
-            for day in ['1','2']:
-                base_name = exp + '_' + str(day) + '_' + str(seq_length)
-                for parameter in self.outcome_parameters:
-                    col_name = base_name + '_' + parameter
-                    if not col_name in self.df:
-                        self.df[col_name] = ''
-
     def test_that_columns_exist(self, experiment_name,vpn,day,sequence_length):
         base_name = experiment_name + '_' + str(day) + '_' + str(sequence_length)
 
@@ -316,11 +319,43 @@ class LearnTable():
         rownum = self.df.loc[self.df['VPN']==vpn].iloc[0,0]
         return (experiment, group, rownum)
 
-        
+
+    def fill_table_from_result_files(self):
+        results = []
+        arg_list = []
+        for idx in range(self.df.shape[0]):
+            vpn = int(self.df.loc[idx,'VPN'])
+            print(f"engaging table row number: {idx} with VPN = {vpn}")
+            
+            mydict = {'idx': idx, 'df': self.df, 'experiment_name_list': self.experiment_name_list, 'vpn': vpn}
+            arg_list.append(mydict)
+
+        pool = mp.Pool(10) #mp.cpu_count())
+
+        results = pool.map(parallel_functions.estimate_and_fill_one_row_in_learn_table, [args for args in arg_list])
+        print(results)
+
+    def fill_table(self):
+        results = []
+        arg_list = []
+        for idx in range(self.df.shape[0]):
+            vpn = int(self.df.loc[idx,'VPN'])
+            print(f"engaging table row number: {idx} with VPN = {vpn}")
+            
+            mydict = {'idx': idx, 'df': self.df, 'experiment_name_list': self.experiment_name_list, 'vpn': vpn}
+            arg_list.append(mydict)
+
+        pool = mp.Pool(10) #mp.cpu_count())
+
+        results = pool.map(parallel_functions.estimate_and_fill_one_row_in_learn_table, [args for args in arg_list])
+        print(results)
+
 
 
         
 if __name__ == '__main__':
     filename = "H:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\Lernspiel_Auswertung_2020b.csv"
+    filename = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\Lernspiel_Auswertung_2020b.csv"
     table = LearnTable(filename)
+    table.add_estimated_results_to_learn_table()
     print(table.df)

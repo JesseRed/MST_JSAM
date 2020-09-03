@@ -115,6 +115,7 @@ class SEQ():
         except:
             print(f"invalid file name for extracting the VPN with: {self.filename} ... error in SEQ.init")
             raise ValueError("invalid Filename")
+        self.paradigma = 0  # aktuell gibt es noch keine verschiedenen Paradigmen im SEQ Task
         #!_________________________
         self.experiment_name = "SEQ"
         #print(self.df.head())

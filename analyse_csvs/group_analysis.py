@@ -55,6 +55,7 @@ class Group_analysis():
         group.get_data()
         #group.save_data()
         self.groups.append(group)
+        logger.debug(f"after self.groups.append in group_analysis ... len(groups) = {len(self.groups)}")
 
 
     def add_pre_estimated_group(self, dic):

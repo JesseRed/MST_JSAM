@@ -11,12 +11,12 @@ from srtt import SRTT
 import pickle
 ##################################
 ### logging 
-log_level = logging.INFO
-data_base_log_level = logging.INFO
+# log_level = logging.INFO
+# data_base_log_level = logging.INFO
 
-logging.basicConfig(level=log_level, filename='logfile.log', 
-    format ='', #format='%(asctime)s :: %(levelname)s :: %(name)s :: %(message)s',
-    filemode='w')
+# logging.basicConfig(level=log_level, filename='logfile.log', 
+#     format ='', #format='%(asctime)s :: %(levelname)s :: %(name)s :: %(message)s',
+#     filemode='w')
 logger = logging.getLogger(__name__)
 #db_logger = logging.getLogger('sqlalchemy')
 #db_logger.addHandler(logger)
@@ -126,7 +126,7 @@ class Experiment:
         """
 
 
-    def __init__(self, experiment_name, vpn, day, sequence_length, root_dir, is_load=False, df="leer", sep='\t'):
+    def __init__(self, experiment_name, vpn, day, sequence_length, root_dir, is_load=False, df="leer", sep='\t', paradigma = 0):
         """ idee an der init ist, dass nur ein Experimentname, ein vpn, ein Tag und sequenzlaenge uebergeben werden muesse
             wenn es hier bereits ein abgespeichertes experiment gibt dann wird das geladen
             es kann aber auch neu berechnet werden
@@ -136,8 +136,9 @@ class Experiment:
         self.experiment_name = experiment_name  # Name des Experiments (MST, SEQ, SRTT)
         self.vpn = vpn  # die Versuchspersonennummer
         self.day = day  # DER Trainingstag
+        self.paradigma = paradigma  # falls an einem Tag unterschiedliche Interventionen erfolgten (MST_21 vs. MST_22 vs. MST_23) 
         self.sequence_length = sequence_length
-        self.filename = str(self.vpn) + '_' + self.experiment_name + '_' +  str(self.day) + '_' + str(self.sequence_length)
+        self.filename = str(self.vpn) + '_' + self.experiment_name + '_' +  str(self.day) + '_' + str(self.paradigma) + '_' + str(self.sequence_length)
 
         # the root dir is the dir where the estimations are rooted, 
         # in this dir there will an Experiment_data dir created
@@ -266,6 +267,8 @@ class Experiment:
         """
         #dirname = os.path.join(os.path.dirname(__file__),'Experiment_data')
         #dirname = os.path.join(self.root_dir,'Experiment_data')
+        # logging.debug(f"in Experiment.save with data_dir = {self.data_dir}, filename = {self.filename}")
+        # print("in Experiment.save()")
         with open(os.path.join(self.data_dir, self.filename),'wb') as fp:
             pickle.dump(self, fp)
 
@@ -278,6 +281,7 @@ class Experiment:
         string = "Experiment Name: " + self.experiment_name 
         string = string + "; VPN = " + str(self.vpn)
         string = string + "; Day = " + str(self.day)
+        string = string + "; Paradigma = " + str(self.paradigma)
         string = string + str(self.cor_seqsum_lpn)
         pd.set_option('display.max_rows', 2000)
         pd.set_option('display.max_columns', 2000)
@@ -302,7 +306,7 @@ if __name__ == "__main__":
     subj_class = MST(fullfilename = mstfile, sequence_length = 5) #, path_output = ".\\Data_python", _id = "no_id")
 
     print("MST ready")
-    subj_exp = Experiment(subj_class.experiment_name, subj_class.vpn, subj_class.day, subj_class.sequence_length, is_load=False, df = subj_class.df)
+    subj_exp = Experiment(subj_class.experiment_name, subj_class.vpn, subj_class.day, subj_class.sequence_length, is_load=False, df = subj_class.df, paradigma=0)
     print(f"in main now subj_exp.add_network_class")
     subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9, is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=3)
     # with open('testpickle','rb') as fp:

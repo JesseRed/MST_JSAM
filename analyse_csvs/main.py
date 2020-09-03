@@ -7,7 +7,12 @@ import json, os
 from statistic_ck import Statistic
 from group_analysis import Group_analysis
 #from group import Group
-#from lern_table import LearnTable
+from lern_table import LearnTable
+import logging
+
+logging.basicConfig(level=logging.DEBUG, filename='logfile2.log', 
+    format='%(asctime)s :: %(levelname)s :: %(name)s :: %(message)s')
+logger = logging.getLogger(__name__)
 
 app = QtWidgets.QApplication(sys.argv)
 
@@ -16,7 +21,7 @@ app = QtWidgets.QApplication(sys.argv)
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, parent = None):
         super().__init__(parent)
-
+        logger.debug("start of main window")
         self.setWindowTitle("Analyser_v01")
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -24,6 +29,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.pushButtonSaveConfig.clicked.connect(self.saveConfig)
         self.config_file_name = "analyse_csv_config.json"
         self.ui.pushButtonChangeStartEstimation.clicked.connect(self.estimate)
+        self.ui.pushButtonAddTargetToTable.clicked.connect(self.addTargetToTable)
+        self.ui.pushButtonChooseTableFile.clicked.connect(self.chooseTableFile)
         self.load_last_config()
         
     def load_last_config(self):
@@ -33,6 +40,11 @@ class MainWindow(QtWidgets.QMainWindow):
             with open(dir_file, 'r') as j:
                 self.config_data = json.load(j)
             self.adapt_gui_to_config()
+
+    def chooseTableFile(self):
+        filename = QFileDialog.getOpenFileName()
+        self.ui.lineEditTableFile.setText(filename[0])
+
 
     def changeMainDir(self):
         # setting the main Directory where all config files and estimations will be saved
@@ -53,14 +65,16 @@ class MainWindow(QtWidgets.QMainWindow):
         # if so than the value will be used... in the other case than
         # a default value will be used
         config = {
-            "lineEditMainDir"       : self.ui.lineEditMainDir.text(),
-            "textEditMSTjson"       : self.ui.textEditMSTjson.toPlainText(),
-            "textEditSEQjson"       : self.ui.textEditSEQjson.toPlainText(),
-            "textEditSRTTjson"      : self.ui.textEditSRTTjson.toPlainText(),
-            "checkBoxEstimateMST"   : self.ui.checkBoxEstimateMST.isChecked(),
-            "checkBoxEstimateSEQ"   : self.ui.checkBoxEstimateSEQ.isChecked(),
-            "checkBoxEstimateSRTT"  : self.ui.checkBoxEstimateSRTT.isChecked(),
-            "spinBoxMultiProcessor" : self.ui.spinBoxMultiProcessor.value()
+            "lineEditMainDir"                   : self.ui.lineEditMainDir.text(),
+            "textEditMSTjson"                   : self.ui.textEditMSTjson.toPlainText(),
+            "textEditSEQjson"                   : self.ui.textEditSEQjson.toPlainText(),
+            "textEditSRTTjson"                  : self.ui.textEditSRTTjson.toPlainText(),
+            "checkBoxEstimateMST"               : self.ui.checkBoxEstimateMST.isChecked(),
+            "checkBoxEstimateSEQ"               : self.ui.checkBoxEstimateSEQ.isChecked(),
+            "checkBoxEstimateSRTT"              : self.ui.checkBoxEstimateSRTT.isChecked(),
+            "spinBoxMultiProcessor"             : self.ui.spinBoxMultiProcessor.value(),
+            "lineEditTableFile"                 : self.ui.lineEditTableFile.text(),
+            "lineEditTargetGroupFilePattern"    : self.ui.lineEditTargetGroupFilePattern.text(),
         }
 
         with open(os.path.join(self.ui.lineEditMainDir.text(), self.config_file_name), 'w') as file:
@@ -116,6 +130,11 @@ class MainWindow(QtWidgets.QMainWindow):
                     target_color=dic["target_color"],
                     num_processes=self.ui.spinBoxMultiProcessor.value()
                     )
+    def addTargetToTable(self):
+        myLearnTable = LearnTable(self.ui.lineEditTableFile.text())
+        myLearnTable.add_estimated_results_to_learn_table(
+            results_directory = os.path.join(self.ui.lineEditMainDir.text(),"Experiment_data"),
+            experiment_name_list = eval(self.ui.lineEditTargetGroupFilePattern.text()))
 
 if __name__ == '__main__':
     ui_window = MainWindow()

@@ -11,11 +11,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1287, 819)
+        MainWindow.resize(1290, 839)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget.setGeometry(QtCore.QRect(10, 80, 1251, 701))
+        self.tabWidget.setGeometry(QtCore.QRect(10, 80, 1251, 671))
         self.tabWidget.setObjectName("tabWidget")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
@@ -40,9 +40,6 @@ class Ui_MainWindow(object):
         self.textEditSRTTjson.setGeometry(QtCore.QRect(10, 20, 781, 481))
         self.textEditSRTTjson.setObjectName("textEditSRTTjson")
         self.tabWidget_2.addTab(self.SRTTTAB, "")
-        self.pushButtonSaveConfig = QtWidgets.QPushButton(self.tab)
-        self.pushButtonSaveConfig.setGeometry(QtCore.QRect(20, 620, 121, 23))
-        self.pushButtonSaveConfig.setObjectName("pushButtonSaveConfig")
         self.pushButtonChangeStartEstimation = QtWidgets.QPushButton(self.tab)
         self.pushButtonChangeStartEstimation.setGeometry(QtCore.QRect(970, 620, 121, 23))
         self.pushButtonChangeStartEstimation.setObjectName("pushButtonChangeStartEstimation")
@@ -75,6 +72,27 @@ class Ui_MainWindow(object):
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.tabWidget.addTab(self.tab, "")
+        self.tab_3 = QtWidgets.QWidget()
+        self.tab_3.setObjectName("tab_3")
+        self.lineEditTargetGroupFilePattern = QtWidgets.QLineEdit(self.tab_3)
+        self.lineEditTargetGroupFilePattern.setGeometry(QtCore.QRect(50, 100, 471, 22))
+        self.lineEditTargetGroupFilePattern.setObjectName("lineEditTargetGroupFilePattern")
+        self.lineEditTableFile = QtWidgets.QLineEdit(self.tab_3)
+        self.lineEditTableFile.setGeometry(QtCore.QRect(30, 40, 521, 22))
+        self.lineEditTableFile.setObjectName("lineEditTableFile")
+        self.pushButtonAddTargetToTable = QtWidgets.QPushButton(self.tab_3)
+        self.pushButtonAddTargetToTable.setGeometry(QtCore.QRect(180, 180, 251, 28))
+        self.pushButtonAddTargetToTable.setObjectName("pushButtonAddTargetToTable")
+        self.label_4 = QtWidgets.QLabel(self.tab_3)
+        self.label_4.setGeometry(QtCore.QRect(50, 80, 131, 16))
+        self.label_4.setObjectName("label_4")
+        self.pushButtonChooseTableFile = QtWidgets.QPushButton(self.tab_3)
+        self.pushButtonChooseTableFile.setGeometry(QtCore.QRect(580, 40, 93, 28))
+        self.pushButtonChooseTableFile.setObjectName("pushButtonChooseTableFile")
+        self.textBrowser = QtWidgets.QTextBrowser(self.tab_3)
+        self.textBrowser.setGeometry(QtCore.QRect(600, 100, 421, 192))
+        self.textBrowser.setObjectName("textBrowser")
+        self.tabWidget.addTab(self.tab_3, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
         self.tabWidget.addTab(self.tab_2, "")
@@ -90,9 +108,12 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.label.setFont(font)
         self.label.setObjectName("label")
+        self.pushButtonSaveConfig = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButtonSaveConfig.setGeometry(QtCore.QRect(40, 760, 121, 23))
+        self.pushButtonSaveConfig.setObjectName("pushButtonSaveConfig")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1287, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1290, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -100,7 +121,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         self.tabWidget_2.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -191,7 +212,6 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">    </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#b4c973;\">&quot;table&quot;</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">                     :   </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#b4c973;\">&quot;.</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#a1617a;\">\\\\</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#b4c973;\">Data_Rogens</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#a1617a;\">\\\\</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#b4c973;\">Lernspiel_Auswertung_2020b.csv&quot;</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">,</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">}</span></p></body></html>"))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.SRTTTAB), _translate("MainWindow", "SRTT"))
-        self.pushButtonSaveConfig.setText(_translate("MainWindow", "save config"))
         self.pushButtonChangeStartEstimation.setText(_translate("MainWindow", "start Estimation"))
         self.checkBoxEstimateMST.setText(_translate("MainWindow", "estimate MST"))
         self.checkBoxEstimateSEQ.setText(_translate("MainWindow", "estimate SEQ"))
@@ -199,8 +219,32 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Number of parallel Processes"))
         self.label_3.setText(_translate("MainWindow", "( if is_multiprocessing is True)"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Estimation"))
+        self.lineEditTargetGroupFilePattern.setText(_translate("MainWindow", "[\"MST_1\", \"MST_2\", \"MST_3\"]"))
+        self.pushButtonAddTargetToTable.setText(_translate("MainWindow", "add target to table"))
+        self.label_4.setText(_translate("MainWindow", "Target Group file pattern"))
+        self.pushButtonChooseTableFile.setText(_translate("MainWindow", "choose table file"))
+        self.textBrowser.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Im Target Group file pattern sollte eine Liste an Filepattern stehen, welche die Unterschiedlichen Columns in der Tablle kennzeichnet</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">z.B. Grischek Paradigma</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1. Tag: alle Probanden machen  das gleiche,  -&gt; MST_1_1_5</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2. Tag: drei unterschiedliche Paradigmen       -&gt; MST_2_1_5, MST_2_2_5, MST_2_3_5</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">3. Tag: alle Probanden machen das gleiche    -&gt; MST 3_0_5</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-&gt; Die Doktoranden brauchen fuer jede der Experimente unterschiedliche Spalten </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">[&quot;MST_1_1&quot;, &quot;MST_2_1&quot;, &quot;MST_2_2&quot;, &quot;MST_2_3&quot;, &quot;MST_3_0&quot;]</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-&gt; Die Doktoranden sollen tageweise Eintragungen haben  </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">[&quot;MST_1&quot;, &quot;MST_2&quot;, &quot;MST_3&quot;]</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Entscheidend ist die Benennung der Files im Ordner Experiment_data</p></body></html>"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Export"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Statistic"))
         self.lineEditMainDir.setText(_translate("MainWindow", ".\\\\Data_Rogens\\Results2"))
         self.pushButtonChangeMainDir.setText(_translate("MainWindow", "ChangeMainDir"))
         self.label.setText(_translate("MainWindow", "The Main Output directory where all Results and Configurations will be saved"))
+        self.pushButtonSaveConfig.setText(_translate("MainWindow", "save config"))
 

@@ -41,9 +41,9 @@ mp_output = multiprocessing.Queue()
 def get_and_save_data_for_one_subj(filename, experiment="MST", is_estimate_network=False, sequence_length=8, path_outputfiles="./tmp", _id=0, coupling_parameter = 0.03,  resolution_parameter = 0.9,is_estimate_clustering= False, is_estimate_Q= False, num_random_Q=5):
     print(f"in get_and_save_data_for_one_subj")
     if experiment == 'MST':
-        print(f"estimate MST")
+        # logging.debug(f"estimate MST with filename = {filename}, sequence_length = {sequence_length}, path_output = {path_outputfiles}, _id = {_id}")
         subj_class = MST(fullfilename = filename, sequence_length = sequence_length, path_output = path_outputfiles, _id = _id)
-        print(f"after estimation of MST")
+        # logging.debug(f"after estimation of MST")
     if experiment == 'SEQ':
         subj_class = SEQ(fullfilename = filename, sequence_length = sequence_length, path_output = path_outputfiles, _id = _id)
     if experiment == 'SRTT':
@@ -51,11 +51,12 @@ def get_and_save_data_for_one_subj(filename, experiment="MST", is_estimate_netwo
     if experiment == 'ASTEROID':
         subj_class = ASTEROID(fullfilename = filename, path_output = path_outputfiles, _id = _id)
 
-    subj_exp = Experiment(subj_class.experiment_name, subj_class.vpn, subj_class.day, subj_class.sequence_length, path_outputfiles, is_load=False, df=subj_class.df)
+    subj_exp = Experiment(subj_class.experiment_name, subj_class.vpn, subj_class.day, subj_class.sequence_length, 
+            path_outputfiles, is_load=False, df=subj_class.df, paradigma = subj_class.paradigma)
 
     if is_estimate_network:
         subj_exp.add_network_class(coupling_parameter = coupling_parameter, resolution_parameter = resolution_parameter, is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q= num_random_Q)
-            
+    logging.debug("now save the subj_exp by using subj_exp.save()")
     subj_exp.save()
     
 
