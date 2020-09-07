@@ -8,6 +8,7 @@ from statistic_ck import Statistic
 from group_analysis import Group_analysis
 #from group import Group
 from lern_table import LearnTable
+from statistic_exp_txt_ck import Statistic_Exp_Dir
 import logging
 
 logging.basicConfig(level=logging.DEBUG, filename='logfile2.log', 
@@ -31,6 +32,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.pushButtonChangeStartEstimation.clicked.connect(self.estimate)
         self.ui.pushButtonAddTargetToTable.clicked.connect(self.addTargetToTable)
         self.ui.pushButtonChooseTableFile.clicked.connect(self.chooseTableFile)
+        self.ui.pushButtonChangeStatDir.clicked.connect(self.changeStatDir)
+        self.ui.pushButtonEstimateStatistics.clicked.connect(self.estimateStatistics)
+        self.ui.pushButtonCreateCSV.clicked.connect(self.create_one_csv)
         self.load_last_config()
         
     def load_last_config(self):
@@ -59,6 +63,14 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.config_data = json.load(j)
             self.adapt_gui_to_config()
 
+
+    def changeStatDir(self):
+        # setting the main Directory where all config files and estimations will be saved
+#        filename = QFileDialog.getOpenFileName()
+        dirname = QFileDialog.getExistingDirectory()
+        self.ui.lineEditStatDir.setText(dirname)
+
+
     def saveConfig(self):
         # Idea is to save all parameters in the gui in a json file
         # by loading it will be checked whether the label exist 
@@ -75,6 +87,7 @@ class MainWindow(QtWidgets.QMainWindow):
             "spinBoxMultiProcessor"             : self.ui.spinBoxMultiProcessor.value(),
             "lineEditTableFile"                 : self.ui.lineEditTableFile.text(),
             "lineEditTargetGroupFilePattern"    : self.ui.lineEditTargetGroupFilePattern.text(),
+            "lineEditStatDir"                   : self.ui.lineEditStatDir.text(),
         }
 
         with open(os.path.join(self.ui.lineEditMainDir.text(), self.config_file_name), 'w') as file:
@@ -135,6 +148,26 @@ class MainWindow(QtWidgets.QMainWindow):
         myLearnTable.add_estimated_results_to_learn_table(
             results_directory = os.path.join(self.ui.lineEditMainDir.text(),"Experiment_data"),
             experiment_name_list = eval(self.ui.lineEditTargetGroupFilePattern.text()))
+
+    def estimateStatistics(self):
+        f = "estimate my new statistik"
+        print(f)
+        self.ui.textBrowserStatistics.setText(f)
+        stat = Statistic_Exp_Dir(self.ui.lineEditStatDir.text(), 
+                                 self.ui.lineEditMainDir.text(), 
+                                 output_filename=self.ui.lineEditOutputFilename.text()
+                                 )
+        stat.perform_all_available_analyses()
+        # self.ui.textBrowserStatistics.setText("\n".join(stat.print_output))
+        self.ui.textBrowserStatistics.setText(" ".join(stat.print_output))
+
+    def create_one_csv(self):
+        """ creating one big csv with all available data with one line for each experiment"""
+        stat = Statistic_Exp_Dir(self.ui.lineEditStatDir.text(), 
+                                 self.ui.lineEditMainDir.text(), 
+                                 output_filename=self.ui.lineEditOutputFilename.text()
+                                 )
+        stat.create_one_csv()
 
 if __name__ == '__main__':
     ui_window = MainWindow()

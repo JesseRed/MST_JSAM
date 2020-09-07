@@ -16,7 +16,7 @@ from statistic_ck import Statistic
 import logging, json
 from experiment import Experiment
 import statistics
-import parallel_functions 
+#import parallel_functions 
 import multiprocessing as mp
 import pickle
 

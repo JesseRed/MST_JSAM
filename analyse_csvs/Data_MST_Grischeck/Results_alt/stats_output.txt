@@ -1,0 +1,1 @@
+found 3 groups in the given directoryGroup 0 with name = SEQ (54 files)Group 1 with name = SRTT (43 files)Group 2 with name = MST (52 files)

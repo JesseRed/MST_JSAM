@@ -95,6 +95,33 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.tab_3, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
+        self.pushButtonEstimateStatistics = QtWidgets.QPushButton(self.tab_2)
+        self.pushButtonEstimateStatistics.setGeometry(QtCore.QRect(180, 590, 93, 28))
+        self.pushButtonEstimateStatistics.setObjectName("pushButtonEstimateStatistics")
+        self.textBrowser_2 = QtWidgets.QTextBrowser(self.tab_2)
+        self.textBrowser_2.setGeometry(QtCore.QRect(780, 551, 391, 81))
+        self.textBrowser_2.setObjectName("textBrowser_2")
+        self.lineEditStatDir = QtWidgets.QLineEdit(self.tab_2)
+        self.lineEditStatDir.setGeometry(QtCore.QRect(120, 30, 641, 22))
+        self.lineEditStatDir.setObjectName("lineEditStatDir")
+        self.label_5 = QtWidgets.QLabel(self.tab_2)
+        self.label_5.setGeometry(QtCore.QRect(220, 10, 341, 16))
+        self.label_5.setObjectName("label_5")
+        self.pushButtonChangeStatDir = QtWidgets.QPushButton(self.tab_2)
+        self.pushButtonChangeStatDir.setGeometry(QtCore.QRect(790, 30, 41, 28))
+        self.pushButtonChangeStatDir.setObjectName("pushButtonChangeStatDir")
+        self.textBrowserStatistics = QtWidgets.QTextBrowser(self.tab_2)
+        self.textBrowserStatistics.setGeometry(QtCore.QRect(30, 70, 1141, 451))
+        self.textBrowserStatistics.setObjectName("textBrowserStatistics")
+        self.lineEditOutputFilename = QtWidgets.QLineEdit(self.tab_2)
+        self.lineEditOutputFilename.setGeometry(QtCore.QRect(920, 30, 181, 22))
+        self.lineEditOutputFilename.setObjectName("lineEditOutputFilename")
+        self.label_6 = QtWidgets.QLabel(self.tab_2)
+        self.label_6.setGeometry(QtCore.QRect(1020, 10, 91, 16))
+        self.label_6.setObjectName("label_6")
+        self.pushButtonCreateCSV = QtWidgets.QPushButton(self.tab_2)
+        self.pushButtonCreateCSV.setGeometry(QtCore.QRect(352, 590, 131, 28))
+        self.pushButtonCreateCSV.setObjectName("pushButtonCreateCSV")
         self.tabWidget.addTab(self.tab_2, "")
         self.lineEditMainDir = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEditMainDir.setGeometry(QtCore.QRect(20, 41, 741, 22))
@@ -121,7 +148,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(2)
         self.tabWidget_2.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -131,7 +158,7 @@ class Ui_MainWindow(object):
         self.textEditMSTjson.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">{</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">    </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#b4c973;\">&quot;is_perform_analysis&quot;</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">       :   </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#6c99bb;\">True</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">,</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">    </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#b4c973;\">&quot;is_estimate_network&quot;</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">       :   </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#6c99bb;\">False</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">,</span></p>\n"
@@ -159,7 +186,7 @@ class Ui_MainWindow(object):
         self.textEditSEQjson.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">{</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">    </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#b4c973;\">&quot;is_perform_analysis&quot;</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">       :   </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#6c99bb;\">True</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">,</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">    </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#b4c973;\">&quot;is_estimate_network&quot;</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">       :   </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#6c99bb;\">False</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">,</span></p>\n"
@@ -187,7 +214,7 @@ class Ui_MainWindow(object):
         self.textEditSRTTjson.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">{</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#b4c973;\">    &quot;is_perform_analysis&quot;</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">       :   </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#6c99bb;\">True</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">,</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">    </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#b4c973;\">&quot;is_estimate_network&quot;</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">       :   </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#6c99bb;\">False</span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:10pt; color:#d6d6d6;\">,</span></p>\n"
@@ -226,22 +253,37 @@ class Ui_MainWindow(object):
         self.textBrowser.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Im Target Group file pattern sollte eine Liste an Filepattern stehen, welche die Unterschiedlichen Columns in der Tablle kennzeichnet</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">z.B. Grischek Paradigma</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1. Tag: alle Probanden machen  das gleiche,  -&gt; MST_1_1_5</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2. Tag: drei unterschiedliche Paradigmen       -&gt; MST_2_1_5, MST_2_2_5, MST_2_3_5</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">3. Tag: alle Probanden machen das gleiche    -&gt; MST 3_0_5</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-&gt; Die Doktoranden brauchen fuer jede der Experimente unterschiedliche Spalten </p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">[&quot;MST_1_1&quot;, &quot;MST_2_1&quot;, &quot;MST_2_2&quot;, &quot;MST_2_3&quot;, &quot;MST_3_0&quot;]</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-&gt; Die Doktoranden sollen tageweise Eintragungen haben  </p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">[&quot;MST_1&quot;, &quot;MST_2&quot;, &quot;MST_3&quot;]</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Entscheidend ist die Benennung der Files im Ordner Experiment_data</p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Im Target Group file pattern sollte eine Liste an Filepattern stehen, welche die Unterschiedlichen Columns in der Tablle kennzeichnet</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">z.B. Grischek Paradigma</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">1. Tag: alle Probanden machen  das gleiche,  -&gt; MST_1_1_5</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">2. Tag: drei unterschiedliche Paradigmen       -&gt; MST_2_1_5, MST_2_2_5, MST_2_3_5</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">3. Tag: alle Probanden machen das gleiche    -&gt; MST 3_0_5</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">-&gt; Die Doktoranden brauchen fuer jede der Experimente unterschiedliche Spalten </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">[&quot;MST_1_1&quot;, &quot;MST_2_1&quot;, &quot;MST_2_2&quot;, &quot;MST_2_3&quot;, &quot;MST_3_0&quot;]</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">-&gt; Die Doktoranden sollen tageweise Eintragungen haben  </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">[&quot;MST_1&quot;, &quot;MST_2&quot;, &quot;MST_3&quot;]</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Entscheidend ist die Benennung der Files im Ordner Experiment_data</span></p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Export"))
+        self.pushButtonEstimateStatistics.setText(_translate("MainWindow", "Estimate Statistics"))
+        self.textBrowser_2.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">Idea: </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">choose a directory where all the experimental files are located (pickeled).</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">These files will be analysed and the statistic will be made available as txt File in the Results directory</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\">additionally results will we shown in the text field.</span></p></body></html>"))
+        self.lineEditStatDir.setText(_translate("MainWindow", "D:\\\\Programming\\\\MST_JSAM\\\\analyse_csvs\\\\Data_Rogens\\\\Results\\\\Experiment_data"))
+        self.label_5.setText(_translate("MainWindow", "directory with all experiment result files"))
+        self.pushButtonChangeStatDir.setText(_translate("MainWindow", "..."))
+        self.lineEditOutputFilename.setText(_translate("MainWindow", "statistic_output.txt"))
+        self.label_6.setText(_translate("MainWindow", "output filename"))
+        self.pushButtonCreateCSV.setText(_translate("MainWindow", "create one result csv"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Statistic"))
         self.lineEditMainDir.setText(_translate("MainWindow", ".\\\\Data_Rogens\\Results2"))
         self.pushButtonChangeMainDir.setText(_translate("MainWindow", "ChangeMainDir"))

@@ -34,7 +34,7 @@ class Network():
         self.num_random_Q = num_random_Q
         
         self.coupling_parameter = coupling_parameter
-        self.resolution_parameter = resolution_parameter   
+        self.resolution_parameter = resolution_parameter
         #logger.info(f"dimension in network get_normalized_2D_array {self.ipi}") 
         self.ipi = self.get_normalized_2D_array(ipi)
         # self.ipi now 2D np.array trials x sequence_elements (key presses per trial)
@@ -46,12 +46,12 @@ class Network():
         self.delta_intra_slice = self.get_delta_intra_slice(self.A)
         self.delta_inter_slice = self.get_delta_inter_slice(self.C)
 
-        self.c = np.sum(self.C,axis=2)
-        self.k = np.sum(self.A,axis=0)
-        self.kappa = self.k + self.c
-        self.my2 = sum(sum(self.kappa))
-        self.m = np.sum(self.k, axis=0)
-        self.gamma = np.zeros((self.A.shape[2]))+self.resolution_parameter
+        self.c = np.sum(self.C, axis=2)  # checked 08.09.2020
+        self.k = np.sum(self.A, axis=0)  # checked 08.09.2020
+        self.kappa = self.k + self.c     # checked 08.09.2020
+        self.my2 = sum(sum(self.kappa))  # checked 08.09.2020
+        self.m = np.sum(self.k, axis=0)  # checked 08.09.2020
+        self.gamma = np.zeros((self.A.shape[2]))+self.resolution_parameter  # checked 08.09.2020
 
         if self.is_estimate_clustering:
             self.clustering()
@@ -79,9 +79,19 @@ class Network():
         ipi_norm_arr = self.get_normalized_ipi_arr(ipi_arr, m, std)
         return ipi_norm_arr
 
-    def shuffle(self, ipi):
+    # checked CK 07.09.2020
+    def shuffle(self, ipi): 
         for i in range(ipi.shape[0]):
             random.shuffle(ipi[i,:])
+        return ipi
+
+    # checked CK 07.09.2020
+    def shuffle2D(self, ipi):
+        for i in range(ipi.shape[0]):
+            random.shuffle(ipi[i,:])
+        for j in range(ipi.shape[1]):
+            random.shuffle(ipi[:,j])
+            
         return ipi
         
     def estimate_chunk_magnitudes(self, g):
@@ -133,7 +143,7 @@ class Network():
         ret = (1 if gi==gj else 0)
         return ret
 
-    def get_null_model_P(self,A):
+    def get_null_model_P(self, A):
         ''' Berechnung von P entsprechend von paper Newman and Girvan 2004
         '''
         P = np.zeros((A.shape[0],A.shape[1]))
