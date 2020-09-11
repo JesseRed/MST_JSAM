@@ -30,7 +30,7 @@ class MST():
         self._id = _id
         self.filehandler = FileHandler(path_output=self.path_output, filename = self.filename, time_identifier = _id)
         self.input_df = pd.read_csv(self.fullfilename, sep = ';', engine = "python")
-        self.sequence_length = 5
+        self.sequence_length = sequence_length
         self.df = self.generate_standard_log_file_from_input_df(self.input_df)
         #!________________________
         #! 02.05.2020 ich habe die Namensgebung in unity veraendert ... hier ggf. Anpassung ... auch wenn man mehr als 
@@ -456,9 +456,12 @@ if __name__ == '__main__':
         mstfile = "G:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
     if computername == "XenonBang":
         mstfile = "H:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
-    mst = MST(fullfilename = mstfile, sequence_length = 5, path_output = ".\\Data_python", _id = "no_id")
+    if computername == "Laptop-LittleBang":
+        mstfile = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_MST_Grischeck\\Jung\\3_Elena​Buettner​MOLE21fertig.csv"
+        outpath = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_MST_Grischeck\\tmp\\"
+    mst = MST(fullfilename = mstfile, sequence_length = 5, path_output = outpath, _id = "no_id")
 
-    #mst.save()
+#    mst.save()
 #    ipi_cor = mst.ipi_cor
 #    ipi_norm = mst.ipi_norm
 #    ipi_norm_arr = mst.ipi_norm_arr

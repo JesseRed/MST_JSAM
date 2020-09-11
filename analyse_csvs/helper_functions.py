@@ -29,6 +29,8 @@ def create_standard_df():
         'target', 'pressed', 'sequence'])
     return df
 
+
+
 # def write_to_df_log(logfile, exp, ipi):
 #     current_element = 0
 #     with open(logfile, 'w') as fp:

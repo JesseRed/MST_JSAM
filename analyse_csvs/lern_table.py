@@ -161,8 +161,9 @@ class LearnTable():
             try:
                 best_time = min(min(exp.cor_seqtimesum_lplblsn[0]))
             except:
-                print(f"error in get_parameter_from_experiment with exp.cor_seqtimesum_lplblsn = {exp.cor_seqtimesum_lplblsn}")
-                raise ValueError("best_time value error")
+                best_time = -99.9
+                #print(f"error in get_parameter_from_experiment with exp.cor_seqtimesum_lplblsn = {exp.cor_seqtimesum_lplblsn}")
+                #raise ValueError("best_time value error")
             return best_time
         
 

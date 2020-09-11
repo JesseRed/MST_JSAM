@@ -184,8 +184,8 @@ Regression across the mean of all subjects for each blocks ...
 Dep. Variable:                      y   R-squared:                       0.865
 Model:                            OLS   Adj. R-squared:                  0.848
 Method:                 Least Squares   F-statistic:                     51.33
-Date:                Mon, 07 Sep 2020   Prob (F-statistic):           9.57e-05
-Time:                        16:26:26   Log-Likelihood:                -14.722
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):           9.57e-05
+Time:                        13:17:24   Log-Likelihood:                -14.722
 No. Observations:                  10   AIC:                             33.44
 Df Residuals:                       8   BIC:                             34.05
 Df Model:                           1                                         
@@ -223,8 +223,8 @@ Regression across the mean of all subjects for each blocks ...
 Dep. Variable:                      y   R-squared:                       0.705
 Model:                            OLS   Adj. R-squared:                  0.668
 Method:                 Least Squares   F-statistic:                     19.13
-Date:                Mon, 07 Sep 2020   Prob (F-statistic):            0.00237
-Time:                        16:26:26   Log-Likelihood:                -18.635
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):            0.00237
+Time:                        13:17:24   Log-Likelihood:                -18.635
 No. Observations:                  10   AIC:                             41.27
 Df Residuals:                       8   BIC:                             41.87
 Df Model:                           1                                         
@@ -279,8 +279,8 @@ Regression across the mean of all subjects for each blocks ...
 Dep. Variable:                      y   R-squared:                       0.639
 Model:                            OLS   Adj. R-squared:                  0.549
 Method:                 Least Squares   F-statistic:                     7.090
-Date:                Mon, 07 Sep 2020   Prob (F-statistic):             0.0562
-Time:                        16:26:26   Log-Likelihood:                -8.6657
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):             0.0562
+Time:                        13:17:24   Log-Likelihood:                -8.6657
 No. Observations:                   6   AIC:                             21.33
 Df Residuals:                       4   BIC:                             20.91
 Df Model:                           1                                         
@@ -314,8 +314,8 @@ Regression across the mean of all subjects for each blocks ...
 Dep. Variable:                      y   R-squared:                       0.437
 Model:                            OLS   Adj. R-squared:                  0.296
 Method:                 Least Squares   F-statistic:                     3.099
-Date:                Mon, 07 Sep 2020   Prob (F-statistic):              0.153
-Time:                        16:26:26   Log-Likelihood:                -10.004
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):              0.153
+Time:                        13:17:24   Log-Likelihood:                -10.004
 No. Observations:                   6   AIC:                             24.01
 Df Residuals:                       4   BIC:                             23.59
 Df Model:                           1                                         
@@ -350,8 +350,8 @@ Regression across the mean of all subjects for each blocks ...
 Dep. Variable:                      y   R-squared:                       0.605
 Model:                            OLS   Adj. R-squared:                  0.506
 Method:                 Least Squares   F-statistic:                     6.119
-Date:                Mon, 07 Sep 2020   Prob (F-statistic):             0.0687
-Time:                        16:26:26   Log-Likelihood:                -8.9405
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):             0.0687
+Time:                        13:17:24   Log-Likelihood:                -8.9405
 No. Observations:                   6   AIC:                             21.88
 Df Residuals:                       4   BIC:                             21.46
 Df Model:                           1                                         
@@ -385,8 +385,8 @@ Regression across the mean of all subjects for each blocks ...
 Dep. Variable:                      y   R-squared:                       0.329
 Model:                            OLS   Adj. R-squared:                  0.161
 Method:                 Least Squares   F-statistic:                     1.962
-Date:                Mon, 07 Sep 2020   Prob (F-statistic):              0.234
-Time:                        16:26:27   Log-Likelihood:                -10.528
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):              0.234
+Time:                        13:17:24   Log-Likelihood:                -10.528
 No. Observations:                   6   AIC:                             25.06
 Df Residuals:                       4   BIC:                             24.64
 Df Model:                           1                                         
@@ -446,8 +446,8 @@ Regression across the mean of all subjects for each blocks ...
 Dep. Variable:                      y   R-squared:                       0.825
 Model:                            OLS   Adj. R-squared:                  0.807
 Method:                 Least Squares   F-statistic:                     47.07
-Date:                Mon, 07 Sep 2020   Prob (F-statistic):           4.40e-05
-Time:                        16:26:27   Log-Likelihood:                -21.445
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):           4.40e-05
+Time:                        13:17:24   Log-Likelihood:                -21.445
 No. Observations:                  12   AIC:                             46.89
 Df Residuals:                      10   BIC:                             47.86
 Df Model:                           1                                         
@@ -487,8 +487,8 @@ Regression across the mean of all subjects for each blocks ...
 Dep. Variable:                      y   R-squared:                       0.488
 Model:                            OLS   Adj. R-squared:                  0.437
 Method:                 Least Squares   F-statistic:                     9.525
-Date:                Mon, 07 Sep 2020   Prob (F-statistic):             0.0115
-Time:                        16:26:27   Log-Likelihood:                -27.880
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):             0.0115
+Time:                        13:17:24   Log-Likelihood:                -27.880
 No. Observations:                  12   AIC:                             59.76
 Df Residuals:                      10   BIC:                             60.73
 Df Model:                           1                                         
@@ -529,8 +529,8 @@ Regression across the mean of all subjects for each blocks ...
 Dep. Variable:                      y   R-squared:                       0.591
 Model:                            OLS   Adj. R-squared:                  0.550
 Method:                 Least Squares   F-statistic:                     14.46
-Date:                Mon, 07 Sep 2020   Prob (F-statistic):            0.00347
-Time:                        16:26:27   Log-Likelihood:                -26.528
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):            0.00347
+Time:                        13:17:24   Log-Likelihood:                -26.528
 No. Observations:                  12   AIC:                             57.06
 Df Residuals:                      10   BIC:                             58.03
 Df Model:                           1                                         
@@ -570,8 +570,8 @@ Regression across the mean of all subjects for each blocks ...
 Dep. Variable:                      y   R-squared:                       0.559
 Model:                            OLS   Adj. R-squared:                  0.515
 Method:                 Least Squares   F-statistic:                     12.69
-Date:                Mon, 07 Sep 2020   Prob (F-statistic):            0.00516
-Time:                        16:26:27   Log-Likelihood:                -26.978
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):            0.00516
+Time:                        13:17:24   Log-Likelihood:                -26.978
 No. Observations:                  12   AIC:                             57.96
 Df Residuals:                      10   BIC:                             58.92
 Df Model:                           1                                         
@@ -617,13 +617,43 @@ We quantified chunking within each sequence by the optimized modularity Qmulti–t
 sequence networks. Modularity in this case measures the separability between clusters of
 IKIs. Higher values of Q indicate a greater ease in separating chunks.
 ___________MST_______
-MST Day 1 p = 0.07846159  with t = -1.85  (mean = 0.391 +- 0.01587  vs. 0.397 +- 0.01967
-MST Day 2 p = 0.1332596  with t = -1.55  (mean = 0.392 +- 0.01558  vs. 0.398 +- 0.02076
+Subject z-score for real Q 
+[-5.588451856495198, 5.402575586045492, -3.7134955791907758, -5.564779255435256, -21.425048101456134, 3.9368114310061952, -2.5847617441676176, -8.895817259183348, 18.73157603718512, -1.2856894011546043, -1.7575286959672918, -4.369456458300412, -4.686343815512717, -10.231860522278376, -9.318147364461527, -7.907408134283828, -20.943069582551267, -6.981924638999963, 9.105932214444817, -7.388193315509694, -3.2633832102221962, -5.212460481344144, 3.943403734776013]
+with mean = -3.912935670132901
+Q Zusammensetzung:
+Q = 0.0009897653462408035 * Summe([74448.7723846622 - 986.9390199508459 + 513.6000000000134] * 291600)
+MST Day 1 p = 6.079595e-09  with t = 7.38e+02  (mean = 7.49 +- 5.659  vs. 2.48 +- 1.692
+Subject z-score for real Q 
+[6.897262023203587, -2.597092993275239, -1.2196286384778772, 1.0632321430763971, -13.037411539344458, -28.457370208354252, 22.293878587020977, 2.6000163554659426, -14.270034175624405, -25.648945215308164, -6.0530862908189755, -6.894294598525251, -4.234757888525205, 54.60527294772867, -0.2873274011188114, -10.148846039572948, -16.689706451839804, 6.198035285316327, -19.747400372569675, -15.057147552919064, 10.555097241536153, 3.8313469344245963, -6.245316243218369, -13.004703165180029, -12.096138094707209, -5.631689856344541]
+with mean = -3.5875675079981395
+Q Zusammensetzung:
+Q = 0.0006856838481383013 * Summe([153366.90454151586 - 1263.1394007865083 + 729.5999999999807] * 585225)
+MST Day 2 p = 1.132857e-09  with t = 9.76e+02  (mean = 11.9 +- 11.58  vs. 2.48 +- 1.694
 ___________SRTT_______
-SRTT Day 1 p = 0.001565721  with t = -3.66  (mean = 0.469 +- 0.01303  vs. 0.479 +- 0.007199
-SRTT Day 2 p = 0.01113588  with t = -2.78  (mean = 0.469 +- 0.009226  vs. 0.476 +- 0.00891
+Subject z-score for real Q 
+[-1.8019031574245652, -6.187758480919579, -13.498596181748193, 0.6911896316222553, -3.3176336354176637, -3.848074770826957, 0.10515682771943725, 1.3088394436193014, -14.13625423312862, -7.11416139139516, 2.6005673065505293, -10.757020526720366, -5.49121540200015, -4.4173766197293425, -3.4489561180042814, -1.6736801889493134, -2.840730097283762, 1.1655145518219654, -12.115812093534053, 0.5422786951719514, -1.3696884207538322]
+with mean = -4.076443564825257
+Q Zusammensetzung:
+Q = 0.0017847795094391359 * Summe([10667.625783741787 - 545.2712163623693 + 270.0000000000045] * 67600)
+SRTT Day 1 p = 0.01737108  with t = 1.59e+03  (mean = 4.69 +- 4.394  vs. 2.41 +- 1.787
+Subject z-score for real Q 
+[-8.80988279968929, 1.3228395820103196, -0.9510406180297424, -0.9470741472779323, 0.9177103675908729, 4.036514075340346, -0.01280169407732259, 4.485824132779869, -6.536468427330409, -1.9846064132648262, -1.2456888957088388, -1.5496676618363183, 2.2886747758624417, 0.672550579516163, -10.706040668529361, -8.520667301040517, -7.307746367153865, -0.8025278193023894, -3.3280485714920163, -2.2524464844005543, -5.904871276850771, -8.165060407079956]
+with mean = -2.5136602745438226
+Q Zusammensetzung:
+Q = 0.0012994924025936812 * Summe([20143.124641704624 - 756.8830554845093 + 378.0000000000086] * 129600)
+SRTT Day 2 p = 0.06163271  with t = 1.94e+03  (mean = 3.76 +- 3.255  vs. 2.4 +- 1.803
 ___________SEQ_______
-SEQ Day 1 p = 0.5822406  with t = 0.557  (mean = 0.431 +- 0.01252  vs. 0.428 +- 0.01845
-SEQ Day 2 p = 0.9675396  with t = -0.0411  (mean = 0.429 +- 0.0135  vs. 0.429 +- 0.01601
+Subject z-score for real Q 
+[-26.842877626338613, 8.878265093056626, 14.91831251339346, 17.471025727360875, -5.417980707542625, 16.11327790981206, 33.380187366903215, 4.36686863525934, -4.519513298424678, -14.61037253144486, 7.720545521511623, 39.622636146419865, 9.55278910406907, 22.10087091196093, -6.05270753740784, -2.3797205717815615, 9.397288510445154, -15.20071836089727, -15.727999469278538, -1.52005365392278, 15.88441002865968, -22.477872002261204, 3.2038639166211382, 5.5518809040815595, -20.047722738051718, -9.648221137867662, -12.288737167980996]
+with mean = 1.904730573568676
+Q Zusammensetzung:
+Q = 0.0008659729083980123 * Summe([59967.7902353175 - 1073.455993477208 + 621.5999999999971] * 360000)
+SEQ Day 1 p = 6.129919e-14  with t = 4.9e+02  (mean = 13.5 +- 9.44  vs. 2.47 +- 1.703
+Subject z-score for real Q 
+[-67.44008375542415, 6.468701993373808, 12.405574140784449, 30.32830645803556, -0.6270550705929785, 3.2195328616791055, 9.66562074712441, 3.4173171253718553, -17.200038130568778, 2.5630253390667534, 14.886598148890002, 3.4050113506653577, 6.482959074508448, 1.009352041765217, 4.920099651630347, -15.050665016149564, -17.141544393809138, 6.593141459819358, 4.071273156069323, -15.31658031795082, -0.5506948002976657, 7.365029954990278, -5.200172859667287, 4.096730478086267, -19.27982963650475]
+with mean = -1.4763355999641838
+Q Zusammensetzung:
+Q = 0.0007874740336954379 * Summe([72248.81762810561 - 1191.1017671627405 + 680.3999999999882] * 430336)
+SEQ Day 2 p = 4.266286e-08  with t = 1.09e+03  (mean = 11.1 +- 13.78  vs. 2.47 +- 1.709
 end estimation group q
 performing an ANOVA

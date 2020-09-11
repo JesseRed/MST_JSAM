@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import logging, os, json
 from network import Network
+import matplotlib.pyplot as plt
 import socket
 from mst import MST
 from seq import SEQ
@@ -144,7 +145,7 @@ class Experiment:
         # in this dir there will an Experiment_data dir created
         # in this Experiment_data dir all the experiment files will be saved and loaded
         self.root_dir = root_dir
-        self.data_dir =  os.path.join(self.root_dir,'Experiment_data')       
+        self.data_dir =  os.path.join(self.root_dir, 'Experiment_data')       
         if not os.path.exists(self.data_dir):
             os.makedirs(self.data_dir)
             
@@ -207,6 +208,7 @@ class Experiment:
         self.all_hits_lplsln = d
 
         a,b, c, d = exp_est.estimate_ipi_hits_lplblsln(self.df_ipi)
+        #print(self.df_ipi.tail())
         self.all_ipi_lplblsln = a
         self.cor_ipi_lplblsln = b 
         self.err_ipi_lplblsln = c
@@ -261,7 +263,9 @@ class Experiment:
         # CK 08.09.2020
         #ipi_cor = exp_est.make2dlist_to_2darray(self.cor_ipi_lsln)
         # CK 08.09.2020
-        ipi_cor = exp_est.make2dlist_to_2darray(self.cor_ipi_lplsln[parad,:,:])
+        #ipi_cor = exp_est.make2dlist_to_2darray(self.cor_ipi_lplsln[parad,:,:])
+        # CK 10.09.2020
+        ipi_cor = exp_est.make2dlist_to_2darray(self.cor_ipi_lplsln[parad][:][:])
         self.net = Network(ipi_cor, coupling_parameter = coupling_parameter,  resolution_parameter = resolution_parameter,is_estimate_clustering= is_estimate_clustering, is_estimate_Q= is_estimate_Q, num_random_Q=num_random_Q)
         #self.net.filename = self.filename
 
@@ -275,88 +279,88 @@ class Experiment:
         with open(os.path.join(self.data_dir, self.filename),'wb') as fp:
             pickle.dump(self, fp)
 
-    def save_as_json(self):
-        results = {
-            'experiment_name'                           : self.experiment_name,               # Name des Experiments (MST, SEQ, SRTT)
-            'vpn'                                       : self.vpn,                                        # die Versuchspersonennummer
-            'day'                                       : self.day,                                       # DER Trainingstag
-            'paradigma'                                 : self.paradigma,            # falls an einem Tag unterschiedliche Interventionen erfolgten (MST_21 vs. MST_22 vs. MST_23) 
-            'sequence_length'                           : self.sequence_length,
-            'filename'                                  : self.filename,
-            'root_dir'                                  : self.root_dir,
-            'data_dir'                                  : self.data_dir,
-            'is_delete_first'                           : self.is_delete_first,  #! ein wesentlicher Unterschied ist noch, dass beim MST der erste ipi nicht geloescht wird      
-            'all_ipi_lsln'                              : self.all_ipi_lsln, 
-            'cor_ipi_lsln'                              : self.cor_ipi_lsln, 
-            'err_ipi_lsln'                              : self.err_ipi_lsln, 
-            'all_hits_lsln'                             : self.all_hits_lsln, 
-            'all_ipi_lblsln'                            : self.all_ipi_lblsln, 
-            'cor_ipi_lblsln'                            : self.cor_ipi_lblsln, 
-            'err_ipi_lblsln'                            : self.err_ipi_lblsln , 
-            'all_hits_lblsln'                           : self.all_hits_lblsln, 
-            'all_ipi_lplsln'                            : self.all_ipi_lplsln, 
-            'cor_ipi_lplsln'                            : self.cor_ipi_lplsln, 
-            'err_ipi_lplsln'                            : self.err_ipi_lplsln, 
-            'all_hits_lplsln'                           : self.all_hits_lplsln, 
-            'all_ipi_lplblsln'                          : self.all_ipi_lplblsln, 
-            'cor_ipi_lplblsln'                          : self.cor_ipi_lplblsln, 
-            'err_ipi_lplblsln'                          : self.err_ipi_lplblsln, 
-            'all_hits_lplblsln'                         : self.all_hits_lplblsln, 
-            'all_seqsum_lpn'                            : self.all_seqsum_lpn, 
-            'all_seqsum_lplbn'                          : self.all_seqsum_lplbn, 
-            'all_seqtimesum_lplsn'                      : self.all_seqtimesum_lplsn, 
-            'all_seqtimesum_lplblsn'                    : self.all_seqtimesum_lplblsn, 
-            'cor_seqsum_lpn'                            : self.cor_seqsum_lpn, 
-            'cor_seqsum_lplbn'                          : self.cor_seqsum_lplbn, 
-            'cor_seqtimesum_lplsn'                      : self.cor_seqtimesum_lplsn, 
-            'cor_seqtimesum_lplblsn'                    : self.cor_seqtimesum_lplblsn, 
-            'err_seqsum_lpn'                            : self.err_seqsum_lpn, 
-            'err_seqsum_lplbn'                          : self.err_seqsum_lplbn, 
-            'err_seqtimesum_lplsn'                      : self.err_seqtimesum_lplsn, 
-            'err_seqtimesum_lplblsn'                    : self.err_seqtimesum_lplblsn,     
-            'all_seqtimesum_slope_lpn'                  : self.all_seqtimesum_slope_lpn, 
-            'all_seqtimesum_to_max_slope_lpn'           : self.all_seqtimesum_to_max_slope_lpn, 
-            'cor_seqtimesum_slope_lpn'                  : self.cor_seqtimesum_slope_lpn, 
-            'cor_seqtimesum_to_max_slope_lpn'           : self.cor_seqtimesum_to_max_slope_lpn, 
-            'err_seqtimesum_slope_lpn'                  : self.err_seqtimesum_slope_lpn, 
-            'err_seqtimesum_to_max_slope_lpn'           : self.err_seqtimesum_to_max_slope_lpn, 
-            'all_seqtimesum_per_block_slope_lpn'        : self.all_seqtimesum_per_block_slope_lpn, 
-            'all_seqtimesum_per_block_to_max_slope_lpn' : self.all_seqtimesum_per_block_to_max_slope_lpn,  
-            'cor_seqtimesum_per_block_slope_lpn'        : self.cor_seqtimesum_per_block_slope_lpn, 
-            'cor_seqtimesum_per_block_to_max_slope_lpn' : self.cor_seqtimesum_per_block_to_max_slope_lpn, 
-            'err_seqtimesum_per_block_slope_lpn'        : self.err_seqtimesum_per_block_slope_lpn, 
-            'err_seqtimesum_per_block_to_max_slope_lpn' : self.err_seqtimesum_per_block_to_max_slope_lpn, 
-            'all_seqnum_per_block_slope_lpn'            : self.all_seqnum_per_block_slope_lpn, 
-            'cor_seqnum_per_block_slope_lpn'            : self.cor_seqnum_per_block_slope_lpn, 
-            'err_seqnum_per_block_slope_lpn'            : self.err_seqnum_per_block_slope_lpn, 
-            'net_A'                                     : self.net.A,
-            'net_C'                                     : self.net.C,
-            'net_c'                                     : self.net.c,
-            'net_ipi'                                   : self.net.ipi,
-            'net_is_estimate_clustering'                : self.net.is_estimate_clustering,
-            'net_k'                                     : self.net.k,
-            'net_kappa'                                 : self.net.kappa,
-            'net_m'                                     : self.net.m,
-            'net_my2'                                   : self.net.my2,
-            'net_phi'                                   : self.net.phi,
-            'net_phi_real'                              : self.net.phi_real,
-            'net_phi_fake_list'                         : self.net.phi_fake_list,
-            'net_q_real'                                : self.net.q_real,
-            'net_q_real_t'                              : self.net.q_real_t,
-            'net_q_real_p'                              : self.net.q_real_p,
-            'net_q_fake_list'                           : self.net.q_fake_list,
-            'net_g_real'                                : self.net.g_real,
-            'net_g_fake_list'                           : self.net.g_fake_list,
-            'net_is_adapt_communities_across_trials'    : self.net.is_adapt_communities_across_trials,
-            'net_is_estimate_Q'                         : self.net.is_estimate_Q,
-            'net_num_random_Q'                          : self.net.num_random_Q,
-            'net_resolution_parameter'                  : self.net.resolution_parameter,
-        }
-        json_data_dir = self.data_dir + "json"
-        if not os.path.exists(json_data_dir):
-            os.makedirs(json_data_dir)
-        with open(os.path.join(json_data_dir, self.filename + '.json'),'w') as fp:
-            json.dump(results, fp)
+    # def save_as_json(self):
+    #     results = {
+    #         'experiment_name'                           : self.experiment_name,               # Name des Experiments (MST, SEQ, SRTT)
+    #         'vpn'                                       : self.vpn,                                        # die Versuchspersonennummer
+    #         'day'                                       : self.day,                                       # DER Trainingstag
+    #         'paradigma'                                 : self.paradigma,            # falls an einem Tag unterschiedliche Interventionen erfolgten (MST_21 vs. MST_22 vs. MST_23) 
+    #         'sequence_length'                           : self.sequence_length,
+    #         'filename'                                  : self.filename,
+    #         'root_dir'                                  : self.root_dir,
+    #         'data_dir'                                  : self.data_dir,
+    #         'is_delete_first'                           : self.is_delete_first,  #! ein wesentlicher Unterschied ist noch, dass beim MST der erste ipi nicht geloescht wird      
+    #         'all_ipi_lsln'                              : self.all_ipi_lsln, 
+    #         'cor_ipi_lsln'                              : self.cor_ipi_lsln, 
+    #         'err_ipi_lsln'                              : self.err_ipi_lsln, 
+    #         'all_hits_lsln'                             : self.all_hits_lsln, 
+    #         'all_ipi_lblsln'                            : self.all_ipi_lblsln, 
+    #         'cor_ipi_lblsln'                            : self.cor_ipi_lblsln, 
+    #         'err_ipi_lblsln'                            : self.err_ipi_lblsln , 
+    #         'all_hits_lblsln'                           : self.all_hits_lblsln, 
+    #         'all_ipi_lplsln'                            : self.all_ipi_lplsln, 
+    #         'cor_ipi_lplsln'                            : self.cor_ipi_lplsln, 
+    #         'err_ipi_lplsln'                            : self.err_ipi_lplsln, 
+    #         'all_hits_lplsln'                           : self.all_hits_lplsln, 
+    #         'all_ipi_lplblsln'                          : self.all_ipi_lplblsln, 
+    #         'cor_ipi_lplblsln'                          : self.cor_ipi_lplblsln, 
+    #         'err_ipi_lplblsln'                          : self.err_ipi_lplblsln, 
+    #         'all_hits_lplblsln'                         : self.all_hits_lplblsln, 
+    #         'all_seqsum_lpn'                            : self.all_seqsum_lpn, 
+    #         'all_seqsum_lplbn'                          : self.all_seqsum_lplbn, 
+    #         'all_seqtimesum_lplsn'                      : self.all_seqtimesum_lplsn, 
+    #         'all_seqtimesum_lplblsn'                    : self.all_seqtimesum_lplblsn, 
+    #         'cor_seqsum_lpn'                            : self.cor_seqsum_lpn, 
+    #         'cor_seqsum_lplbn'                          : self.cor_seqsum_lplbn, 
+    #         'cor_seqtimesum_lplsn'                      : self.cor_seqtimesum_lplsn, 
+    #         'cor_seqtimesum_lplblsn'                    : self.cor_seqtimesum_lplblsn, 
+    #         'err_seqsum_lpn'                            : self.err_seqsum_lpn, 
+    #         'err_seqsum_lplbn'                          : self.err_seqsum_lplbn, 
+    #         'err_seqtimesum_lplsn'                      : self.err_seqtimesum_lplsn, 
+    #         'err_seqtimesum_lplblsn'                    : self.err_seqtimesum_lplblsn,     
+    #         'all_seqtimesum_slope_lpn'                  : self.all_seqtimesum_slope_lpn, 
+    #         'all_seqtimesum_to_max_slope_lpn'           : self.all_seqtimesum_to_max_slope_lpn, 
+    #         'cor_seqtimesum_slope_lpn'                  : self.cor_seqtimesum_slope_lpn, 
+    #         'cor_seqtimesum_to_max_slope_lpn'           : self.cor_seqtimesum_to_max_slope_lpn, 
+    #         'err_seqtimesum_slope_lpn'                  : self.err_seqtimesum_slope_lpn, 
+    #         'err_seqtimesum_to_max_slope_lpn'           : self.err_seqtimesum_to_max_slope_lpn, 
+    #         'all_seqtimesum_per_block_slope_lpn'        : self.all_seqtimesum_per_block_slope_lpn, 
+    #         'all_seqtimesum_per_block_to_max_slope_lpn' : self.all_seqtimesum_per_block_to_max_slope_lpn,  
+    #         'cor_seqtimesum_per_block_slope_lpn'        : self.cor_seqtimesum_per_block_slope_lpn, 
+    #         'cor_seqtimesum_per_block_to_max_slope_lpn' : self.cor_seqtimesum_per_block_to_max_slope_lpn, 
+    #         'err_seqtimesum_per_block_slope_lpn'        : self.err_seqtimesum_per_block_slope_lpn, 
+    #         'err_seqtimesum_per_block_to_max_slope_lpn' : self.err_seqtimesum_per_block_to_max_slope_lpn, 
+    #         'all_seqnum_per_block_slope_lpn'            : self.all_seqnum_per_block_slope_lpn, 
+    #         'cor_seqnum_per_block_slope_lpn'            : self.cor_seqnum_per_block_slope_lpn, 
+    #         'err_seqnum_per_block_slope_lpn'            : self.err_seqnum_per_block_slope_lpn, 
+    #         'net_A'                                     : self.net.A,
+    #         'net_C'                                     : self.net.C,
+    #         'net_c'                                     : self.net.c,
+    #         'net_ipi'                                   : self.net.ipi,
+    #         'net_is_estimate_clustering'                : self.net.is_estimate_clustering,
+    #         'net_k'                                     : self.net.k,
+    #         'net_kappa'                                 : self.net.kappa,
+    #         'net_m'                                     : self.net.m,
+    #         'net_my2'                                   : self.net.my2,
+    #         'net_phi'                                   : self.net.phi,
+    #         'net_phi_real'                              : self.net.phi_real,
+    #         'net_phi_fake_list'                         : self.net.phi_fake_list,
+    #         'net_q_real'                                : self.net.q_real,
+    #         'net_q_real_t'                              : self.net.q_real_t,
+    #         'net_q_real_p'                              : self.net.q_real_p,
+    #         'net_q_fake_list'                           : self.net.q_fake_list,
+    #         'net_g_real'                                : self.net.g_real,
+    #         'net_g_fake_list'                           : self.net.g_fake_list,
+    #         'net_is_adapt_communities_across_trials'    : self.net.is_adapt_communities_across_trials,
+    #         'net_is_estimate_Q'                         : self.net.is_estimate_Q,
+    #         'net_num_random_Q'                          : self.net.num_random_Q,
+    #         'net_resolution_parameter'                  : self.net.resolution_parameter,
+    #     }
+    #     json_data_dir = self.data_dir + "json"
+    #     if not os.path.exists(json_data_dir):
+    #         os.makedirs(json_data_dir)
+    #     with open(os.path.join(json_data_dir, self.filename + '.json'),'w') as fp:
+    #         json.dump(results, fp)
 
 
     def load(self):
@@ -394,9 +398,16 @@ if __name__ == "__main__":
         #mstfile = "D:\Programming\MST_JSAM\analyse_csvs\Data_Rogens\Results\Experiment_data\\17_TimQueißertREST1fertig.csv"
         #subj_exp = Experiment("MST", 15, 1, 8, is_load = True)
         estimate = True
+
+        paradigma = "MST"
+        paradigma = 'SEQsimple'
+        paradigma = 'SEQ'
+        simulation = False
+        
         if not estimate:
             file = 'D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\Results\\Experiment_data\\15_MST_1_5'
             file = 'D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\Results\\Experiment_data\\23_SEQ_1_8' #22
+            file = 'D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\Results\\Experiment_SEQ\\23_SEQ_1_0_8' #22
             with open(file,'rb') as fp:
                 subj_exp = pickle.load(fp)
         # print(vars(subj_exp.net))
@@ -404,28 +415,57 @@ if __name__ == "__main__":
         # print("attributes........................")
         # print(attributes)
         if estimate:
-            srttfile = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SRTT", "28_Dorothea Staub199811211_SRTT1.csv")
-            orgseqfile = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ", "20_JulianKlosFRA1fertig.csv")
-            orgseqfile = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ", "23_Isabell BernhardFRA1fertig.csv")
-        
+            if paradigma=="SEQ":
+                file = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ", "20_JulianKlosFRA1fertig.csv")
+                file = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ", "23_Isabell BernhardFRA1fertig.csv")
+                if simulation:
+                    file = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ_Sim", "34_NoraRichterFRA1fertig.csv")
+            if paradigma=="SEQ_simple":
+                if simulation:
+                    file = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ_Sim", "34_SEQsimpleFRA1fertig.csv")
+            if paradigma=="MST":
+                file = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST_Sim", "16_PaulaHörnigREST2fertig.csv")
+                file = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_MST_Grischeck\\Jung\\3_Elena​Buettner​MOLE21fertig.csv"
+            if paradigma == "SRTT":
+                file = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SRTT", "28_Dorothea Staub199811211_SRTT1.csv")
+            
+            
+            
+            
         # subj_class = MST(fullfilename = mstfile, sequence_length = 5) #, path_output = ".\\Data_python", _id = "no_id")
         #subj_class = SEQ(fullfilename = srttfile, sequence_length = 10) #, path_output = ".\\Data_python", _id = "no_id")
             root_dir = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\tmp"
-            subj_class = SEQ(fullfilename = orgseqfile, sequence_length = 8, path_output = root_dir, _id = "no_id")
+            root_dir = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_MST_Grischeck\\tmp"
+            #subj_class = SEQ(fullfilename = orgseqfile, sequence_length = 8, path_output = root_dir, _id = "no_id")
+            if paradigma == 'MST':
+                subj_class = MST(fullfilename = mstfile, sequence_length = 5, path_output = root_dir, _id = "no_id")
+            if paradigma == 'SEQ':
+                subj_class = SEQ(fullfilename = seqfile, sequence_length = 10, path_output = root_dir, _id = "no_id")
+            if paradigma == 'SEQsimple':
+                subj_class = SEQ(fullfilename = seqfilesimple, sequence_length = 10, path_output = root_dir, _id = "no_id")
         # print("MST ready")
             subj_exp = Experiment(subj_class.experiment_name, subj_class.vpn, subj_class.day, subj_class.sequence_length, root_dir,is_load=False, df = subj_class.df, paradigma=0)
         #print(subj_exp.cor_seqtimesum_lplblsn)
         #print(subj_exp.all_seqtimesum_lplblsn)
 
-            #subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9, is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=3)
-            subj_exp.add_network_class(coupling_parameter = 0.06,  resolution_parameter = 0.9, is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=3)
+            subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9, is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=3)
+            #subj_exp.add_network_class(coupling_parameter = 0.01,  resolution_parameter = 0.9, is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=3)
             #subj_exp.save_as_json()
         print("all_seqtimesum_per_block_slope_lpn")
         print(subj_exp.all_seqtimesum_per_block_slope_lpn)
-        print("Q_REAL")
-        print(subj_exp.net.q_real)
-        print(subj_exp.net.q_fake_list)
-        print(subj_exp.net.phi)
+        print("subj_exp.err_seqsum_lplbn")
+        print(subj_exp.err_seqsum_lplbn)
+        print("err_ipi_lplblsln")
+        for idx, p in enumerate(subj_exp.err_ipi_lplblsln):
+            print(f"paradigma {idx}")
+            for idx2,b in enumerate(p):
+                print(f"block {idx2}")
+                print(b)
+        # print("Q_REAL")
+        # print(subj_exp.net.q_real)
+        # print("Q_FAKE")
+        # print(subj_exp.net.q_fake_list)
+        # print(subj_exp.net.phi)
         
         #print(vars(subj_exp.net))
         #attributes = [attr for attr in dir(subj_exp.net) if (not attr.startswith('__'))]

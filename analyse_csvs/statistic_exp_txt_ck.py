@@ -13,6 +13,7 @@ import statistics
 import matplotlib.pyplot as plt
 import logging
 import statsmodels.api as sm
+from scipy.stats import mannwhitneyu
 from statsmodels.sandbox.regression.predstd import wls_prediction_std
 
 # class Stat_Group():
@@ -62,7 +63,7 @@ class Statistic_Exp_Dir():
         self.create_groups()
         self.check_data_consistency()
         self.was_there_learning_in_each_experiment()
-        self.estimate_q()
+        self.estimate_q(is_q_fake_abs = True)
         self.estimate_phi()
         self.estimate_anova()
 
@@ -406,7 +407,10 @@ class Statistic_Exp_Dir():
             # }
     """
         
-    def estimate_q(self):
+    def estimate_q(self, is_q_fake_abs = True):
+        """ is_q_fake_abs whether the difference between shuffeled an real Q is 
+            used or whether the absolute value will be used
+        """
         self.myprint(" ")
         self.myprint("__________________________________________________________")
         self.myprint("________________________Q_________________________________")
@@ -416,35 +420,118 @@ class Statistic_Exp_Dir():
         self.myprint("IKIs. Higher values of Q indicate a greater ease in separating chunks.")
         self.myprint("___________MST_______")
         exp_list = self.filter_experiments(experiment_names=["MST"], days=[1], vpns=[])
-        self.group_q(exp_list, "MST Day 1")
+        self.group_q(exp_list, "MST Day 1", q_fake_abs = is_q_fake_abs)
         exp_list = self.filter_experiments(experiment_names=["MST"], days=[2], vpns=[])
-        self.group_q(exp_list, "MST Day 2")
+        self.group_q(exp_list, "MST Day 2", q_fake_abs = is_q_fake_abs)
         self.myprint("___________SRTT_______")
         exp_list = self.filter_experiments(experiment_names=["SRTT"], days=[1], vpns=[])
-        self.group_q(exp_list, "SRTT Day 1")
+        self.group_q(exp_list, "SRTT Day 1", q_fake_abs = is_q_fake_abs)
         exp_list = self.filter_experiments(experiment_names=["SRTT"], days=[2], vpns=[])
-        self.group_q(exp_list, "SRTT Day 2")
+        self.group_q(exp_list, "SRTT Day 2", q_fake_abs = is_q_fake_abs)
         self.myprint("___________SEQ_______")
         exp_list = self.filter_experiments(experiment_names=["SEQ"], days=[1], vpns=[])
-        self.group_q(exp_list, "SEQ Day 1")
+        self.group_q(exp_list, "SEQ Day 1", q_fake_abs = is_q_fake_abs)
         exp_list = self.filter_experiments(experiment_names=["SEQ"], days=[2], vpns=[])
-        self.group_q(exp_list, "SEQ Day 2")
+        self.group_q(exp_list, "SEQ Day 2", q_fake_abs = is_q_fake_abs)
         self.myprint("end estimation group q")
 
-    def group_q(self,exp_list, desc):
+
+    def group_q(self,exp_list, desc, q_fake_abs = False):
+        """ in case of q_fake_abs = True then the abs difference will be computed
+            after z-score correction 
+            otherwise the simple difference will be used (this is not really correcte becaus different distributions)
+        """
         subj_q = [] # a list 
         subj_q_fake = []
+        subj_q_fake_z = []
+        subj_q_abs = []
+        subj_q_z = []
         print(len(exp_list))
         for exp in exp_list:
+            subj_q_abs.append(abs(exp.net.q_real - statistics.mean(exp.net.q_fake_list)))
             subj_q.append(exp.net.q_real)
             subj_q_fake.append(statistics.mean(exp.net.q_fake_list))
-        G1 = subj_q
-        G2 = subj_q_fake
-        t, p = stats.ttest_rel(G1, G2)
-        m = [statistics.mean(G1), statistics.mean(G2)]
-        std = [statistics.stdev(G1), statistics.stdev(G2)]
-        self.print_pt_2g(key=desc, t=t,p=p, mymean = m, std=std)
+            stderr=statistics.stdev(exp.net.q_fake_list)/sqrt(len(exp.net.q_fake_list))
+            subj_q_z.append((exp.net.q_real-statistics.mean(exp.net.q_fake_list))/stderr)
+            # fuege jeden normalisieren fake wert in Form eines Z Wertes nun ein
+            for f in exp.net.q_fake_list:
+                subj_q_fake_z.append((f-statistics.mean(exp.net.q_fake_list))/stderr)
+        if q_fake_abs:
+            self.myprint(f"Subject z-score for real Q ")
+            self.myprint(f"{str(subj_q_z)}")
+            self.myprint(f"with mean = {statistics.mean(subj_q_z)}")
+            self.print_Q_parts(exp.net)
+            G1 = [abs(elem) for elem in subj_q_z]
+            G2 = [abs(elem) for elem in subj_q_fake_z]
+            #G2 = abs(subj_q_fake_z)
+            #t, p = stats.ttest_ind(G1, G2)
+            m = [statistics.mean(G1), statistics.mean(G2)]
+            std = [statistics.stdev(G1), statistics.stdev(G2)]
+            #self.print_pt_2g(key=desc, t=t,p=p, mymean = m, std=std)
+            # data1 = [0.873, 2.817, 0.121, -0.945, -0.055, -1.436, 0.360, -1.478, -1.637, -1.869]
+            # data2 = [1.142, -0.432, -0.938, -0.729, -0.846, -0.157, 0.500, 1.183, -1.075, -0.169]
+            t, p = mannwhitneyu(G1, G2)
+            
+            self.print_pt_2g(key=desc, t=t,p=p, mymean = m, std=std)
+
+#             G1 = np.array(abs(subj_q_z))
+#             G2 = np.array(abs(subj_q_fake_z))
+# #            G1 = np.array(subj_q_abs)
+# #            G1 = subj_q_abs
+# #            self.myprint(str(G1))
+#             t, p = stats.ttest_1samp(G1,0.0)
+#             m = G1.mean()
+#             #m = statistics.mean(G1)
+#             std = G1.std()
+# #           std = statistics.stdev(G1)
+#             self.print_pt_1g(desc, t,p, m, std)
+
+        if not q_fake_abs:
+            G1 = subj_q
+            G2 = subj_q_fake
+            t, p = stats.ttest_rel(G1, G2)
+            m = [statistics.mean(G1), statistics.mean(G2)]
+            std = [statistics.stdev(G1), statistics.stdev(G2)]
+            self.print_pt_2g(key=desc, t=t,p=p, mymean = m, std=std)
         
+    def print_Q_parts(self, net):
+        """ analysiert die Zusammensetzung der Berechnung von Q"""
+        self.myprint("REAL Q")
+        for idx, Q in enumerate(net.Q_list):
+            
+            A = net.A_list[idx]
+            #print(f"A.shape = {A.shape}")
+            my2 = net.my2_list[idx]
+            gamma = net.gamma_list[idx]
+            #print(f"gamma.shape = {gamma.shape}")
+            k = net.k_list[idx]
+            #print(f"k.shape = {k.shape}")
+            m = net.m_list[idx]
+            #print(f"m.shape = {m.shape}")
+            delta_intra_slice = net.delta_intra_slice_list[idx]
+            #print(f"delta_intra_slice.shape = {delta_intra_slice.shape}")
+            delta_inter_slice = net.delta_inter_slice_list[idx]
+            #print(f"delta_inter_slice.shape = {delta_inter_slice.shape}")
+            C = net.C_list[idx]
+            #print(f"C.shape = {C.shape}")
+            g = net.g_list[idx]
+            #print(f"g.shape = {g.shape}")
+            A_sum = 0
+            gamma_sum = 0
+            C_sum = 0
+            dg_sum = 0
+            for i in range(A.shape[0]):
+                for j in range(A.shape[1]):
+                    for s in range(A.shape[2]):
+                        for r in range(C.shape[2]):
+                            A_sum +=A[i,j,s]
+                            gamma_sum += gamma[s]*((k[i,j]*k[j,s])/(2*m[s]))*delta_inter_slice[s,r]
+                            C_sum += delta_intra_slice[i,j] * C[j,s,r]
+                            dg_sum += 1 if (g[i,s]==g[j,r]) else 0
+            desc = "REAL Q " if idx==0 else "FAKE Q"
+
+            self.myprint(f"{desc} ({idx}) Zusammensetzung of result Q of {Q}")
+            self.myprint(f"Q = {1/my2} * Summe([{A_sum} - {gamma_sum} + {C_sum}] * {dg_sum})")
 
     def estimate_phi(self):
         pass

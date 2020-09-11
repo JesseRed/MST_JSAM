@@ -204,9 +204,21 @@ def estimate_all_ipi_hits_lsln(df_input):
     else:
         if current_sequence:
             err_ipi_lsln.append(current_sequence)
-            
+    
+    # self.empty_to_zero(all_ipi_lsln)
+    # self.empty_to_zero(cor_ipi_lsln)
+    # self.empty_to_zero(err_ipi_lsln)
+    # self.empty_to_zero(all_hits_lsln)
+
     return (all_ipi_lsln, cor_ipi_lsln, err_ipi_lsln, all_hits_lsln)         
 
+    def empty_to_zero(mylist):
+        """if list has no elements, then make a list with a zero
+        """
+        if len(mylist)==0:
+            mylist.append(0)
+        return mylist
+        
 
 def estimate_ipi_hits_lplblsln(df_ipi):
     df = df_ipi
@@ -217,14 +229,20 @@ def estimate_ipi_hits_lplblsln(df_ipi):
     for current_paradigma in range(df['sequence'].min() ,df['sequence'].max()+1):
         df_paradigma = df[df['sequence']==current_paradigma]
         all_ipi_lblsln, cor_ipi_lblsln, err_ipi_lblsln, all_hits_lblsln = estimate_ipi_hits_lblsln(df_paradigma)
-        if all_ipi_lblsln: 
-            all_ipi_lplblsln.append(all_ipi_lblsln)
-        if cor_ipi_lblsln:
-            cor_ipi_lplblsln.append(cor_ipi_lblsln)
-        if err_ipi_lblsln:
-            err_ipi_lplblsln.append(err_ipi_lblsln)
-        if all_hits_lblsln:
-            all_hits_lplblsln.append(all_hits_lblsln)
+
+        # CK 11.09.2020 append even if empty ... else blocks are not in correct order
+        all_ipi_lplblsln.append(all_ipi_lblsln)
+        cor_ipi_lplblsln.append(cor_ipi_lblsln)
+        err_ipi_lplblsln.append(err_ipi_lblsln)
+        all_hits_lplblsln.append(all_hits_lblsln)
+        # if all_ipi_lblsln: 
+        #     all_ipi_lplblsln.append(all_ipi_lblsln)
+        # if cor_ipi_lblsln:
+        #     cor_ipi_lplblsln.append(cor_ipi_lblsln)
+        # if err_ipi_lblsln:
+        #     err_ipi_lplblsln.append(err_ipi_lblsln)
+        # if all_hits_lblsln:
+        #     all_hits_lplblsln.append(all_hits_lblsln)
     return (all_ipi_lplblsln, cor_ipi_lplblsln, err_ipi_lplblsln, all_hits_lplblsln)
 
 
@@ -255,16 +273,22 @@ def estimate_ipi_hits_lblsln(df_ipi):
     err_ipi_lblsln = []
     all_hits_lblsln = []       #estimate_all_ipi_hits_lglsln_lsln()
     for current_block in range(df['BlockNumber'].min() ,df['BlockNumber'].max()+1):
+        #print(f"estimate_ipi_hits_lblsln with current block = {current_block}")
         df_block = df[df['BlockNumber']==current_block]
         all_ipi_lsln, cor_ipi_lsln, err_ipi_lsln, all_hits_lsln = estimate_all_ipi_hits_lsln(df_block)
-        if all_ipi_lsln:
-            all_ipi_lblsln.append(all_ipi_lsln)
-        if cor_ipi_lsln:
-            cor_ipi_lblsln.append(cor_ipi_lsln)
-        if err_ipi_lsln:
-            err_ipi_lblsln.append(err_ipi_lsln)
-        if all_hits_lsln:
-            all_hits_lblsln.append(all_hits_lsln)
+        # CK 11.09.2020 fill with empty list to avoid false numbering of blocks
+        all_ipi_lblsln.append(all_ipi_lsln)
+        cor_ipi_lblsln.append(cor_ipi_lsln)
+        err_ipi_lblsln.append(err_ipi_lsln)
+        all_hits_lblsln.append(all_hits_lsln)
+        # if all_ipi_lsln:
+        #     all_ipi_lblsln.append(all_ipi_lsln)
+        # if cor_ipi_lsln:
+        #     cor_ipi_lblsln.append(cor_ipi_lsln)
+        # if err_ipi_lsln:
+        #     err_ipi_lblsln.append(err_ipi_lsln)
+        # if all_hits_lsln:
+        #     all_hits_lblsln.append(all_hits_lsln)
     return (all_ipi_lblsln, cor_ipi_lblsln, err_ipi_lblsln, all_hits_lblsln)
 
 # def estimate_all_ipi_hits(self):

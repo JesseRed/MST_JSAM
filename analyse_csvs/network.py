@@ -10,7 +10,7 @@ from statistics import mean, stdev
 import statistics
 import scipy
 import networkx
-import time
+import time, copy
 from sim import SIM
 import random
 import pickle
@@ -39,30 +39,57 @@ class Network():
         self.ipi = self.get_normalized_2D_array(ipi)
         # self.ipi now 2D np.array trials x sequence_elements (key presses per trial)
         
-        
+        #! all relevant Values are saved in lists .... starting with the variable namen and than list
+        # IMPORTANT is that the real value of all estimations is the first one than the 
+        # shuffeld ones following
 #        self.ipi = self.convert_to_array2D(self.ipi_norm)
         self.A = self.get_adjacency_matrix(self.ipi) 
+        self.A_list = []
         self.C = self.get_inter_slice_coupling(self.ipi, self.coupling_parameter)
+        self.C_list = []
         self.delta_intra_slice = self.get_delta_intra_slice(self.A)
+        self.delta_intra_slice_list = []
         self.delta_inter_slice = self.get_delta_inter_slice(self.C)
+        self.delta_inter_slice_list = []
 
         self.c = np.sum(self.C, axis=2)  # checked 08.09.2020
+        self.c_list = []
         self.k = np.sum(self.A, axis=0)  # checked 08.09.2020
+        self.k_list = []
         self.kappa = self.k + self.c     # checked 08.09.2020
+        self.kappa_list = []
         self.my2 = sum(sum(self.kappa))  # checked 08.09.2020
+        self.my2_list = []
         self.m = np.sum(self.k, axis=0)  # checked 08.09.2020
+        self.m_list = []
         self.gamma = np.zeros((self.A.shape[2]))+self.resolution_parameter  # checked 08.09.2020
+        self.gamma_list = []
+        self.ipi_list = []
+        self.phi_list = []
+        self.g_list = []
+        self.Q_list = []
+        
 
         if self.is_estimate_clustering:
             self.clustering()
         
-        if self.is_estimate_Q:
-            g_real, q_real = self.estimate_chunks(is_random = False)
-            self.phi_real = self.estimate_chunk_magnitudes(g_real)
-            if self.num_random_Q>0:
-                self.test_chunking_against_random(rand_iterations=self.num_random_Q)
-                #results_json = self.get_results_as_json()
-            self.print_results(print_shuffled_results = (self.num_random_Q>0))
+        if self.estimate_Q:
+            self.estimate_Q()
+
+
+    def estimate_Q(self):
+        # it is important that the estimation with real values comes first !!!!
+        # the real values are the first entry in the list ... than the fake values following
+        self.estimate_chunks(is_random = False)
+        self.estimate_chunk_magnitudes(self.g_list[-1])
+        # only after estimation of real Q than the estimation of fals Q is performed
+        for i in range(self.num_random_Q):
+            self.estimate_chunks(is_random = True)
+            self.estimate_chunk_magnitudes(self.g_list[-1])
+
+        self.q_real_t, self.q_real_p = scipy.stats.ttest_1samp(self.Q_list[1:],self.Q_list[0])
+        self.print_results(print_shuffled_results = (self.num_random_Q>0))
+
 
     def get_normalized_2D_array(self, ipi):
         ''' checking and preparing of input data
@@ -80,7 +107,8 @@ class Network():
         return ipi_norm_arr
 
     # checked CK 07.09.2020
-    def shuffle(self, ipi): 
+    def shuffle(self, ipi_org):
+        ipi = copy.deepcopy(ipi_org) 
         for i in range(ipi.shape[0]):
             random.shuffle(ipi[i,:])
         return ipi
@@ -126,7 +154,8 @@ class Network():
             phi_arr[i]=(phi_arr[i]-m)/m
 
         self.phi = phi_arr.tolist()
-        return self.phi
+        self.phi_list.append(self.phi)
+        return
 
 
     def estimate_Q_st(self, trial, W, P):
@@ -163,9 +192,11 @@ class Network():
         if is_random:
             # Shuffle the data
             ipi_shuffled = self.shuffle(self.ipi)
+            self.ipi_list.append(ipi_shuffled)
             A = self.get_adjacency_matrix(ipi_shuffled)
         else:
             A = self.A # setzte die normale Adjecency matrix
+            self.ipi_list.append(self.ipi)
             
         g = self.initialize_g() # jedes node ist seine eigene community
         start = time.time()
@@ -189,10 +220,27 @@ class Network():
             logger.info(f"durchlauf={idx} mit Qms = {Qms}")
         Qms = self.get_Qms_opt(g, A)
         logger.info(f"Final Qms = {Qms}")
-        if not is_random:
-            self.g_real = g
-            self.q_real = Qms
-        return (g, Qms)
+        self.A = A
+        self.g = g
+        self.Qms = Qms
+        """ save the estimated Valued for possible further analysis"""
+        self.save_Variables()
+        
+    
+    def save_Variables(self):
+        self.A_list.append(self.A)
+        self.C_list.append(self.C)
+        self.delta_intra_slice_list.append(self.delta_intra_slice)
+        self.delta_inter_slice_list.append(self.delta_inter_slice)
+        self.c_list.append(self.c)
+        self.k_list.append(self.k)
+        self.kappa_list.append(self.kappa)
+        self.my2_list.append(self.my2)
+        self.m_list.append(self.m)
+        self.gamma_list.append(self.gamma)
+        self.g_list.append(self.g)
+        self.Q_list.append(self.Qms)
+            
         
     def adapt_communities(self,g, A):
         # Anpassung von g entsprechend dem Algorithmus von Blondel 2008
@@ -258,6 +306,7 @@ class Network():
     def initialize_g(self):
         # initialization with every node is a community
         g = np.arange(self.A.shape[0]*self.A.shape[2]).reshape(self.A.shape[0],self.A.shape[2])
+        g = self.shuffle(g)
         #g = np.ones((self.A.shape[0],self.A.shape[2]),dtype=int)
         return g
     
@@ -593,37 +642,9 @@ class Network():
         # plt.scatter(X[labels==4, 0], X[labels==4, 1], s=50, marker='o', color='orange')
 
         # plt.show()
-    
-    def test_chunking_against_random(self, rand_iterations = 10):
-        # teste ob das Netzwerk g_real mit dem Q sich 
-        # signifikant von geshuffelten kombinationen unterscheidet
-        # rand_num ist die Anzahl der random Konfigurationen
-        #Randomize
-        
-        g_fake_list = []
-        q_fake_list = []
-        phi_fake_list = []
-        for i in range(rand_iterations):
-            g, q = self.estimate_chunks(is_random = True)
 
-            phi = self.estimate_chunk_magnitudes(g)
-            g_fake_list.append(g)
-            q_fake_list.append(q)
-            phi_fake_list.append(phi)
-        # with open(".\\Data_python\\g_fake_list.txt", "wb") as fp:   #Pickling
-        #     pickle.dump(g_fake_list, fp)
-        # with open(".\\Data_python\\q_fake_list.txt", "wb") as fp:   #Pickling
-        #     pickle.dump(q_fake_list, fp)
-        # with open(".\\Data_python\\phi_fake_list.txt", "wb") as fp:   #Pickling
-        #     pickle.dump(phi_fake_list, fp)
-        # with open(".\\Data_python\\phi_real.txt", "wb") as fp:   #Pickling
-        #     pickle.dump(self.phi_real, fp)
-        self.q_fake_list = q_fake_list
-        self.g_fake_list = g_fake_list
-        self.phi_fake_list = phi_fake_list
-        t, p = scipy.stats.ttest_1samp(q_fake_list,self.q_real)
-        self.q_real_t = t
-        self.q_real_p = p
+
+
 
     def print_results(self, print_shuffled_results = True):
         ''' printing der relevanten Informationen
@@ -631,86 +652,18 @@ class Network():
         logger.info(".....................")
         logger.info("---print relevant Information---")
         logger.info(f"inputfile = ")
-        logger.info(f"Qmulti-trial = {self.q_real}")
+        logger.info(f"Qmulti-trial = {self.Q_list[0]}")
         if print_shuffled_results:
-            logger.info(f"Qmulti-trial = {self.q_real} (p = {self.q_real_p}, t = {self.q_real_t})")
-            q_fake_list_mean = sum(self.q_fake_list)/len(self.q_fake_list)
-            q_fake_list_std = np.std(np.asarray(self.q_fake_list), axis = 0)
+            logger.info(f"Qmulti-trial = {self.Q_list[0]} (p = {self.q_real_p}, t = {self.q_real_t})")
+            q_fake_list_mean = sum(self.Q_list[1:])/(len(self.Q_list)-1)
+            q_fake_list_std = np.std(np.asarray(self.Q_list[1:]), axis = 0)
             logger.info(f"Qmulti-trial-shuffled = {q_fake_list_mean} +- {q_fake_list_std:.4}")
-        #logger.info(f"phi ....")
-        #logger.info(f"phi_real = {self.phi_real}")
-        x = np.arange(len(self.phi_real)-1)
-        y = self.phi_real[1:]
+
+        x = np.arange(len(self.phi_list[-1])-1)
+        y = self.phi_list[-1][1:]
         slope,b = np.polyfit(x, y, 1)
         logger.info(f"slope of phi_real = {slope}")
-        #plt.plot(x, y, '.')
-        #plt.plot(x, b + slope * x, '-')
-        #plt.show()
 
-    #* es wird nun alles in der Experiment Klasse abgespeichert 
-    #* diese Funktion sollte nun nicht mehr gebraucht werden
-    # def get_results_as_json(self):
-    #     ''' speicherung der relevanten Informationen in einm json file
-    #     '''
-    #     results = {
-    #         'ipi':                  self.ipi.tolist(),
-    #         'date_of_analysis':     datetime.today().strftime('%Y-%m-%d')
-    #     }
-    #     if hasattr(self, 'filename'):
-    #         results.update({'input_file': self.filename})
-
-    #     if self.is_estimate_clustering:
-    #         results.update({'is_clustering_performed': 'True'})
-        
-    #     if self.is_estimate_Q: #= True, is_estimate_Q= False, num_random_Q=0 
-    #         x = np.arange(len(self.phi_real)-1)
-    #         y = self.phi_real[1:]
-    #         phi_real_slope,b = np.polyfit(x, y, 1)
-    #         results.update({
-    #             'phi_real':             self.phi_real,
-    #             'phi_real_slope':       phi_real_slope,
-    #             'q_real':               self.q_real,
-    #             'g_real':               tolist_ck(self.g_real),
-    #             'A':                    self.A.tolist()
-    #         })
-
-    #     if self.num_random_Q>0: #= True, is_estimate_Q= False, num_random_Q=0 
-    #         self.q_real_t, self.q_real_p = scipy.stats.ttest_1samp(self.q_fake_list,self.q_real)
-    #         results.update({
-    #             'q_real_t':             self.q_real_t,
-    #             'q_real_p':             self.q_real_p,
-    #             'q_fake_list':          self.q_fake_list,
-    #             'q_fake_list_mean':     sum(self.q_fake_list)/len(self.q_fake_list),
-    #             'g_fake_list':          tolist_ck(self.g_fake_list) # arrays verschachtelt in einer Liste
-    #         })
-
-        # phi_fake_list_arr = np.asarray(self.phi_fake_list)
-        # phi_fake_list_mean = np.nanmean(phi_fake_list_arr,axis=0)
-        # phi_fake_list_std = np.nanstd(phi_fake_list_arr,axis=0)
-        # x = np.arange(len(self.phi_real)-1)
-        # y = self.phi_real[1:]
-        # phi_real_slope,b = np.polyfit(x, y, 1)
-        # filename = 'net_results_x2.json'# + self.filename
-        # results = {
-        #     'input_file':           '04_2_SRTT_2020-02-06_12-17-15.txt',
-        #     'ipi':                  self.ipi.tolist(),
-        #     'date_of_analysis':     datetime.today().strftime('%Y-%m-%d'),
-        #     'phi_real':             self.phi_real,
-        #     'phi_real_slope':       phi_real_slope,
-        #     'q_real':               self.q_real,
-        #     'q_real_t':             self.q_real_t,
-        #     'q_real_p':             self.q_real_p,
-        #     'q_fake_list':          self.q_fake_list,
-        #     'q_fake_list_mean':     sum(self.q_fake_list)/len(self.q_fake_list),
-        #     'g_real':               self.tolist_ck(self.g_real),
-        #     'g_fake_list':          self.tolist_ck(self.g_fake_list), # arrays verschachtelt in einer Liste
-        #     'A':                    self.A.tolist()
-        # }
-        # with open(".\\Data_python\\"+filename, "w") as fp:   #Pickling
-        #             json.dump(results, fp)
-        # logger.info(f"q_real = {self.q_real}")
-        # logger.info(f"q_fake_list_mean = {sum(self.q_fake_list)/len(self.q_fake_list)}")
-        
 
 
             
@@ -748,12 +701,14 @@ if __name__ == '__main__':
  #   net = Network(srtt.rts_cv_but, coupling_parameter = 0.03,  resolution_parameter = 0.9)
 
     if is_estimate_Q:
-        g_real,q_real = net.estimate_chunks(is_random = False)
-        logger.info(f"q_real = {q_real}")
-        net.phi_real = net.estimate_chunk_magnitudes(g_real)
-        if is_test_against_random:
-            net.test_chunking_against_random(rand_iterations=3)
-            #logger.info(f"q_real = {q_real}")
+        net.estimate_chunks(is_random = False)
+        logger.info(f"q_real = {net.Q_list[0]}")
+        net.estimate_chunk_magnitudes(net.g_list[-1])
+
+        # only after estimation of real Q than the estimation of fals Q is performed
+        for i in range(self.num_random_Q):
+            net.estimate_chunks(is_random = True)
+            Network.estimate_chunk_magnitudes(net.g_list[-1])
             results_json = net.get_results_as_json()
         net.print_results(print_shuffled_results = is_test_against_random)
 
