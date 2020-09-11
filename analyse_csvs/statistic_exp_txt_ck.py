@@ -20,7 +20,14 @@ from statsmodels.sandbox.regression.predstd import wls_prediction_std
 #################################################
 # Logging configuration
 #################################################
-dirname = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\Results"
+computername = socket.gethostname()
+if computername == "BigBang":
+    mstfile = "G:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
+if computername == "XenonBang":
+    dirname = "G:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\Results"
+if computername == "Laptop-LittleBang":
+    dirname = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\Results"
+
 logfilename = os.path.join(dirname, "results.log")
 logger_stat = logging.getLogger("")
 logger_stat.setLevel(logging.DEBUG)
