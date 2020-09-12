@@ -11,7 +11,7 @@ from scipy import stats
 from scipy.stats import ttest_1samp, ttest_ind, ttest_rel
 import statistics
 import matplotlib.pyplot as plt
-import logging
+import logging, socket
 import statsmodels.api as sm
 from scipy.stats import mannwhitneyu
 from statsmodels.sandbox.regression.predstd import wls_prediction_std
@@ -448,6 +448,9 @@ class Statistic_Exp_Dir():
             after z-score correction 
             otherwise the simple difference will be used (this is not really correcte becaus different distributions)
         """
+        if not exp_list:
+            self.myprint("not experiments for {desc}")
+            return
         subj_q = [] # a list 
         subj_q_fake = []
         subj_q_fake_z = []
@@ -455,19 +458,19 @@ class Statistic_Exp_Dir():
         subj_q_z = []
         print(len(exp_list))
         for exp in exp_list:
-            subj_q_abs.append(abs(exp.net.q_real - statistics.mean(exp.net.q_fake_list)))
-            subj_q.append(exp.net.q_real)
-            subj_q_fake.append(statistics.mean(exp.net.q_fake_list))
-            stderr=statistics.stdev(exp.net.q_fake_list)/sqrt(len(exp.net.q_fake_list))
-            subj_q_z.append((exp.net.q_real-statistics.mean(exp.net.q_fake_list))/stderr)
+            subj_q_abs.append(abs(exp.net.Q_list[0] - statistics.mean(exp.net.Q_list[1:])))
+            subj_q.append(exp.net.Q_list[0])
+            subj_q_fake.append(statistics.mean(exp.net.Q_list[1:]))
+            stderr=statistics.stdev(exp.net.Q_list[1:])/sqrt(len(exp.net.Q_list[1:]))
+            subj_q_z.append((exp.net.Q_list[0]-statistics.mean(exp.net.Q_list[1:]))/stderr)
             # fuege jeden normalisieren fake wert in Form eines Z Wertes nun ein
-            for f in exp.net.q_fake_list:
-                subj_q_fake_z.append((f-statistics.mean(exp.net.q_fake_list))/stderr)
+            for f in exp.net.Q_list[1:]:
+                subj_q_fake_z.append((f-statistics.mean(exp.net.Q_list[1:]))/stderr)
         if q_fake_abs:
             self.myprint(f"Subject z-score for real Q ")
             self.myprint(f"{str(subj_q_z)}")
             self.myprint(f"with mean = {statistics.mean(subj_q_z)}")
-            self.print_Q_parts(exp.net)
+            self.myprint(exp.net.print_Q_parts())
             G1 = [abs(elem) for elem in subj_q_z]
             G2 = [abs(elem) for elem in subj_q_fake_z]
             #G2 = abs(subj_q_fake_z)
@@ -501,44 +504,7 @@ class Statistic_Exp_Dir():
             std = [statistics.stdev(G1), statistics.stdev(G2)]
             self.print_pt_2g(key=desc, t=t,p=p, mymean = m, std=std)
         
-    def print_Q_parts(self, net):
-        """ analysiert die Zusammensetzung der Berechnung von Q"""
-        self.myprint("REAL Q")
-        for idx, Q in enumerate(net.Q_list):
-            
-            A = net.A_list[idx]
-            #print(f"A.shape = {A.shape}")
-            my2 = net.my2_list[idx]
-            gamma = net.gamma_list[idx]
-            #print(f"gamma.shape = {gamma.shape}")
-            k = net.k_list[idx]
-            #print(f"k.shape = {k.shape}")
-            m = net.m_list[idx]
-            #print(f"m.shape = {m.shape}")
-            delta_intra_slice = net.delta_intra_slice_list[idx]
-            #print(f"delta_intra_slice.shape = {delta_intra_slice.shape}")
-            delta_inter_slice = net.delta_inter_slice_list[idx]
-            #print(f"delta_inter_slice.shape = {delta_inter_slice.shape}")
-            C = net.C_list[idx]
-            #print(f"C.shape = {C.shape}")
-            g = net.g_list[idx]
-            #print(f"g.shape = {g.shape}")
-            A_sum = 0
-            gamma_sum = 0
-            C_sum = 0
-            dg_sum = 0
-            for i in range(A.shape[0]):
-                for j in range(A.shape[1]):
-                    for s in range(A.shape[2]):
-                        for r in range(C.shape[2]):
-                            A_sum +=A[i,j,s]
-                            gamma_sum += gamma[s]*((k[i,j]*k[j,s])/(2*m[s]))*delta_inter_slice[s,r]
-                            C_sum += delta_intra_slice[i,j] * C[j,s,r]
-                            dg_sum += 1 if (g[i,s]==g[j,r]) else 0
-            desc = "REAL Q " if idx==0 else "FAKE Q"
-
-            self.myprint(f"{desc} ({idx}) Zusammensetzung of result Q of {Q}")
-            self.myprint(f"Q = {1/my2} * Summe([{A_sum} - {gamma_sum} + {C_sum}] * {dg_sum})")
+    
 
     def estimate_phi(self):
         pass
@@ -589,9 +555,11 @@ class Statistic_Exp_Dir():
                 self.myprint("1.1. is there a linear decrease in the Time to perform an sequence per block per paradigma (linear Regression)?")
                 self.myprint(".... for day 1...")
                 exp_list = self.filter_experiments(experiment_names=["SEQ"], days=[1], vpns=[])
+                print([e.filename for e in exp_list])
                 self.estimate_linear_regression(exp_list, "cor_seqtimesum_lplblsn", 0, mean_last_dim = True, num_blocks=10)
                 self.myprint(".... for day 2...")
                 exp_list = self.filter_experiments(experiment_names=["SEQ"], days=[2], vpns=[])
+                print([e.filename for e in exp_list])
                 self.estimate_linear_regression(exp_list, "cor_seqtimesum_lplblsn", 0, mean_last_dim = True, num_blocks=10)
                 self.myprint("now use the slope of each subject and perform a t-test for the group")
                 exp_list = self.filter_experiments(experiment_names=["SEQ"], days=[1], vpns=[])
@@ -664,7 +632,7 @@ class Statistic_Exp_Dir():
         for exp in exp_list:
             v = getattr(exp,key)
             t = v[paradigma]
-        
+            print(f"the data of file {exp.filename}  and parameter={key}... {t}")
             if mean_last_dim:
                 t = self.list_of_list_to_list(t)
             if len(t)==(num_blocks-1):

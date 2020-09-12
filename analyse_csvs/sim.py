@@ -22,6 +22,8 @@ class SIM():
             self.create_SEQ()
         if paradigm_name == 'SEQsimple':
             self.create_SEQsimple()
+        if paradigm_name == 'SEQdirect':
+            self.create_SEQdirect()
     
     def create_MST(self):
 
@@ -304,9 +306,6 @@ class SIM():
         #use constant values for each sequence
         const_val = [0.7, 0.75, 2.65, 0.52, 0.5, 1.9, 0.4, 0.43 ]
         const_val = [2.7, 0.75, 0.65, 0.52, 0.5, 0.6, 0.4, 0.43 ]
-        const_val = [[0.7, 0.75, 2.65, 0.52, 0.5, 1.9, 0.4, 0.43],
-                     [0.75, 2.65, 0.52, 0.5, 1.9, 0.4, 0.43, 2.7],
-                     [2.65, 0.52, 0.5, 1.9, 0.4, 0.43, 2.7, 0.5]]
         const_val = [[0.5, 1.5, 0.5, 1.5, 0.5, 1.5, 0.5, 1.5],
                      [2.5, 3.5, 2.5, 3.5, 2.5, 3.5, 2.5, 3.5],
                      [0.5, 1.5, 0.5, 1.5, 0.5, 1.5, 0.5, 1.5]
@@ -315,6 +314,20 @@ class SIM():
                      [0.5, 0.5, 0.5, 0.5, 0.5, 2.5, 0.5, 0.5],
                      [0.5, 0.5, 2.5, 0.5, 0.5, 0.5, 2.5, 0.5]
                      ]
+        const_val = [[2.5, 2.5, 2.5, 2.5, 0.5, 0.5, 0.5, 0.5],
+                     [2.5, 2.5, 2.5, 2.5, 0.5, 0.5, 0.5, 0.5],
+                     [2.5, 2.5, 2.5, 2.5, 0.5, 0.5, 0.5, 0.5]
+                     ]
+        const_val = [[0.7, 0.75, 2.65, 0.52, 0.5, 1.9, 0.4, 0.43],
+                     [0.75, 2.65, 0.52, 0.5, 1.9, 0.4, 0.43, 2.7],
+                     [2.65, 0.52, 0.5, 1.9, 0.4, 0.43, 2.7, 0.5]]
+        const_val = [[0.7, 0.75, 2.65, 0.52, 0.5, 1.9, 0.4, 0.43],
+                     [0.75, 2.65, 0.52, 0.5, 1.9, 0.4, 0.43, 0.7],
+                     [2.65, 0.52, 0.5, 1.9, 0.4, 0.43, 0.7, 0.5],
+                     [0.55, 0.52, 1.5, 1.9, 0.5, 0.53, 0.47, 0.52],
+                     [0.65, 0.42, 0.5, 1.3, 0.45, 0.58, 0.77, 1.52]
+                     ]
+                     
         #const_val = [2.7, 0.75, 0.65, 0.52, 0.5, 0.6, 0.4, 0.43 ]
                         
         df = pd.read_csv(self.inputfile, sep = ';' )
@@ -330,6 +343,7 @@ class SIM():
         block_idx = 1
         z = 0
         t_last = 0
+#        for idx in range(len(t_org)):
         for idx in range(len(t_org)):
             if block_idx!=b_org[idx]:
                 block_idx+=1
@@ -345,7 +359,9 @@ class SIM():
             const_val[const_sel] = [t *0.99 for t in const_val[const_sel]]
             t_last = t_last + const_val[const_sel][z] + rnd
             t_new.append(t_last)
-
+            z += 1
+            if z>=len(const_val[0]):
+                z=0
         for idx in range(df.shape[0]):
              # wir passen nur die Zeiten an 
             df.iloc[idx,2]= str(t_new[idx]).replace('.',',')
@@ -354,10 +370,54 @@ class SIM():
         df.to_csv(self.outputfile, sep=';', index=False)
 
 
+    def create_SEQdirect(self, chunk_length = 3):
+        
+        print(f"create SEQ file direct from handmade matrix")
+
+        #use constant values for each sequence
+        const_val = [[0.7, 0.75, 2.65, 0.52, 0.5, 1.9, 0.4, 0.43],
+                     [0.75, 2.65, 0.52, 0.5, 1.9, 0.4, 0.43, 0.7],
+                     [2.65, 0.52, 0.5, 1.9, 0.4, 0.43, 0.7, 0.5],
+                     [0.55, 0.52, 1.5, 1.9, 0.5, 0.53, 0.47, 0.52],
+                     [0.65, 0.42, 0.5, 1.3, 0.45, 0.58, 0.77, 1.52]
+                     ]
+                     
+        #const_val = [2.7, 0.75, 0.65, 0.52, 0.5, 0.6, 0.4, 0.43 ]
+                        
+        df = pd.read_csv(self.inputfile, sep = ';' )
+        t_org = []
+        b_org = []
+        for idx, row in df.iterrows():
+            t_org.append(float(row["Time Since Block start"].replace(',','.')))
+            b_org.append(int(row["BlockNumber"]))
+        # ersetze nun die Zeiten
+        block_idx = 1
+        z = 0
+        t_last = 0
+        t_new = []
+#        for idx in range(len(t_org)):
+        for idx in range(len(const_val)*8):
+            if block_idx!=b_org[idx]:
+                block_idx+=1
+                z = 0
+                t_last = 0
+            rnd = np.random.uniform(0.0, 1.7)
+            t_last = t_last + const_val[block_idx-1][z] + rnd
+            t_new.append(t_last)
+            z+=1
+
+        for idx in range(df.shape[0]):
+             # wir passen nur die Zeiten an 
+            df.iloc[idx,2]= str(t_new[idx]).replace('.',',')
+
+        print(df.head(50))
+        df.to_csv(self.outputfile, sep=';', index=False)
+
+
 
 if __name__ == "__main__":
     # seed random number generator
-    paradigm_name = 'SEQsimple'
+    paradigm_name = 'SEQdirect'
     if paradigm_name == 'MST':
         inputfile = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST_Sim\\TemplateMST.csv"
         outputfile = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST_Sim\\16_PaulaHörnigREST2fertig.csv"
@@ -369,6 +429,9 @@ if __name__ == "__main__":
         outputfile = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ_Sim\\34_NoraRichterFRA1fertig.csv"
     if paradigm_name == 'SEQsimple':
         inputfile = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ_Sim\\TemplateSEQ.csv"
+        outputfile = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ_Sim\\34_SEQsimpleFRA1fertig.csv"
+    if paradigm_name == 'SEQdirect':
+        inputfile = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ_Sim\\TemplateSEQ2.csv"
         outputfile = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ_Sim\\34_SEQsimpleFRA1fertig.csv"
         
     mysim = SIM(paradigm_name, inputfile, outputfile)

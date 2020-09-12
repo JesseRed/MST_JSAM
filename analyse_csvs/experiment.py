@@ -400,9 +400,10 @@ if __name__ == "__main__":
         estimate = True
 
         paradigma = "MST"
-        paradigma = 'SEQsimple'
+
         paradigma = 'SEQ'
-        simulation = False
+        paradigma = 'SEQsimple'
+        simulation = True
         
         if not estimate:
             file = 'D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\Results\\Experiment_data\\15_MST_1_5'
@@ -420,7 +421,7 @@ if __name__ == "__main__":
                 file = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ", "23_Isabell BernhardFRA1fertig.csv")
                 if simulation:
                     file = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ_Sim", "34_NoraRichterFRA1fertig.csv")
-            if paradigma=="SEQ_simple":
+            if paradigma=="SEQsimple":
                 if simulation:
                     file = os.path.join("D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\SEQ_Sim", "34_SEQsimpleFRA1fertig.csv")
             if paradigma=="MST":
@@ -438,29 +439,31 @@ if __name__ == "__main__":
             root_dir = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_MST_Grischeck\\tmp"
             #subj_class = SEQ(fullfilename = orgseqfile, sequence_length = 8, path_output = root_dir, _id = "no_id")
             if paradigma == 'MST':
-                subj_class = MST(fullfilename = mstfile, sequence_length = 5, path_output = root_dir, _id = "no_id")
+                subj_class = MST(fullfilename = file, sequence_length = 5, path_output = root_dir, _id = "no_id")
             if paradigma == 'SEQ':
-                subj_class = SEQ(fullfilename = seqfile, sequence_length = 10, path_output = root_dir, _id = "no_id")
+                subj_class = SEQ(fullfilename = file, sequence_length = 8, path_output = root_dir, _id = "no_id")
             if paradigma == 'SEQsimple':
-                subj_class = SEQ(fullfilename = seqfilesimple, sequence_length = 10, path_output = root_dir, _id = "no_id")
+                subj_class = SEQ(fullfilename = file, sequence_length = 8, path_output = root_dir, _id = "no_id")
         # print("MST ready")
             subj_exp = Experiment(subj_class.experiment_name, subj_class.vpn, subj_class.day, subj_class.sequence_length, root_dir,is_load=False, df = subj_class.df, paradigma=0)
         #print(subj_exp.cor_seqtimesum_lplblsn)
         #print(subj_exp.all_seqtimesum_lplblsn)
 
-            subj_exp.add_network_class(coupling_parameter = 0.03,  resolution_parameter = 0.9, is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=3)
+
+            subj_exp.add_network_class(coupling_parameter = 0.913,  resolution_parameter = 0.9, is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=3)
+            print(subj_exp.net.print_Q_parts())
             #subj_exp.add_network_class(coupling_parameter = 0.01,  resolution_parameter = 0.9, is_estimate_clustering= False, is_estimate_Q= True, num_random_Q=3)
             #subj_exp.save_as_json()
-        print("all_seqtimesum_per_block_slope_lpn")
-        print(subj_exp.all_seqtimesum_per_block_slope_lpn)
-        print("subj_exp.err_seqsum_lplbn")
-        print(subj_exp.err_seqsum_lplbn)
-        print("err_ipi_lplblsln")
-        for idx, p in enumerate(subj_exp.err_ipi_lplblsln):
-            print(f"paradigma {idx}")
-            for idx2,b in enumerate(p):
-                print(f"block {idx2}")
-                print(b)
+        # print("all_seqtimesum_per_block_slope_lpn")
+        # print(subj_exp.all_seqtimesum_per_block_slope_lpn)
+        # print("subj_exp.err_seqsum_lplbn")
+        # print(subj_exp.err_seqsum_lplbn)
+        # print("err_ipi_lplblsln")
+        # for idx, p in enumerate(subj_exp.err_ipi_lplblsln):
+        #     print(f"paradigma {idx}")
+        #     for idx2,b in enumerate(p):
+        #         print(f"block {idx2}")
+        #         print(b)
         # print("Q_REAL")
         # print(subj_exp.net.q_real)
         # print("Q_FAKE")
