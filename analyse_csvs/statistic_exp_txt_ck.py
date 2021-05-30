@@ -23,6 +23,7 @@ from statsmodels.sandbox.regression.predstd import wls_prediction_std
 computername = socket.gethostname()
 if computername == "BigBang":
     mstfile = "G:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
+    dirname = ".\\Data_Rogens\\Results"
 if computername == "XenonBang":
     dirname = "G:\\Programming\\MST_JSAM\\analyse_csvs\\Data_Rogens\\Results"
 if computername == "Laptop-LittleBang":

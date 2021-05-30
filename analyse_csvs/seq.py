@@ -16,7 +16,10 @@ logger = logging.getLogger(__name__)
 
 class SEQ():
     def __init__(self, fullfilename=".\\Data_Seq_8\\_Carsten_FRA1fertig.csv", sequence_length=8, path_output=".\\Data_python", _id="nox_id", show_images = False, target_color = 8):        
-        """ die target color markiert die Zielfarbe welche als erstes in die Liste der paradigmen kommt ...
+        """ Wandelt das uebergebene csv File in ein Standard Format um das in 
+            der Experiment Klasse dann standardisiert weiter verarbeitet werden kann
+
+            die target color markiert die Zielfarbe welche als erstes in die Liste der paradigmen kommt ...
             als letztes sollte immer die RandomSequenz
 
             und fuer welches das outputfile erstellt wird

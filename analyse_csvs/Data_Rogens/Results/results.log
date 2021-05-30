@@ -1,2 +1,294 @@
-2020-09-11 20:27:54,020 :: statistic_exp_txt_ck :: DEBUG :: root :: entering stats ....
-2020-09-11 20:27:54,055 :: main :: DEBUG :: __main__ :: start of main window
+2021-05-29 20:46:06,457 :: statistic_exp_txt_ck :: DEBUG :: root :: entering stats ....
+2021-05-29 20:46:06,475 :: seq :: INFO :: seq :: Initialising class SEQ ...
+2021-05-29 20:46:07,657 :: network :: INFO :: network :: Qms execution time = 0.017 s
+2021-05-29 20:46:28,581 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:46:28,581 :: network :: INFO :: network :: ----------Durchlauf = 1 --------------
+2021-05-29 20:46:28,581 :: network :: INFO :: network :: postadapt ... unique elements in g: 277
+2021-05-29 21:02:04,881 :: group_analysis :: DEBUG :: group_analysis :: after self.groups.append in group_analysis ... len(groups) = 1
+: INFO :: network :: durchlauf=1 mit Qms = 0.35452407210712783
+2021-05-29 20:46:44,601 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:46:44,601 :: network :: INFO :: network :: ----------Durchlauf = 2 --------------
+2021-05-29 20:46:44,602 :: network :: INFO :: network :: postadapt ... unique elements in g: 218
+2021-05-29 20:46:44,602 :: network :: INFO :: network :: adapt_communities execution time = 16.0 s
+2021-05-29 20:46:44,602 :: network :: INFO :: network :: durchlauf=2 mit Qms = 0.41730133985623247
+2021-05-29 20:47:00,056 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:47:00,056 :: network :: INFO :: network :: ----------Durchlauf = 3 --------------
+2021-05-29 20:47:00,057 :: network :: INFO :: network :: postadapt ... unique elements in g: 203
+2021-05-29 20:47:00,057 :: network :: INFO :: network :: adapt_communities execution time = 15.5 s
+2021-05-29 20:47:00,057 :: network :: INFO :: network :: durchlauf=3 mit Qms = 0.42922418068084833
+2021-05-29 20:47:15,474 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:47:15,474 :: network :: INFO :: network :: ----------Durchlauf = 4 --------------
+2021-05-29 20:47:15,474 :: network :: INFO :: network :: postadapt ... unique elements in g: 201
+2021-05-29 20:47:15,475 :: network :: INFO :: network :: adapt_communities execution time = 15.4 s
+2021-05-29 20:47:15,475 :: network :: INFO :: network :: durchlauf=4 mit Qms = 0.43223708037557257
+2021-05-29 20:47:30,923 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:47:30,924 :: network :: INFO :: network :: ----------Durchlauf = 5 --------------
+2021-05-29 20:47:30,924 :: network :: INFO :: network :: postadapt ... unique elements in g: 200
+2021-05-29 20:47:30,924 :: network :: INFO :: network :: adapt_communities execution time = 15.4 s
+2021-05-29 20:47:30,924 :: network :: INFO :: network :: durchlauf=5 mit Qms = 0.43336451564584705
+2021-05-29 20:47:46,349 :: network :: INFO :: network :: Final Qms = 0.43336451564584705
+2021-05-29 20:47:46,349 :: network :: INFO :: network :: estimating chunk magnitudes
+2021-05-29 20:47:46,374 :: network :: INFO :: network :: chunk magnitude m = -0.15561441799627995
+2021-05-29 20:47:46,393 :: network :: INFO :: network :: Qms execution time = 0.017 s
+2021-05-29 20:48:06,549 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:48:06,550 :: network :: INFO :: network :: ----------Durchlauf = 1 --------------
+2021-05-29 20:48:06,550 :: network :: INFO :: network :: postadapt ... unique elements in g: 283
+2021-05-29 20:48:06,550 :: network :: INFO :: network :: adapt_communities execution time = 20.2 s
+2021-05-29 20:48:06,550 :: network :: INFO :: network :: durchlauf=1 mit Qms = 0.3532752258734154
+2021-05-29 20:48:21,873 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:48:21,873 :: network :: INFO :: network :: ----------Durchlauf = 2 --------------
+2021-05-29 20:48:21,874 :: network :: INFO :: network :: postadapt ... unique elements in g: 216
+2021-05-29 20:48:21,874 :: network :: INFO :: network :: adapt_communities execution time = 15.3 s
+2021-05-29 20:48:21,874 :: network :: INFO :: network :: durchlauf=2 mit Qms = 0.42016669030501563
+2021-05-29 20:48:36,759 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:48:36,760 :: network :: INFO :: network :: ----------Durchlauf = 3 --------------
+2021-05-29 20:48:36,760 :: network :: INFO :: network :: postadapt ... unique elements in g: 200
+2021-05-29 20:48:36,760 :: network :: INFO :: network :: adapt_communities execution time = 14.9 s
+2021-05-29 20:48:36,761 :: network :: INFO :: network :: durchlauf=3 mit Qms = 0.43236303518394736
+2021-05-29 20:48:51,435 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:48:51,435 :: network :: INFO :: network :: ----------Durchlauf = 4 --------------
+2021-05-29 20:48:51,435 :: network :: INFO :: network :: postadapt ... unique elements in g: 196
+2021-05-29 20:48:51,436 :: network :: INFO :: network :: adapt_communities execution time = 14.7 s
+2021-05-29 20:48:51,436 :: network :: INFO :: network :: durchlauf=4 mit Qms = 0.4360731174366125
+2021-05-29 20:49:06,050 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:49:06,051 :: network :: INFO :: network :: ----------Durchlauf = 5 --------------
+2021-05-29 20:49:06,051 :: network :: INFO :: network :: postadapt ... unique elements in g: 193
+2021-05-29 20:49:06,051 :: network :: INFO :: network :: adapt_communities execution time = 14.6 s
+2021-05-29 20:49:06,051 :: network :: INFO :: network :: durchlauf=5 mit Qms = 0.4375258613874446
+2021-05-29 20:49:20,615 :: network :: INFO :: network :: Final Qms = 0.4375258613874446
+2021-05-29 20:49:20,616 :: network :: INFO :: network :: estimating chunk magnitudes
+2021-05-29 20:49:20,640 :: network :: INFO :: network :: chunk magnitude m = -0.14981397025091456
+2021-05-29 20:49:20,660 :: network :: INFO :: network :: Qms execution time = 0.017 s
+2021-05-29 20:49:40,998 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:49:40,999 :: network :: INFO :: network :: ----------Durchlauf = 1 --------------
+2021-05-29 20:49:40,999 :: network :: INFO :: network :: postadapt ... unique elements in g: 278
+2021-05-29 20:49:41,000 :: network :: INFO :: network :: adapt_communities execution time = 20.3 s
+2021-05-29 20:49:41,000 :: network :: INFO :: network :: durchlauf=1 mit Qms = 0.3583119640625846
+2021-05-29 20:49:57,010 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:49:57,011 :: network :: INFO :: network :: ----------Durchlauf = 2 --------------
+2021-05-29 20:49:57,011 :: network :: INFO :: network :: postadapt ... unique elements in g: 218
+2021-05-29 20:49:57,011 :: network :: INFO :: network :: adapt_communities execution time = 16.0 s
+2021-05-29 20:49:57,011 :: network :: INFO :: network :: durchlauf=2 mit Qms = 0.41440775589871176
+2021-05-29 20:50:12,526 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:50:12,526 :: network :: INFO :: network :: ----------Durchlauf = 3 --------------
+2021-05-29 20:50:12,526 :: network :: INFO :: network :: postadapt ... unique elements in g: 210
+2021-05-29 20:50:12,527 :: network :: INFO :: network :: adapt_communities execution time = 15.5 s
+2021-05-29 20:50:12,527 :: network :: INFO :: network :: durchlauf=3 mit Qms = 0.42414678919663185
+2021-05-29 20:50:28,041 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:50:28,041 :: network :: INFO :: network :: ----------Durchlauf = 4 --------------
+2021-05-29 20:50:28,042 :: network :: INFO :: network :: postadapt ... unique elements in g: 209
+2021-05-29 20:50:28,042 :: network :: INFO :: network :: adapt_communities execution time = 15.5 s
+2021-05-29 20:50:28,042 :: network :: INFO :: network :: durchlauf=4 mit Qms = 0.42484506897692537
+2021-05-29 20:50:43,592 :: network :: INFO :: network :: Final Qms = 0.42484506897692537
+2021-05-29 20:50:43,592 :: network :: INFO :: network :: estimating chunk magnitudes
+2021-05-29 20:50:43,617 :: network :: INFO :: network :: chunk magnitude m = -0.1571456396707742
+2021-05-29 20:50:43,636 :: network :: INFO :: network :: Qms execution time = 0.016 s
+2021-05-29 20:51:03,771 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:51:03,772 :: network :: INFO :: network :: ----------Durchlauf = 1 --------------
+2021-05-29 20:51:03,772 :: network :: INFO :: network :: postadapt ... unique elements in g: 287
+2021-05-29 20:51:03,772 :: network :: INFO :: network :: adapt_communities execution time = 20.1 s
+2021-05-29 20:51:03,772 :: network :: INFO :: network :: durchlauf=1 mit Qms = 0.35044173940430523
+2021-05-29 20:51:19,425 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:51:19,426 :: network :: INFO :: network :: ----------Durchlauf = 2 --------------
+2021-05-29 20:51:19,426 :: network :: INFO :: network :: postadapt ... unique elements in g: 223
+2021-05-29 20:51:19,426 :: network :: INFO :: network :: adapt_communities execution time = 15.7 s
+2021-05-29 20:51:19,427 :: network :: INFO :: network :: durchlauf=2 mit Qms = 0.41608245323956156
+2021-05-29 20:51:34,528 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:51:34,528 :: network :: INFO :: network :: ----------Durchlauf = 3 --------------
+2021-05-29 20:51:34,529 :: network :: INFO :: network :: postadapt ... unique elements in g: 205
+2021-05-29 20:51:34,529 :: network :: INFO :: network :: adapt_communities execution time = 15.1 s
+2021-05-29 20:51:34,529 :: network :: INFO :: network :: durchlauf=3 mit Qms = 0.43328292139240165
+2021-05-29 20:51:49,439 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:51:49,439 :: network :: INFO :: network :: ----------Durchlauf = 4 --------------
+2021-05-29 20:51:49,439 :: network :: INFO :: network :: postadapt ... unique elements in g: 200
+2021-05-29 20:51:49,440 :: network :: INFO :: network :: adapt_communities execution time = 14.9 s
+2021-05-29 20:51:49,440 :: network :: INFO :: network :: durchlauf=4 mit Qms = 0.43816917211955947
+2021-05-29 20:52:04,350 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:52:04,351 :: network :: INFO :: network :: ----------Durchlauf = 5 --------------
+2021-05-29 20:52:04,351 :: network :: INFO :: network :: postadapt ... unique elements in g: 198
+2021-05-29 20:52:04,351 :: network :: INFO :: network :: adapt_communities execution time = 14.9 s
+2021-05-29 20:52:04,351 :: network :: INFO :: network :: durchlauf=5 mit Qms = 0.4389603542488166
+2021-05-29 20:52:19,320 :: network :: INFO :: network :: Final Qms = 0.4389603542488166
+2021-05-29 20:52:19,320 :: network :: INFO :: network :: estimating chunk magnitudes
+2021-05-29 20:52:19,345 :: network :: INFO :: network :: chunk magnitude m = -0.15613564945624206
+2021-05-29 20:52:19,364 :: network :: INFO :: network :: Qms execution time = 0.017 s
+2021-05-29 20:52:39,420 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:52:39,420 :: network :: INFO :: network :: ----------Durchlauf = 1 --------------
+2021-05-29 20:52:39,421 :: network :: INFO :: network :: postadapt ... unique elements in g: 293
+2021-05-29 20:52:39,421 :: network :: INFO :: network :: adapt_communities execution time = 20.1 s
+2021-05-29 20:52:39,421 :: network :: INFO :: network :: durchlauf=1 mit Qms = 0.34707890129514907
+2021-05-29 20:52:54,813 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:52:54,814 :: network :: INFO :: network :: ----------Durchlauf = 2 --------------
+2021-05-29 20:52:54,814 :: network :: INFO :: network :: postadapt ... unique elements in g: 222
+2021-05-29 20:52:54,814 :: network :: INFO :: network :: adapt_communities execution time = 15.4 s
+2021-05-29 20:52:54,814 :: network :: INFO :: network :: durchlauf=2 mit Qms = 0.4214232864488059
+2021-05-29 20:53:09,843 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:53:09,844 :: network :: INFO :: network :: ----------Durchlauf = 3 --------------
+2021-05-29 20:53:09,844 :: network :: INFO :: network :: postadapt ... unique elements in g: 201
+2021-05-29 20:53:09,844 :: network :: INFO :: network :: adapt_communities execution time = 15.0 s
+2021-05-29 20:53:09,844 :: network :: INFO :: network :: durchlauf=3 mit Qms = 0.43646942670029093
+2021-05-29 20:53:24,674 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:53:24,675 :: network :: INFO :: network :: ----------Durchlauf = 4 --------------
+2021-05-29 20:53:24,675 :: network :: INFO :: network :: postadapt ... unique elements in g: 196
+2021-05-29 20:53:24,675 :: network :: INFO :: network :: adapt_communities execution time = 14.8 s
+2021-05-29 20:53:24,676 :: network :: INFO :: network :: durchlauf=4 mit Qms = 0.43889395931520114
+2021-05-29 20:53:39,516 :: network :: INFO :: network :: Final Qms = 0.43889395931520114
+2021-05-29 20:53:39,516 :: network :: INFO :: network :: estimating chunk magnitudes
+2021-05-29 20:53:39,541 :: network :: INFO :: network :: chunk magnitude m = -0.1481554896188149
+2021-05-29 20:53:39,559 :: network :: INFO :: network :: Qms execution time = 0.016 s
+2021-05-29 20:53:59,787 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:53:59,788 :: network :: INFO :: network :: ----------Durchlauf = 1 --------------
+2021-05-29 20:53:59,788 :: network :: INFO :: network :: postadapt ... unique elements in g: 277
+2021-05-29 20:53:59,789 :: network :: INFO :: network :: adapt_communities execution time = 20.2 s
+2021-05-29 20:53:59,789 :: network :: INFO :: network :: durchlauf=1 mit Qms = 0.35774856372468444
+2021-05-29 20:54:15,338 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:54:15,339 :: network :: INFO :: network :: ----------Durchlauf = 2 --------------
+2021-05-29 20:54:15,339 :: network :: INFO :: network :: postadapt ... unique elements in g: 213
+2021-05-29 20:54:15,339 :: network :: INFO :: network :: adapt_communities execution time = 15.5 s
+2021-05-29 20:54:15,339 :: network :: INFO :: network :: durchlauf=2 mit Qms = 0.42302594587313386
+2021-05-29 20:54:30,397 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:54:30,397 :: network :: INFO :: network :: ----------Durchlauf = 3 --------------
+2021-05-29 20:54:30,398 :: network :: INFO :: network :: postadapt ... unique elements in g: 202
+2021-05-29 20:54:30,398 :: network :: INFO :: network :: adapt_communities execution time = 15.1 s
+2021-05-29 20:54:30,398 :: network :: INFO :: network :: durchlauf=3 mit Qms = 0.43087397178196774
+2021-05-29 20:54:45,442 :: network :: INFO :: network :: Final Qms = 0.43087397178196774
+2021-05-29 20:54:45,442 :: network :: INFO :: network :: estimating chunk magnitudes
+2021-05-29 20:54:45,469 :: network :: INFO :: network :: chunk magnitude m = -0.15811695192615782
+2021-05-29 20:54:45,489 :: network :: INFO :: network :: Qms execution time = 0.017 s
+2021-05-29 20:55:05,479 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:55:05,479 :: network :: INFO :: network :: ----------Durchlauf = 1 --------------
+2021-05-29 20:55:05,479 :: network :: INFO :: network :: postadapt ... unique elements in g: 286
+2021-05-29 20:55:05,480 :: network :: INFO :: network :: adapt_communities execution time = 20.0 s
+2021-05-29 20:55:05,480 :: network :: INFO :: network :: durchlauf=1 mit Qms = 0.3420716558665343
+2021-05-29 20:55:21,322 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:55:21,323 :: network :: INFO :: network :: ----------Durchlauf = 2 --------------
+2021-05-29 20:55:21,323 :: network :: INFO :: network :: postadapt ... unique elements in g: 219
+2021-05-29 20:55:21,323 :: network :: INFO :: network :: adapt_communities execution time = 15.8 s
+2021-05-29 20:55:21,323 :: network :: INFO :: network :: durchlauf=2 mit Qms = 0.4151625539341447
+2021-05-29 20:55:36,517 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:55:36,517 :: network :: INFO :: network :: ----------Durchlauf = 3 --------------
+2021-05-29 20:55:36,518 :: network :: INFO :: network :: postadapt ... unique elements in g: 206
+2021-05-29 20:55:36,518 :: network :: INFO :: network :: adapt_communities execution time = 15.2 s
+2021-05-29 20:55:36,518 :: network :: INFO :: network :: durchlauf=3 mit Qms = 0.4270876458080506
+2021-05-29 20:55:51,753 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:55:51,754 :: network :: INFO :: network :: ----------Durchlauf = 4 --------------
+2021-05-29 20:55:51,754 :: network :: INFO :: network :: postadapt ... unique elements in g: 203
+2021-05-29 20:55:51,754 :: network :: INFO :: network :: adapt_communities execution time = 15.2 s
+2021-05-29 20:55:51,755 :: network :: INFO :: network :: durchlauf=4 mit Qms = 0.42909527674419307
+2021-05-29 20:56:06,934 :: network :: INFO :: network :: Final Qms = 0.42909527674419307
+2021-05-29 20:56:06,935 :: network :: INFO :: network :: estimating chunk magnitudes
+2021-05-29 20:56:06,959 :: network :: INFO :: network :: chunk magnitude m = -0.14428380479809444
+2021-05-29 20:56:06,977 :: network :: INFO :: network :: Qms execution time = 0.015 s
+2021-05-29 20:56:27,085 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:56:27,086 :: network :: INFO :: network :: ----------Durchlauf = 1 --------------
+2021-05-29 20:56:27,086 :: network :: INFO :: network :: postadapt ... unique elements in g: 287
+2021-05-29 20:56:27,086 :: network :: INFO :: network :: adapt_communities execution time = 20.1 s
+2021-05-29 20:56:27,087 :: network :: INFO :: network :: durchlauf=1 mit Qms = 0.35399028015401135
+2021-05-29 20:56:42,775 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:56:42,776 :: network :: INFO :: network :: ----------Durchlauf = 2 --------------
+2021-05-29 20:56:42,776 :: network :: INFO :: network :: postadapt ... unique elements in g: 214
+2021-05-29 20:56:42,776 :: network :: INFO :: network :: adapt_communities execution time = 15.7 s
+2021-05-29 20:56:42,777 :: network :: INFO :: network :: durchlauf=2 mit Qms = 0.42488559307931717
+2021-05-29 20:56:57,725 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:56:57,725 :: network :: INFO :: network :: ----------Durchlauf = 3 --------------
+2021-05-29 20:56:57,725 :: network :: INFO :: network :: postadapt ... unique elements in g: 201
+2021-05-29 20:56:57,725 :: network :: INFO :: network :: adapt_communities execution time = 14.9 s
+2021-05-29 20:56:57,725 :: network :: INFO :: network :: durchlauf=3 mit Qms = 0.4357306451780582
+2021-05-29 20:57:12,654 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:57:12,654 :: network :: INFO :: network :: ----------Durchlauf = 4 --------------
+2021-05-29 20:57:12,655 :: network :: INFO :: network :: postadapt ... unique elements in g: 199
+2021-05-29 20:57:12,655 :: network :: INFO :: network :: adapt_communities execution time = 14.9 s
+2021-05-29 20:57:12,655 :: network :: INFO :: network :: durchlauf=4 mit Qms = 0.4369110610157531
+2021-05-29 20:57:27,545 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:57:27,545 :: network :: INFO :: network :: ----------Durchlauf = 5 --------------
+2021-05-29 20:57:27,546 :: network :: INFO :: network :: postadapt ... unique elements in g: 198
+2021-05-29 20:57:27,546 :: network :: INFO :: network :: adapt_communities execution time = 14.9 s
+2021-05-29 20:57:27,546 :: network :: INFO :: network :: durchlauf=5 mit Qms = 0.43739878212693506
+2021-05-29 20:57:42,531 :: network :: INFO :: network :: Final Qms = 0.43739878212693506
+2021-05-29 20:57:42,532 :: network :: INFO :: network :: estimating chunk magnitudes
+2021-05-29 20:57:42,557 :: network :: INFO :: network :: chunk magnitude m = -0.15494606476033093
+2021-05-29 20:57:42,576 :: network :: INFO :: network :: Qms execution time = 0.017 s
+2021-05-29 20:58:02,583 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:58:02,584 :: network :: INFO :: network :: ----------Durchlauf = 1 --------------
+2021-05-29 20:58:02,584 :: network :: INFO :: network :: postadapt ... unique elements in g: 285
+2021-05-29 20:58:02,585 :: network :: INFO :: network :: adapt_communities execution time = 20.0 s
+2021-05-29 20:58:02,585 :: network :: INFO :: network :: durchlauf=1 mit Qms = 0.35536379191798145
+2021-05-29 20:58:18,716 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:58:18,716 :: network :: INFO :: network :: ----------Durchlauf = 2 --------------
+2021-05-29 20:58:18,717 :: network :: INFO :: network :: postadapt ... unique elements in g: 229
+2021-05-29 20:58:18,717 :: network :: INFO :: network :: adapt_communities execution time = 16.1 s
+2021-05-29 20:58:18,717 :: network :: INFO :: network :: durchlauf=2 mit Qms = 0.4080698258937436
+2021-05-29 20:58:34,447 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:58:34,449 :: network :: INFO :: network :: ----------Durchlauf = 3 --------------
+2021-05-29 20:58:34,449 :: network :: INFO :: network :: postadapt ... unique elements in g: 217
+2021-05-29 20:58:34,449 :: network :: INFO :: network :: adapt_communities execution time = 15.7 s
+2021-05-29 20:58:34,449 :: network :: INFO :: network :: durchlauf=3 mit Qms = 0.41694112817183376
+2021-05-29 20:58:50,160 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:58:50,161 :: network :: INFO :: network :: ----------Durchlauf = 4 --------------
+2021-05-29 20:58:50,161 :: network :: INFO :: network :: postadapt ... unique elements in g: 215
+2021-05-29 20:58:50,161 :: network :: INFO :: network :: adapt_communities execution time = 15.7 s
+2021-05-29 20:58:50,161 :: network :: INFO :: network :: durchlauf=4 mit Qms = 0.41793962823993636
+2021-05-29 20:59:05,842 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:59:05,842 :: network :: INFO :: network :: ----------Durchlauf = 5 --------------
+2021-05-29 20:59:05,842 :: network :: INFO :: network :: postadapt ... unique elements in g: 214
+2021-05-29 20:59:05,843 :: network :: INFO :: network :: adapt_communities execution time = 15.7 s
+2021-05-29 20:59:05,843 :: network :: INFO :: network :: durchlauf=5 mit Qms = 0.4182638945375206
+2021-05-29 20:59:21,555 :: network :: INFO :: network :: Final Qms = 0.4182638945375206
+2021-05-29 20:59:21,555 :: network :: INFO :: network :: estimating chunk magnitudes
+2021-05-29 20:59:21,580 :: network :: INFO :: network :: chunk magnitude m = -0.15970637094166393
+2021-05-29 20:59:21,598 :: network :: INFO :: network :: Qms execution time = 0.016 s
+2021-05-29 20:59:41,896 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:59:41,897 :: network :: INFO :: network :: ----------Durchlauf = 1 --------------
+2021-05-29 20:59:41,897 :: network :: INFO :: network :: postadapt ... unique elements in g: 292
+2021-05-29 20:59:41,897 :: network :: INFO :: network :: adapt_communities execution time = 20.3 s
+2021-05-29 20:59:41,898 :: network :: INFO :: network :: durchlauf=1 mit Qms = 0.3406355779564035
+2021-05-29 20:59:57,874 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 20:59:57,875 :: network :: INFO :: network :: ----------Durchlauf = 2 --------------
+2021-05-29 20:59:57,875 :: network :: INFO :: network :: postadapt ... unique elements in g: 232
+2021-05-29 20:59:57,875 :: network :: INFO :: network :: adapt_communities execution time = 16.0 s
+2021-05-29 20:59:57,876 :: network :: INFO :: network :: durchlauf=2 mit Qms = 0.4061057487913821
+2021-05-29 21:00:13,438 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 21:00:13,438 :: network :: INFO :: network :: ----------Durchlauf = 3 --------------
+2021-05-29 21:00:13,439 :: network :: INFO :: network :: postadapt ... unique elements in g: 209
+2021-05-29 21:00:13,439 :: network :: INFO :: network :: adapt_communities execution time = 15.6 s
+2021-05-29 21:00:13,439 :: network :: INFO :: network :: durchlauf=3 mit Qms = 0.42814856099632503
+2021-05-29 21:00:28,947 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 21:00:28,947 :: network :: INFO :: network :: ----------Durchlauf = 4 --------------
+2021-05-29 21:00:28,948 :: network :: INFO :: network :: postadapt ... unique elements in g: 206
+2021-05-29 21:00:28,948 :: network :: INFO :: network :: adapt_communities execution time = 15.5 s
+2021-05-29 21:00:28,948 :: network :: INFO :: network :: durchlauf=4 mit Qms = 0.4310522611699542
+2021-05-29 21:00:44,373 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 21:00:44,373 :: network :: INFO :: network :: ----------Durchlauf = 5 --------------
+2021-05-29 21:00:44,373 :: network :: INFO :: network :: postadapt ... unique elements in g: 205
+2021-05-29 21:00:44,374 :: network :: INFO :: network :: adapt_communities execution time = 15.4 s
+2021-05-29 21:00:44,374 :: network :: INFO :: network :: durchlauf=5 mit Qms = 0.43205229575553233
+2021-05-29 21:00:59,732 :: network :: INFO :: network :: Final Qms = 0.43205229575553233
+2021-05-29 21:00:59,732 :: network :: INFO :: network :: estimating chunk magnitudes
+2021-05-29 21:00:59,757 :: network :: INFO :: network :: chunk magnitude m = -0.1454599355078684
+2021-05-29 21:00:59,775 :: network :: INFO :: network :: Qms execution time = 0.016 s
+2021-05-29 21:01:18,933 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 21:01:18,934 :: network :: INFO :: network :: ----------Durchlauf = 1 --------------
+2021-05-29 21:01:18,934 :: network :: INFO :: network :: postadapt ... unique elements in g: 369
+2021-05-29 21:01:18,935 :: network :: INFO :: network :: adapt_communities execution time = 19.2 s
+2021-05-29 21:01:18,935 :: network :: INFO :: network :: durchlauf=1 mit Qms = 0.2682661465294394
+2021-05-29 21:01:34,760 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 21:01:34,761 :: network :: INFO :: network :: ----------Durchlauf = 2 --------------
+2021-05-29 21:01:34,761 :: network :: INFO :: network :: postadapt ... unique elements in g: 250
+2021-05-29 21:01:34,761 :: network :: INFO :: network :: adapt_communities execution time = 15.8 s
+2021-05-29 21:01:34,761 :: network :: INFO :: network :: durchlauf=2 mit Qms = 0.4165457449011248
+2021-05-29 21:01:49,878 :: network :: INFO :: network :: ------------------------------------------
+2021-05-29 21:01:49,879 :: network :: INFO :: network :: ----------Durchlauf = 3 --------------
+2021-05-29 21:01:49,879 :: network :: INFO :: network :: postadapt ... unique elements in g: 197
+2021-05-29 21:01:49,879 :: network :: INFO :: network :: adapt_communities execution time = 15.1 s
+2021-05-29 21:01:49,879 :: network :: INFO :: network :: durchlauf=3 mit Qms = 0.45444728483405256
+2021-05-29 21:02:04,552 :: network :: INFO :: network :: Final Qms = 0.45444728483405256
+2021-05-29 21:02:04,552 :: network :: INFO :: network :: estimating chunk magnitudes
+2021-05-29 21:02:04,577 :: network :: INFO :: network :: chunk magnitude m = -0.1366156569480768
+2021-05-29 21:02:04,579 :: network :: INFO :: network :: .....................
+2021-05-29 21:02:04,579 :: network :: INFO :: network :: ---print relevant Information---
+2021-05-29 21:02:04,579 :: network :: INFO :: network :: inputfile = 
+2021-05-29 21:02:04,579 :: network :: INFO :: network :: Qmulti-trial = 0.43336451564584705
+2021-05-29 21:02:04,580 :: network :: INFO :: network :: Qmulti-trial = 0.43336451564584705 (p = 0.7843501628825923, t = 0.28196039813925217)
+2021-05-29 21:02:04,580 :: network :: INFO :: network :: Qmulti-trial-shuffled = 0.4342356749708589 +- 0.009269
+2021-05-29 21:02:04,581 :: network :: INFO :: network :: slope of phi_real = -0.0005908951438094051
+2021-05-29 21:02:04,581 :: group :: DEBUG :: root :: now save the subj_exp by using subj_exp.save()
