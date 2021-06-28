@@ -54,6 +54,8 @@ public class Events : MonoBehaviour
     private string currenttextnachricht = "";
     private string sequence = "";
     private GameObject panelPrimer;
+    private GameObject rawimagesmileygreen;
+    private GameObject rawimagesmileyred;
     void Awake()
     {
         print("awake");
@@ -63,6 +65,10 @@ public class Events : MonoBehaviour
         //timeOfApplicationStart = Time.realtimeSinceStartup;
         //print("Fertig");
         gameSession = FindObjectOfType<GameSession>();
+        rawimagesmileygreen = GameObject.Find("RawImageSmileyGreen");
+        rawimagesmileygreen.SetActive(false);
+        rawimagesmileyred = GameObject.Find("RawImageSmileyRed");
+        rawimagesmileyred.SetActive(false);
         waitObject = GameObject.Find("WaitText");
         waitTMPText = waitObject.GetComponent<TextMeshProUGUI>();
         
@@ -300,22 +306,30 @@ public class Events : MonoBehaviour
     IEnumerator startBlockPassive(string textnachricht)
     {
         isActive = false;
-        // introTMPText.text = "Pause!";
-        // yield return new WaitForSeconds(1);
         introTMPText.text = "Pause!\n weiter in ...";
-        nextTMPText.text = textnachricht;
+        // die textnachricht ist sowohl Nachricht wie auch keyword    
+        switch (textnachricht)
+        {
+            case "show_smiley_red":
+                rawimagesmileyred.SetActive(true);
+                break;
+            case "show_smiley_green":
+                rawimagesmileygreen.SetActive(true);
+                break;
+            default:
+                nextTMPText.text = textnachricht;
+                break;
+        }
         for (int i = currentBlock.expTimeOff; i >= 0; i--)
         {
             waitTMPText.SetText(i.ToString());
-
-            //print("vor i = " + i);
             yield return new WaitForSeconds(1);
-            //print("nach i = " + i);
         }
         introTMPText.SetText("");
         waitTMPText.SetText("");
         nextTMPText.SetText("");
-        
+        rawimagesmileygreen.SetActive(false);
+        rawimagesmileyred.SetActive(false);
     }
 
     IEnumerator startBlockPrimer(int duration, string primer)

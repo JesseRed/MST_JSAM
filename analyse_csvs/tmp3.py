@@ -79,3 +79,4 @@ partitions = [la.CPMVertexPartition(H, node_sizes='node_size',                  
                           for H in layers];
 interslice_partition =  la.CPMVertexPartition(interslice_layer,resolution_parameter=0, node_sizes='node_size', weights='weight')
 diff = optimiser.optimise_partition_multiplex(partitions + [interslice_partition]);
+print(diff)
