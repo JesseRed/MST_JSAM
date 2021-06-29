@@ -11,7 +11,8 @@ from scipy import stats
 from scipy.stats import ttest_1samp, ttest_ind, ttest_rel
 import statistics
 import matplotlib.pyplot as plt
-import logging
+import logging, socket
+
 import statsmodels.api as sm
 from scipy.stats import mannwhitneyu
 from statsmodels.sandbox.regression.predstd import wls_prediction_std
