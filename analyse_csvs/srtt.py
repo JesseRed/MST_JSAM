@@ -37,12 +37,21 @@ class SRTT():
         #!________________________
         #! 02.05.2020 ich habe die Namensgebung in unity veraendert ... hier ggf. Anpassung ... auch wenn man mehr als 
         #! einen einstelligen Traingingstage hat ... am besten mit string.split('_') dann arbeiten 
-        self.day = int(self.filename[-1])
+
+        # leider gibt es verschiedene Namenskonventionen
+        if "_SRTT_" in self.filename:
+            self.day = int(self.filename.split('_')[1])
+        else:
+            self.day = int(self.filename[-1])
+    
         #!________________________
         self.vpn = int(self.filename.split('_')[0])
         #!_________________________
         self.experiment_name = "SRTT"
-        
+        self.paradigma = 0  # SRTT hat im Augenblick kein Paradigma
+
+#        self.vpn, self.day, self.paradigma = self.get_infos_from_filename(self.filename)
+            
         #self.df.to_csv("df_output_of_srtt.log",sep='\t')
         
 

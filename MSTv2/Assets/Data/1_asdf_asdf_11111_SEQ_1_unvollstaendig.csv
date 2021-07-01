@@ -1,0 +1,13 @@
+BlockNumber;EventNumber;Time Since Block start;isHit;target;pressed;sequence
+1;1;1.358904;0;4;2;clear
+1;2;1.375652;0;1;3;clear
+1;3;2.065958;0;3;4;clear
+1;4;2.385939;0;2;4;clear
+1;5;2.671729;1;4;4;clear
+1;6;2.890937;0;2;4;clear
+1;7;3.041956;0;1;4;clear
+1;8;3.413557;0;3;4;clear
+1;9;3.666956;1;4;4;clear
+1;10;3.969047;0;1;4;clear
+1;11;4.459342;0;3;4;clear
+1;12;4.678602;0;2;4;clear

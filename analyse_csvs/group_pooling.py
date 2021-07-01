@@ -16,15 +16,16 @@ from experiment import Experiment
 logger = logging.getLogger(__name__)
 
 
-
 class Group_pooling():
-    def __init__(self, vpns = [], day = 0, experiment_name = 'MST', path_inputfiles="./Data MST", filepattern="Tag1", 
-        path_outputfiles = ".\\Data_python", paradigma = 0, sequence_length = 8):
+    def __init__(self, vpns=[], day=0, experiment_name='MST', 
+                 path_inputfiles="./Data MST", filepattern="Tag1", 
+                 path_outputfiles=".\\Data_python", paradigma=0, 
+                 sequence_length=8):
         self.day = day
         self.vpns = vpns
         self.experiment_name = experiment_name
         self.path_inputfiles = path_inputfiles
-        self.sequence_length = sequence_length # only relevant for MST
+        self.sequence_length = sequence_length  # only relevant for MST
         self.filepattern = filepattern
         self.path_outputfiles = path_outputfiles
 
@@ -40,7 +41,7 @@ class Group_pooling():
 
     def load_data(self):
         for vpn in self.vpns:
-            exp = Experiment(self.experiment_name, vpn, self.day, self.sequence_length, is_load = True)
+            exp = Experiment(self.experiment_name, vpn, self.day, self.sequence_length, is_load=True)
             exp2 = exp.load()
             self.subj_exp_list.append(exp2)
         

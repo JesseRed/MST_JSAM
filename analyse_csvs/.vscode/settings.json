@@ -1,5 +1,6 @@
 {
-    "python.pythonPath": "/home/ck/anaconda3/envs/mst/bin/python3",
+    
+    "python.pythonPath": "G:\\ProgramData\\Anaconda3\\envs\\mst\\python.exe",
     "code-runner.executorMap": {
         "python": "F://ProgramData//Anaconda3//envs//Telestroke//python.exe"
     },

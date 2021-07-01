@@ -11,7 +11,7 @@ from myplots import my_violinplot, set_axis_style
 from my_statistics import cohend
 from statistic_exp_ck import Statistic_Exp
 from statistic_ck import Statistic
-import experiments_config #import estimate_Rogens
+#import experiments_config #import estimate_Rogens
 import logging 
 from  group_pooling import Group_pooling
 from lern_table import LearnTable
@@ -28,30 +28,34 @@ class Group_analysis():
         self.path = analysis_path
         self.groups = [] # eine Liste von Gruppen fuer die Analyse, in dieser stehen alle Infos
 
-    def add_group(self, experiment='MST', path_inputfiles=".\\Data MST",
-                  filepattern="Tag1", path_outputfiles=".\\Data_python",
-                  sequence_length=10, _id=None, is_estimate_network=False,
-                  is_clustering=False, is_estimate_Q=True, num_random_Q=10,
-                  coupling_parameter=0.3, resolution_parameter=0.9,
-                  is_multiprocessing=False, show_images=False, target_color=8):
+    def add_group(self, experiment_name = 'MST', path_inputfiles = ".\\Data MST", filepattern="Tag1", 
+        path_outputfiles = ".\\Data_python", sequence_length = 10, _id = None, 
+        is_estimate_network=False, is_clustering = False, is_estimate_Q = True, 
+        num_random_Q = 10, coupling_parameter = 0.3, resolution_parameter = 0.9,
+        is_multiprocessing = False, show_images = False, target_color = 8,
+        num_processes = 6):
 
         logger.info(f"adding additional groups for the analysis")
-        group = Group(experiment_name=experiment,
-                      path_inputfiles=path_inputfiles,
-                      filepattern=filepattern,
-                      path_outputfiles=path_outputfiles,
-                      sequence_length=sequence_length, _id=_id,
-                      is_estimate_network=is_estimate_network,
-                      is_clustering=is_clustering, is_estimate_Q=is_estimate_Q,
-                      num_random_Q=num_random_Q,
-                      coupling_parameter=coupling_parameter,
-                      resolution_parameter=resolution_parameter,
-                      is_multiprocessing=is_multiprocessing,
-                      show_images=show_images,
-                      target_color=target_color)
+        group = Group(experiment_name=experiment_name, 
+                      path_inputfiles=path_inputfiles, 
+                      filepattern=filepattern, 
+                      path_outputfiles=path_outputfiles, 
+                      sequence_length=sequence_length, 
+                      _id=_id, 
+                      is_estimate_network=is_estimate_network, 
+                      is_clustering=is_clustering, 
+                      is_estimate_Q=is_estimate_Q, 
+                      num_random_Q=num_random_Q, 
+                      coupling_parameter=coupling_parameter, 
+                      resolution_parameter=resolution_parameter, 
+                      is_multiprocessing=is_multiprocessing, 
+                      show_images=show_images, 
+                      target_color=target_color,
+                      num_processes=num_processes)
         group.get_data()
         # group.save_data()
         self.groups.append(group)
+        logger.debug(f"after self.groups.append in group_analysis ... len(groups) = {len(self.groups)}")
 
 
     def add_pre_estimated_group(self, dic):
@@ -85,8 +89,9 @@ class Group_analysis():
 
         
 if __name__ == '__main__':
-    experiments_config.estimate_Rogens()
-    # experiments_config.analyse_preestimated_Rogens()
+    pass
+    #experiments_config.estimate_Rogens()
+   # experiments_config.analyse_preestimated_Rogens()
     
 
 #     is_perform_analysis = True

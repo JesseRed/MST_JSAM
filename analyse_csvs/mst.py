@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 
 class MST():
     def __init__(self, fullfilename = ".\\Data MST\\3Tag1_.csv", sequence_length = 5, path_output = ".\\Data_python", _id = "nox_id"):
+        print(f"init of MST with: fillfilename = {fullfilename}, sequence_length = {sequence_length}, path_output = {path_output}, _id = {_id}")
         self.fullfilename = fullfilename
         base=os.path.basename(self.fullfilename)
         self.filename = os.path.splitext(base)[0]
@@ -29,20 +30,39 @@ class MST():
         self._id = _id
         self.filehandler = FileHandler(path_output=self.path_output, filename = self.filename, time_identifier = _id)
         self.input_df = pd.read_csv(self.fullfilename, sep = ';', engine = "python")
-        self.sequence_length = 5
+        self.sequence_length = sequence_length
         self.df = self.generate_standard_log_file_from_input_df(self.input_df)
         #!________________________
         #! 02.05.2020 ich habe die Namensgebung in unity veraendert ... hier ggf. Anpassung ... auch wenn man mehr als 
         #! einen einstelligen Traingingstage hat ... am besten mit string.split('_') dann arbeiten 
-        self.day = int(self.filename.split('fertig')[0][-1])
-        #!________________________
-        self.vpn = int(self.filename.split('_')[0])
+        self.vpn, self.day, self.paradigma = self.get_infos_from_filename(self.filename)
+
         #!_________________________
         self.experiment_name = "MST"
         #self.experiment = Experiment(self.experiment_name, self.vpn, self.day, self.sequence_length, self.df)
 
-        #print(experiment)
+    def get_infos_from_filename(self, filename):
+        # 50_Lena​Mers​MOLE3fertig
+        # 50_Lena​Mers​MOLE11fertig
+        # 50_Lena​Mers​MOLE21fertig ... drei gruppen
+        # 50_Lena​Mers​MOLE22fertig ... drei gruppen
+        # 50_Lena​Mers​MOLE23fertig ... drei gruppen
+        coding_numbers = filename.split('fertig')[0][-3:]
+        real_nums = []
+        for num in coding_numbers:
+            try:
+                real_nums.append(int(num))
+            except:
+                pass
 
+        day = real_nums[0]
+        paradigma = 0
+        if len(real_nums) > 1:
+            paradigma = real_nums[1]
+        #!________________________
+        vpn = int(filename.split('_')[0])
+        return (vpn, day, paradigma)
+            
         # testing
         #self.df = self.input_df
         #self.ipi, self.hits = self.get_inter_key_intervals(self.input_df)
@@ -71,7 +91,11 @@ class MST():
         df['isHit'] = input_df['isHit']
         df['target'] = input_df['target']
         df['pressed'] = input_df['pressed']
-        df['sequence'] = input_df['sequence']
+        # the sequence column is not present in older versions
+        try:
+            df['sequence'] = input_df['sequence']
+        except:
+            df['sequence'] = 0 
 
         # ersetzte die Sequenznamen durch Zahlen nach mit der wichtigsten beginnend 
         #! das replacen muss von Hand erfolgen 
@@ -432,9 +456,12 @@ if __name__ == '__main__':
         mstfile = "G:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
     if computername == "XenonBang":
         mstfile = "H:\\Unity\\MST_JSAM\\analyse_csvs\\Data_Rogens\\MST\\17_TimQueißertREST1fertig.csv"
-    mst = MST(fullfilename = mstfile, sequence_length = 5, path_output = ".\\Data_python", _id = "no_id")
+    if computername == "Laptop-LittleBang":
+        mstfile = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_MST_Grischeck\\Jung\\3_Elena​Buettner​MOLE21fertig.csv"
+        outpath = "D:\\Programming\\MST_JSAM\\analyse_csvs\\Data_MST_Grischeck\\tmp\\"
+    mst = MST(fullfilename = mstfile, sequence_length = 5, path_output = outpath, _id = "no_id")
 
-    #mst.save()
+#    mst.save()
 #    ipi_cor = mst.ipi_cor
 #    ipi_norm = mst.ipi_norm
 #    ipi_norm_arr = mst.ipi_norm_arr

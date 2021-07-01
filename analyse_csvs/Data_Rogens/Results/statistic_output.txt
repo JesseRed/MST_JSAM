@@ -1,0 +1,278 @@
+found 1 groups in the given directoryGroup 0 with name = SEQ (52 files)
+number of Paradigma: 3
+... with number of blocks: 10 10 10  
+checking dataconsistency ...
+checking that every experiment file of a given type and day has the same number of paradigma
+____________________________________
+analysing Group SEQ
+subj   0 file=10_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj   1 file=10_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj   2 file=15_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj   3 file=15_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj   4 file=16_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj   5 file=16_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj   6 file=17_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj   7 file=17_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj   8 file=18_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj   9 file=18_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  10 file=19_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  11 file=19_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  12 file=20_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  13 file=20_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  14 file=21_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  15 file=21_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  16 file=22_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  17 file=23_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  18 file=23_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  19 file=24_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  20 file=24_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  21 file=25_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  22 file=25_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  23 file=26_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  24 file=26_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  25 file=27_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  26 file=27_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  27 file=28_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  28 file=28_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  29 file=29_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  30 file=29_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  31 file=30_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  32 file=30_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  33 file=31_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  34 file=31_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  35 file=32_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  36 file=33_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  37 file=33_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  38 file=34_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  39 file=34_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  40 file=35_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  41 file=35_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  42 file=36_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  43 file=36_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  44 file=37_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  45 file=37_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  46 file=38_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  47 file=38_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  48 file=39_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  49 file=39_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  50 file=40_SEQ_1_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+subj  51 file=40_SEQ_2_0_8 num_p = 3 num_bloecke = [[8, 8, 8, 8, 8, 8, 8, 8, 8, 8], [5, 4, 4, 4, 4, 4, 4, 4, 4, 4], [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]] .... to
+checking dataconsistency finished
+______________________________________________
+Question 1: Was there learning?
+1.1. is there a linear increase in the number of correct sequences per block per paradigma (linear Regression)?
+___________________________________________________
+START____SEQ______________________________________
+SEQ
+1.1. is there a linear decrease in the Time to perform an sequence per block per paradigma (linear Regression)?
+.... for day 1...
+Regression across the mean of all subjects for each blocks ...
+[[2.16293e+05 1.00000e+00]
+ [2.08314e+05 1.00000e+00]
+ [2.09225e+05 1.00000e+00]
+ [2.08861e+05 1.00000e+00]
+ [2.08899e+05 1.00000e+00]
+ [2.07272e+05 1.00000e+00]
+ [2.03370e+05 1.00000e+00]
+ [2.02487e+05 1.00000e+00]
+ [1.98873e+05 1.00000e+00]
+ [1.93478e+05 1.00000e+00]]
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.865
+Model:                            OLS   Adj. R-squared:                  0.848
+Method:                 Least Squares   F-statistic:                     51.33
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):           9.57e-05
+Time:                        20:27:58   Log-Likelihood:                -14.722
+No. Observations:                  10   AIC:                             33.44
+Df Residuals:                       8   BIC:                             34.05
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+x1            -0.0004   6.16e-05     -7.164      0.000      -0.001      -0.000
+const         95.3531     12.687      7.516      0.000      66.097     124.609
+==============================================================================
+Omnibus:                        3.073   Durbin-Watson:                   1.197
+Prob(Omnibus):                  0.215   Jarque-Bera (JB):                1.369
+Skew:                          -0.905   Prob(JB):                        0.504
+Kurtosis:                       2.912   Cond. No.                     7.00e+06
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large,  7e+06. This might indicate that there are
+strong multicollinearity or other numerical problems.
+.... for day 2...
+Regression across the mean of all subjects for each blocks ...
+[[1.61293e+05 1.00000e+00]
+ [1.54743e+05 1.00000e+00]
+ [1.57064e+05 1.00000e+00]
+ [1.57263e+05 1.00000e+00]
+ [1.54485e+05 1.00000e+00]
+ [1.55854e+05 1.00000e+00]
+ [1.54901e+05 1.00000e+00]
+ [1.53584e+05 1.00000e+00]
+ [1.52082e+05 1.00000e+00]
+ [1.51670e+05 1.00000e+00]]
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.705
+Model:                            OLS   Adj. R-squared:                  0.668
+Method:                 Least Squares   F-statistic:                     19.13
+Date:                Fri, 11 Sep 2020   Prob (F-statistic):            0.00237
+Time:                        20:27:59   Log-Likelihood:                -18.635
+No. Observations:                  10   AIC:                             41.27
+Df Residuals:                       8   BIC:                             41.87
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+x1            -0.0009      0.000     -4.374      0.002      -0.001      -0.000
+const        145.2668     32.189      4.513      0.002      71.038     219.496
+==============================================================================
+Omnibus:                       11.193   Durbin-Watson:                   1.780
+Prob(Omnibus):                  0.004   Jarque-Bera (JB):                5.133
+Skew:                          -1.590   Prob(JB):                       0.0768
+Kurtosis:                       4.485   Cond. No.                     9.07e+06
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 9.07e+06. This might indicate that there are
+strong multicollinearity or other numerical problems.
+now use the slope of each subject and perform a t-test for the group
+[-29.10989796 -42.44798535 -10.12595165  -5.4342836  -23.80241935
+  -2.91203875 -17.1046613   -5.73003312 -18.55098151   2.79646547
+ -13.27108516 -26.7218122   -9.93667214  -2.63827919 -24.66998285
+ -21.88679029   5.59596727 -20.66904781  -9.03091452  -2.89674208
+  -3.3762139  -18.52044127  29.8127471  -26.84187121 -10.37268773
+  -4.36887218 -21.29358703]
+cor_seqtimesum_slope_lpn t-test different from 0  p=9.992017633394741e-05 t=-4.587286872428713, m=-12.352150827432858, std=13.730089234766991
+[  3.76481643 -33.51556449 -17.26232011  -1.55203025   8.30675923
+  -0.85761783  -8.52759602  -0.48339029   3.60951877   0.5744616
+  -5.67274423   4.62291744   7.53035562 -10.49138022 -15.60101936
+   3.15357041   4.50599401 -12.65607985   2.06966507  -3.33354751
+  -4.86841598  -3.45356658  -4.50221328  -9.38191396 -23.44297719]
+cor_seqtimesum_slope_lpn t-test different from 0  p=0.02752085885707719 t=-2.34682807393318, m=-4.698572742648347, std=9.808222312211392
+END____SEQ______________________________________
+___________________________________________________
+ 
+ 
+__________________________________________________________
+________________________Q_________________________________
+__________________________________________________________
+We quantified chunking within each sequence by the optimized modularity Qmulti–trial of the
+sequence networks. Modularity in this case measures the separability between clusters of
+IKIs. Higher values of Q indicate a greater ease in separating chunks.
+___________MST_______
+not experiments for {desc}
+not experiments for {desc}
+___________SRTT_______
+not experiments for {desc}
+not experiments for {desc}
+___________SEQ_______
+Subject z-score for real Q 
+[-13.709918500228458, 9.059841116590425, 6.699512416162749, 10.149515015604992, -5.948336404160035, 12.227145113814423, 16.144391806271248, -0.6728839237276532, 3.0662331012811275, -24.93629159320777, 8.525126239146012, 23.018701734437926, 11.65446936456094, 11.464387723057575, -9.850028172581883, -7.467396953091162, 20.265962193947104, -12.216644273512403, -26.02367426901409, -2.505357102753335, 5.606834781910959, -15.644171220979002, 3.060287300760853, 6.07373972845085, -9.333238539437973, -5.786772415058958, -8.945822722257489]
+with mean = 0.14724487207359152
+REAL Q
+REAL Q 
+ (0) Zusammensetzung of result Q of 0.427
+Q = 0.00167 * Summe([16203.0 (A) - 549.8 (gamma*term) + 319.2] (C_term) * 858 (delta_gg))
+unique elements in g: 124
+number of network row = 39FAKE Q
+ (1) Zusammensetzung of result Q of 0.448
+Q = 0.00167 * Summe([15551.5 (A) - 549.8 (gamma*term) + 319.2] (C_term) * 1130 (delta_gg))
+unique elements in g: 98
+number of network row = 39FAKE Q
+ (2) Zusammensetzung of result Q of 0.441
+Q = 0.00167 * Summe([15263.8 (A) - 549.8 (gamma*term) + 319.2] (C_term) * 1076 (delta_gg))
+unique elements in g: 103
+number of network row = 39FAKE Q
+ (3) Zusammensetzung of result Q of 0.450
+Q = 0.00167 * Summe([15266.6 (A) - 549.8 (gamma*term) + 319.2] (C_term) * 1162 (delta_gg))
+unique elements in g: 98
+number of network row = 39FAKE Q
+ (4) Zusammensetzung of result Q of 0.465
+Q = 0.00167 * Summe([15042.3 (A) - 549.8 (gamma*term) + 319.2] (C_term) * 1282 (delta_gg))
+unique elements in g: 90
+number of network row = 39FAKE Q
+ (5) Zusammensetzung of result Q of 0.470
+Q = 0.00167 * Summe([15397.1 (A) - 549.8 (gamma*term) + 319.2] (C_term) * 1236 (delta_gg))
+unique elements in g: 91
+number of network row = 39FAKE Q
+ (6) Zusammensetzung of result Q of 0.478
+Q = 0.00167 * Summe([15568.3 (A) - 549.8 (gamma*term) + 319.2] (C_term) * 1234 (delta_gg))
+unique elements in g: 91
+number of network row = 39FAKE Q
+ (7) Zusammensetzung of result Q of 0.455
+Q = 0.00167 * Summe([15047.0 (A) - 549.8 (gamma*term) + 319.2] (C_term) * 1262 (delta_gg))
+unique elements in g: 90
+number of network row = 39FAKE Q
+ (8) Zusammensetzung of result Q of 0.465
+Q = 0.00167 * Summe([15338.0 (A) - 549.8 (gamma*term) + 319.2] (C_term) * 1232 (delta_gg))
+unique elements in g: 91
+number of network row = 39FAKE Q
+ (9) Zusammensetzung of result Q of 0.470
+Q = 0.00167 * Summe([15750.4 (A) - 549.8 (gamma*term) + 319.2] (C_term) * 1176 (delta_gg))
+unique elements in g: 94
+number of network row = 39FAKE Q
+ (10) Zusammensetzung of result Q of 0.475
+Q = 0.00167 * Summe([15428.9 (A) - 549.8 (gamma*term) + 319.2] (C_term) * 1294 (delta_gg))
+unique elements in g: 89
+number of network row = 39
+SEQ Day 1 p = 2.713199e-13  with t = 5.75e+02  (mean = 10.7 +- 6.703  vs. 2.45 +- 1.736
+Subject z-score for real Q 
+[-31.264106913080596, -2.547752858983121, 8.792907343054669, 28.444986842902207, 2.15125611792374, -7.328147759557736, 1.7291128042344954, 6.105518157817873, -12.399715021448737, 3.85588433556705, 5.750125317298034, 3.443493583776409, 2.8762537770780177, -3.2397525475406437, -1.606172211161934, -11.188006123920628, -5.318279058321647, -2.5201838925140367, 0.42631070507273716, -12.982487933946523, 0.9289478007427644, 0.15885882351516858, -1.5915257235634208, 5.754301918316183, -28.604755127034856]
+with mean = -2.0069171057509814
+REAL Q
+REAL Q 
+ (0) Zusammensetzung of result Q of 0.417
+Q = 0.00151 * Summe([19782.0 (A) - 610.8 (gamma*term) + 352.8] (C_term) * 904 (delta_gg))
+unique elements in g: 141
+number of network row = 43FAKE Q
+ (1) Zusammensetzung of result Q of 0.461
+Q = 0.00151 * Summe([18504.1 (A) - 610.8 (gamma*term) + 352.8] (C_term) * 1356 (delta_gg))
+unique elements in g: 103
+number of network row = 43FAKE Q
+ (2) Zusammensetzung of result Q of 0.461
+Q = 0.00151 * Summe([18397.1 (A) - 610.8 (gamma*term) + 352.8] (C_term) * 1370 (delta_gg))
+unique elements in g: 103
+number of network row = 43FAKE Q
+ (3) Zusammensetzung of result Q of 0.455
+Q = 0.00151 * Summe([18634.7 (A) - 610.8 (gamma*term) + 352.8] (C_term) * 1296 (delta_gg))
+unique elements in g: 105
+number of network row = 43FAKE Q
+ (4) Zusammensetzung of result Q of 0.466
+Q = 0.00151 * Summe([18836.7 (A) - 610.8 (gamma*term) + 352.8] (C_term) * 1444 (delta_gg))
+unique elements in g: 99
+number of network row = 43FAKE Q
+ (5) Zusammensetzung of result Q of 0.451
+Q = 0.00151 * Summe([18088.7 (A) - 610.8 (gamma*term) + 352.8] (C_term) * 1256 (delta_gg))
+unique elements in g: 109
+number of network row = 43FAKE Q
+ (6) Zusammensetzung of result Q of 0.459
+Q = 0.00151 * Summe([18580.9 (A) - 610.8 (gamma*term) + 352.8] (C_term) * 1274 (delta_gg))
+unique elements in g: 107
+number of network row = 43FAKE Q
+ (7) Zusammensetzung of result Q of 0.460
+Q = 0.00151 * Summe([18688.9 (A) - 610.8 (gamma*term) + 352.8] (C_term) * 1316 (delta_gg))
+unique elements in g: 105
+number of network row = 43FAKE Q
+ (8) Zusammensetzung of result Q of 0.463
+Q = 0.00151 * Summe([18872.6 (A) - 610.8 (gamma*term) + 352.8] (C_term) * 1434 (delta_gg))
+unique elements in g: 98
+number of network row = 43FAKE Q
+ (9) Zusammensetzung of result Q of 0.455
+Q = 0.00151 * Summe([18681.2 (A) - 610.8 (gamma*term) + 352.8] (C_term) * 1354 (delta_gg))
+unique elements in g: 102
+number of network row = 43FAKE Q
+ (10) Zusammensetzung of result Q of 0.464
+Q = 0.00151 * Summe([18521.2 (A) - 610.8 (gamma*term) + 352.8] (C_term) * 1380 (delta_gg))
+unique elements in g: 99
+number of network row = 43
+SEQ Day 2 p = 0.0003355954  with t = 1.84e+03  (mean = 7.64 +- 8.962  vs. 2.48 +- 1.699
+end estimation group q
+performing an ANOVA
