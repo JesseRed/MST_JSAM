@@ -199,7 +199,9 @@ public class GameSession : MonoBehaviour
                     int expStartBlockPause = int.Parse(fields[7]);
                     string expStartBlockPrimer = fields[8];
                     int expShowKeys = int.Parse(fields[9]);
-                    Block singleBlock = new Block(expBlock, expSequence, expTimeOn, expTimeOff, expEndBlockPause, expEndBlockMessage, expEndBlockManualContinuation, expStartBlockPause, expStartBlockPrimer, expShowKeys);
+                    //int expEndBlockPause = int.Parse(fields[10]);
+                    string expSingleSequenceFeedback = fields[10];
+                    Block singleBlock = new Block(expBlock, expSequence, expTimeOn, expTimeOff, expEndBlockPause, expEndBlockMessage, expEndBlockManualContinuation, expStartBlockPause, expStartBlockPrimer, expShowKeys, expSingleSequenceFeedback);
                     paradigmaBlocks.Add(singleBlock);
                 }
             }
@@ -260,8 +262,9 @@ public class GameSession : MonoBehaviour
         public int expStartBlockPause;
         public string expStartBlockPrimer;
         public int expShowKeys;
+        public string expSingleSequenceFeedback;
 
-        public Block(int block, string seq, int timeOn, int timeOff, int endBlockPause, string endBlockMessage, int endBlockManualContinuation, int startBlockPause, string startBlockPrimer, int showSingleKeys)
+        public Block(int block, string seq, int timeOn, int timeOff, int endBlockPause, string endBlockMessage, int endBlockManualContinuation, int startBlockPause, string startBlockPrimer, int showSingleKeys, string singleSequenceFeedback)
         {
             expBlock = block;
             // Sequence string to int array
@@ -278,6 +281,7 @@ public class GameSession : MonoBehaviour
             expStartBlockPause = startBlockPause;
             expStartBlockPrimer = startBlockPrimer;
             expShowKeys = showSingleKeys;
+            expSingleSequenceFeedback = singleSequenceFeedback;
             if (endBlockManualContinuation == 1)
             {
                 expEndBlockManualContinuation = true;
