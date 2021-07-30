@@ -1,8 +1,22 @@
 # MST_JSAM
 This repository contains the following learn paradigm as unity games and the currently available data
-Manual Sequence Task (MST)
-SRTT 
-8 Sequence learning Task
+- Manual Sequence Task (MST)
+- SRTT 
+- 8 Sequence learning Task (FRA)
+
+Gesteuert wird ueber die csv Paradigmen Files im Ornder /Assets/ExperimentalDesign
+Der Name des Files bestimmt seinen Aufruf 
+z.B. FRA_Day1.csv (FRA wird im Menue angeklickt und erster Trainingstag wird eingegeben)
+
+
+
+|Block|Sequence|timeOn|timeOff|endBlockPause|endBlockMessage|endBlockManualContinuation|startBlockPause|startBlockPrimer|showSingleKeys|singleSequenceFeedback|
+|----:|:-----------------:|:----:|:----:|:----:|:-------------:|:----:|:----:|:----:|:-----:|:----------------:|
+|1|4-1-3-2-4-2-1-3|-1|2|5|nachricht2|0|2|red|1|show_smiley_red|
+|2|3-2-4-1-3-2-4-1|-1|2|5|nachricht2|0|2|blue|1|next_sequence|
+|3|3-2-4-1-3-2-4-1|-1|0|0|nachricht2|0|2|blue|1|show_smiley_red|
+|4|4-1-3-2-4-2-1-3|-1|0|0|nachricht1|0|2|red|1|show_smiley_red|
+|5|4-1-3-2-4-2-1-3|-1|0|0|nachricht1|0|2|red|1|show_smiley_red|
 
 
 #!  Jenaer Planungsgespraeche 28.04.2020
