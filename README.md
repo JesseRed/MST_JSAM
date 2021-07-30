@@ -25,33 +25,38 @@ z.B. FRA_Day1.csv (FRA wird im Menue angeklickt und erster Trainingstag wird ein
 # Beschreibung
 ## Block [int]
 > Nummer des Blocks
-## Sequence 
+## Sequence [string]
 > die Sequenz die Gezeigt werden soll muss mit "-" getrennt sein
 ## timeOn [int]
 > Zeit die der Proband hat um die Sequenz einzutippen
 > eine Zahl kleiner als 0 bewirkt, dass die Sequenz genau einmal gezeigt wird
-## timeOff
+## timeOff [int]
 > Zeit der Pause nach einem Block in welchem die endBlockMessage gezeigt wird
 * endBlockPause
 * endBlockMessage
-* endBlockManualContinuation
-* startBlockPause  .... Anzahl an Sekunden Pause vor Beginn eines neuen Blocks ... In dieser ZEit wird der startBlockPrimer gezeigt
-## startBlockPrimer .... 
->Wird waehrd der startBlockPause gezeigt (stellt eine Farbe dar) erlaubt sind
+## endBlockManualContinuation [0,1]
+> 0 = der naechste Block startet ohne manuelle Beststaetigung des Nutzers
+> 1 = der naechste Block startet erst nach druck der Space taste
+## startBlockPause  [int] 
+> Anzahl an Sekunden Pause vor Beginn eines neuen Blocks ... In dieser ZEit wird der startBlockPrimer gezeigt
+## startBlockPrimer [string]
+> Wird waehrd der startBlockPause gezeigt (stellt eine Farbe dar) erlaubt sind
 * black
-  * blue
-  * clear
-  * cyan
-  * gray
-  * green
-  * grey
-  * magenta
-  * red
-  * white
-  * yellow
-* showSingleKeys
-* singleSequenceFeedback
-* 
+* blue
+* clear
+* cyan
+* gray
+* green
+* grey
+* magenta
+* red
+* white
+* yellow
+## showSingleKeys [0,1]
+> 0 = Sequenz wird in ihrer vollen Laenge auf dem Bildschirm dargestellt
+> 1 = nur das Zeichen das als naechstes gedruckt werden soll wird gezeigt
+## singleSequenceFeedback
+
 
 
 #!  Jenaer Planungsgespraeche 28.04.2020
