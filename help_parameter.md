@@ -68,7 +68,7 @@ Bsp: 2
 Es wird geprueft ob der uebergebene String ein Spezialstring ist der besonders verarbeitet wird, ansonsten wird der String an sich angezeigt
 * show_smiley_red = es wird ein roter trauriger Smiley gezeigt aber nur wenn ein Fehler gemacht wurde
 * show_smiley_green = es wird ein gruener Smiley gezeigt aber nur wenn die Sequenz korrekt war
-
+* show_smiley_green_red = es wird ein gruener Smiley gezeigt wenn Sequenz korrekt und ein roter wenn ein Fehler in der Sequenz gemacht wurde
 es koennen noch mehr spezialkeys im IEnumerator startBlockPassive(string textnachricht) eingefuegt werden im Events.cs File
 
 ## 9. endBlockPause [int]
