@@ -16,9 +16,9 @@ Bsp: FRA_Day1.csv (FRA wird im Menu angeklickt und erster Trainingstag wird eing
 
 |Block|Sequence|showSingleKeys|startBlockPause|startBlockPrimer|timeOn|feedbacktime|singleSequenceFeedback|endBlockPause|endBlockMessage|endBlockManualContinuation|
 |----:|------------:|:----:|:----:|:----:|:-------------:|:----:|:----:|:----:|:-----:|:----------------:|
-|1|4-1-3-2-4-2-1-3|3|red|-1|4|show_red_smiley|5|myendblockmessage|1|
-|2|3-2-4-1-3-2-4-1|3|red|-1|4|show_green_smiley|5|myendblockmessage|1|
-|3|3-2-4-1-3-2-4-1|3|red|-1|4|mycurrentstringmessageasfeeback|5|myendblockmessage|1|
+|1|4-1-3-2-4-2-1-3|1|3|red|-1|4|show_red_smiley|5|myendblockmessage|1|
+|2|3-2-4-1-3-2-4-1|1|3|red|-1|4|show_green_smiley|5|myendblockmessage|1|
+|3|3-2-4-1-3-2-4-1|1|3|red|-1|4|mycurrentstringmessageasfeeback|5|myendblockmessage|1|
 
 # Beschreibung
 > Die Namen der Spalten koennen veraendert werden ... es ist nur ihre Reihenfolge Wichtig
