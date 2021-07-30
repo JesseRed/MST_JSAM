@@ -191,17 +191,16 @@ public class GameSession : MonoBehaviour
                     // print(fields[0]);
                     int expBlock = int.Parse(fields[0]);
                     string expSequence = fields[1];
-                    int expTimeOn = int.Parse(fields[2]);
-                    int expTimeOff = int.Parse(fields[3]);
-                    int expEndBlockPause = int.Parse(fields[4]);
-                    string expEndBlockMessage = fields[5];
-                    int expEndBlockManualContinuation = int.Parse(fields[6]);
-                    int expStartBlockPause = int.Parse(fields[7]);
-                    string expStartBlockPrimer = fields[8];
-                    int expShowKeys = int.Parse(fields[9]);
-                    //int expEndBlockPause = int.Parse(fields[10]);
-                    string expSingleSequenceFeedback = fields[10];
-                    Block singleBlock = new Block(expBlock, expSequence, expTimeOn, expTimeOff, expEndBlockPause, expEndBlockMessage, expEndBlockManualContinuation, expStartBlockPause, expStartBlockPrimer, expShowKeys, expSingleSequenceFeedback);
+                    int expShowKeys = int.Parse(fields[2]);
+                    int expStartBlockPause = int.Parse(fields[3]);
+                    string expStartBlockPrimer = fields[4];
+                    int expTimeOn = int.Parse(fields[5]);
+                    int expFeedbackTime = int.Parse(fields[6]);
+                    string expSingleSequenceFeedback = fields[7];
+                    int expEndBlockPause = int.Parse(fields[8]);
+                    string expEndBlockMessage = fields[9];
+                    int expEndBlockManualContinuation = int.Parse(fields[10]);
+                    Block singleBlock = new Block(expBlock, expSequence, expTimeOn, expFeedbackTime, expEndBlockPause, expEndBlockMessage, expEndBlockManualContinuation, expStartBlockPause, expStartBlockPrimer, expShowKeys, expSingleSequenceFeedback);
                     paradigmaBlocks.Add(singleBlock);
                 }
             }
@@ -255,7 +254,7 @@ public class GameSession : MonoBehaviour
         public int expBlock;
         public List<int> expSequence = new List<int>();
         public int expTimeOn;
-        public int expTimeOff;
+        public int expFeedbackTime;
         public int expEndBlockPause;
         public string expEndBlockMessage;
         public bool expEndBlockManualContinuation;
@@ -264,7 +263,7 @@ public class GameSession : MonoBehaviour
         public int expShowKeys;
         public string expSingleSequenceFeedback;
 
-        public Block(int block, string seq, int timeOn, int timeOff, int endBlockPause, string endBlockMessage, int endBlockManualContinuation, int startBlockPause, string startBlockPrimer, int showSingleKeys, string singleSequenceFeedback)
+        public Block(int block, string seq, int timeOn, int FeedbackTime, int endBlockPause, string endBlockMessage, int endBlockManualContinuation, int startBlockPause, string startBlockPrimer, int showSingleKeys, string singleSequenceFeedback)
         {
             expBlock = block;
             // Sequence string to int array
@@ -275,7 +274,7 @@ public class GameSession : MonoBehaviour
                 expSequence.Add(int.Parse(fields[i]));
             }
             expTimeOn = timeOn;
-            expTimeOff = timeOff;
+            expFeedbackTime = FeedbackTime;
             expEndBlockPause = endBlockPause;
             expEndBlockMessage = endBlockMessage;
             expStartBlockPause = startBlockPause;

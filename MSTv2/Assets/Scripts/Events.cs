@@ -124,6 +124,7 @@ public class Events : MonoBehaviour
             }
         }
 
+
         if (isActive)
         {
             if (Input.GetKeyDown("f")) { tmpButtonPressed = 4; } // Zeigefinger
@@ -159,23 +160,30 @@ public class Events : MonoBehaviour
             currentBlockStartTime = Time.time;
             errorInBlock = false;
             //print(block.expSequence);
-            currenttextnachricht = block.expEndBlockMessage;
             sequence = block.expStartBlockPrimer;
+
+            //  Die Pause vor dem Block
             if (currentBlock.expStartBlockPause>0){
                 yield return StartCoroutine(startBlockPrimer(block.expStartBlockPause, block.expStartBlockPrimer));
             }
+            // der aktive Block
             if (currentBlock.expTimeOn>0){
                 yield return StartCoroutine(startBlockActiveTime());
             }
             if (currentBlock.expTimeOn<=0){
                 yield return StartCoroutine(startBlockActiveOneSequence());
             }
-            if (currentBlock.expEndBlockPause>0){
+            // das Feedback nach dem Block
+            if (currentBlock.expFeedbackTime>0){
                 yield return StartCoroutine(startBlockFeedback(block.expEndBlockPause, block.expSingleSequenceFeedback));
             }
-
-            if (currentBlock.expTimeOff>0){
-                yield return StartCoroutine(startBlockPassive(currenttextnachricht));
+            // die Pause nach dem Block und nach dem Feedback
+            if (currentBlock.expEndBlockPause>0){
+                yield return StartCoroutine(startBlockPassive(block.expEndBlockMessage));                
+            }
+            // manuelle oder automatisches Weitermachen
+            if (currentBlock.expEndBlockManualContinuation){
+                yield return StartCoroutine(waitUntilSpaceIsPressed());
             }
             gameSession.playerData.SaveDataAsCSV("unvollstaendig");
 
@@ -188,6 +196,21 @@ public class Events : MonoBehaviour
         Application.Quit();
     }
 
+    IEnumerator waitUntilSpaceIsPressed()
+    {
+        introTMPText.text = "Pause!\n weiter mit Space ...";
+        while (!Input.GetKeyDown("space"))
+        {
+            yield return new WaitForSeconds(1);
+        }
+        introTMPText.SetText("");
+        waitTMPText.SetText("");
+        nextTMPText.SetText("");
+        rawimagesmileygreen.SetActive(false);
+        rawimagesmileyred.SetActive(false);
+
+       
+    }
     IEnumerator startBlockActiveOneSequence()
     {
         isActive = true;
@@ -327,7 +350,8 @@ public class Events : MonoBehaviour
                 nextTMPText.text = textnachricht;
                 break;
         }
-        for (int i = currentBlock.expTimeOff; i >= 0; i--)
+        // for (int i = currentBlock.expFeedbackTime; i >= 0; i--)
+        for (int i = currentBlock.expEndBlockPause; i >= 0; i--)
         {
             waitTMPText.SetText(i.ToString());
             yield return new WaitForSeconds(1);
@@ -335,6 +359,52 @@ public class Events : MonoBehaviour
         introTMPText.SetText("");
         waitTMPText.SetText("");
         nextTMPText.SetText("");
+        rawimagesmileygreen.SetActive(false);
+        rawimagesmileyred.SetActive(false);
+    }
+
+
+    IEnumerator startBlockFeedback(int duration, string singleSequenceFeedback)
+    {
+        isActive = false;
+        // introTMPText.text = "Pause!";
+        // yield return new WaitForSeconds(1);
+        introTMPText.text = "Feedback\n ";
+        //introTMPText.text = singleSequenceFeedback;
+        waitTMPText.SetText("");
+        nextTMPText.SetText("");
+        //panelPrimer.SetActive(true);
+        print("errorInBlock: " + errorInBlock);
+        // show the SeqenceFeedback after each Sequence
+        switch (singleSequenceFeedback)
+        {
+            case "show_smiley_green_red":
+                if (errorInBlock){
+                    rawimagesmileyred.SetActive(true);
+                }else{
+                    rawimagesmileyred.SetActive(true);
+                }
+                break;
+            case "show_smiley_red":
+                if (errorInBlock){
+                    rawimagesmileyred.SetActive(true);
+                }
+                break;
+            case "show_smiley_green":
+                if (!errorInBlock){
+                    rawimagesmileygreen.SetActive(true);
+                }
+                break;
+            default:
+                introTMPText.text = singleSequenceFeedback;
+                break;
+        }
+
+        yield return new WaitForSeconds(currentBlock.expFeedbackTime);
+        introTMPText.SetText("");
+        waitTMPText.SetText("");
+        nextTMPText.SetText("");
+        panelPrimer.SetActive(false);
         rawimagesmileygreen.SetActive(false);
         rawimagesmileyred.SetActive(false);
     }
@@ -368,43 +438,4 @@ public class Events : MonoBehaviour
         nextTMPText.SetText("");
         panelPrimer.SetActive(false);
     }
-
-    IEnumerator startBlockFeedback(int duration, string singleSequenceFeedback)
-    {
-        isActive = false;
-        // introTMPText.text = "Pause!";
-        // yield return new WaitForSeconds(1);
-        introTMPText.text = "Feedback\n ";
-        //introTMPText.text = singleSequenceFeedback;
-        waitTMPText.SetText("");
-        nextTMPText.SetText("");
-        //panelPrimer.SetActive(true);
-        print("errorInBlock: " + errorInBlock);
-        // show the SeqenceFeedback after each Sequence
-        switch (singleSequenceFeedback)
-        {
-            case "show_smiley_red":
-                if (errorInBlock){
-                    rawimagesmileyred.SetActive(true);
-                }
-                break;
-            case "show_smiley_green":
-                if (!errorInBlock){
-                    rawimagesmileygreen.SetActive(true);
-                }
-                break;
-            default:
-                introTMPText.text = singleSequenceFeedback;
-                break;
-        }
-
-        yield return new WaitForSeconds(currentBlock.expEndBlockPause);
-        introTMPText.SetText("");
-        waitTMPText.SetText("");
-        nextTMPText.SetText("");
-        panelPrimer.SetActive(false);
-        rawimagesmileygreen.SetActive(false);
-        rawimagesmileyred.SetActive(false);
-    }
-
 }
