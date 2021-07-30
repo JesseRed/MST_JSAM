@@ -14,13 +14,11 @@ Bsp: FRA_Day1.csv (FRA wird im Menu angeklickt und erster Trainingstag wird eing
 
 
 
-|Block|Sequence|timeOn|timeOff|endBlockPause|endBlockMessage|endBlockManualContinuation|startBlockPause|startBlockPrimer|showSingleKeys|singleSequenceFeedback|
-|----:|:-----------------:|:----:|:----:|:----:|:-------------:|:----:|:----:|:----:|:-----:|:----------------:|
-|1|4-1-3-2-4-2-1-3|-1|2|5|nachricht2|0|2|red|1|show_smiley_red|
-|2|3-2-4-1-3-2-4-1|-1|2|5|nachricht2|0|2|blue|1|next_sequence|
-|3|3-2-4-1-3-2-4-1|-1|0|0|nachricht2|0|2|blue|1|show_smiley_red|
-|4|4-1-3-2-4-2-1-3|-1|0|0|nachricht1|0|2|red|1|show_smiley_red|
-|5|4-1-3-2-4-2-1-3|-1|0|0|nachricht1|0|2|red|1|show_smiley_red|
+|Block|Sequence|showSingleKeys|startBlockPause|startBlockPrimer|timeOn|feedbacktime|singleSequenceFeedback|endBlockPause|endBlockMessage|endBlockManualContinuation|
+|----:|------------:|:----:|:----:|:----:|:-------------:|:----:|:----:|:----:|:-----:|:----------------:|
+|1|4-1-3-2-4-2-1-3|3|red|-1|4|show_red_smiley|5|myendblockmessage|1|
+|2|3-2-4-1-3-2-4-1|3|red|-1|4|show_green_smiley|5|myendblockmessage|1|
+|3|3-2-4-1-3-2-4-1|3|red|-1|4|mycurrentstringmessageasfeeback|5|myendblockmessage|1|
 
 # Beschreibung
 > Die Namen der Spalten koennen veraendert werden ... es ist nur ihre Reihenfolge Wichtig
