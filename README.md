@@ -25,15 +25,30 @@ z.B. FRA_Day1.csv (FRA wird im Menue angeklickt und erster Trainingstag wird ein
 # Beschreibung
 ## Block [int]
 > Nummer des Blocks
+Bsp: 2
 ## Sequence [string]
 > die Sequenz die Gezeigt werden soll muss mit "-" getrennt sein
+
+Bsp: 4-1-3-2-4-2-1-3
+
 ## timeOn [int]
 > Zeit die der Proband hat um die Sequenz einzutippen
-> eine Zahl kleiner als 0 bewirkt, dass die Sequenz genau einmal gezeigt wird
+> 
+eine Zahl kleiner als 0 bewirkt, dass die Sequenz genau einmal gezeigt wird
+
+Bsp: 2
 ## timeOff [int]
 > Zeit der Pause nach einem Block in welchem die endBlockMessage gezeigt wird
-* endBlockPause
-* endBlockMessage
+
+Bsp: 2
+## endBlockPause [int]
+> Zeit der Pause nach einem Block in welchem das SingleSequenceFeedback gezeigt wird
+
+Bsp: 2
+## endBlockMessage [string]
+> Nachricht die in der Zeit des timeOff gezeigt wird
+
+Bsp: naechste Sequence kommt gleich
 ## endBlockManualContinuation [0,1]
 > 0 = der naechste Block startet ohne manuelle Beststaetigung des Nutzers
 > 1 = der naechste Block startet erst nach druck der Space taste
@@ -53,12 +68,19 @@ z.B. FRA_Day1.csv (FRA wird im Menue angeklickt und erster Trainingstag wird ein
 * white
 * yellow
 ## showSingleKeys [0,1]
-> 0 = Sequenz wird in ihrer vollen Laenge auf dem Bildschirm dargestellt
+> 0 = Sequenz wird in ihrer vollen Laenge auf dem Bildschirm dargestellt <br>
 > 1 = nur das Zeichen das als naechstes gedruckt werden soll wird gezeigt
-## singleSequenceFeedback
+## singleSequenceFeedback [sting]
+> Feedback fuer den Probanden ueber die zuletzt durchgefuehrte Sequenz
+
+Es wird geprueft ob der uebergebene String ein Spezialstring ist der besonders verarbeitet wird, ansonsten wird der String an sich angezeigt
+* show_smiley_red = es wird ein roter trauriger Smiley gezeigt
+* show_smiley_green = es wird ein gruener Smiley gezeigt
+
+es koennen noch mehr spezialkeys im IEnumerator startBlockPassive(string textnachricht) eingefuegt werden im Events.cs File
 
 
-
+# -------------------------------------
 #!  Jenaer Planungsgespraeche 28.04.2020
 """ ------------------------------------
 outcomeparameter zu Berechnen
