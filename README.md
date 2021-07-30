@@ -7,6 +7,7 @@ This repository contains the following learn paradigm as unity games and the cur
 Gesteuert wird ueber die csv Paradigmen Files im Ornder /Assets/ExperimentalDesign
 Der Name des Files bestimmt seinen Aufruf 
 z.B. FRA_Day1.csv (FRA wird im Menue angeklickt und erster Trainingstag wird eingegeben)
+<br/><br/>
 
 
 
@@ -21,27 +22,26 @@ z.B. FRA_Day1.csv (FRA wird im Menue angeklickt und erster Trainingstag wird ein
 
 #!  Jenaer Planungsgespraeche 28.04.2020
 """ ------------------------------------
-    outcomeparameter zu Berechnen
-        Anstieg insgesamt
-        Anstieg zum Maximum
-        Maximum
-        Gesamtzahl korrekter Sequenzen
-        Veraenderung der Outcomeparameter von Tag_1 zu Tag_2
-        Fehlerhafte Sequenzen pro Block
+outcomeparameter zu Berechnen
+* Anstieg insgesamt
+* Anstieg zum Maximum
+* Maximum
+* Gesamtzahl korrekter Sequenzen
+* Veraenderung der Outcomeparameter von Tag_1 zu Tag_2
+* Fehlerhafte Sequenzen pro Block
 
-    Ziele:
-        - Wie gut kann ich Lernerfolg mit unterschiedlichen Lernspielen testen
-        - Wie valide sind die verschiedenen Lernspiele fuer diese Frage
-        - Wie kann ich Lerntypen unterscheiden, was sind Einflussfaktoren
+Ziele:
+- Wie gut kann ich Lernerfolg mit unterschiedlichen Lernspielen testen
+- Wie valide sind die verschiedenen Lernspiele fuer diese Frage
+- Wie kann ich Lerntypen unterscheiden, was sind Einflussfaktoren
 
-        Teilung der Gruppe anhand der Outcomeparameter in 2 Gruppen im median und Untersuchung 
-            welche Unterschiede diese Gruppen aufweisen
+Teilung der Gruppe anhand der Outcomeparameter in 2 Gruppen im median und Untersuchung welche Unterschiede diese Gruppen aufweisen
 
 
-        std der Lernspiele fuer verschiende outcomeparameter an Tag1, Tag2 und Tag2-Tag1
+std der Lernspiele fuer verschiende outcomeparameter an Tag1, Tag2 und Tag2-Tag1
         
 
-        Indentifikation verschiedener LErntypen
+Indentifikation verschiedener LErntypen
 
             Multiple Regressionsanalyse verschiedener Einflussfaktoren auf die outcomeparameter
             1... alles aus neuropsych 
